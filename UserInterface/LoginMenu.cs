@@ -75,7 +75,7 @@ namespace UserInterface
                             SingletonUser.currentuser = parameterInter.GetCustomer(name, pass);
                             
                             Console.WriteLine("************************************************\n");
-                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.FirstName + "\t press enter to continue\n");
+                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.Name + "\t press enter to continue\n");
                             Console.WriteLine("************************************************\n");
                             Console.ReadLine();
                         }
@@ -133,7 +133,7 @@ namespace UserInterface
                             SingletonUser.currentuser = parameterInter.GetCustomer(name, pass);
                             
                             Console.WriteLine("************************************************\n");
-                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.FirstName + "\t press enter to continue\n");
+                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.Name + "\t press enter to continue\n");
                             Console.WriteLine("************************************************\n");
                             Console.ReadLine();
                         }

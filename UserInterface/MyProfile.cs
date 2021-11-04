@@ -21,7 +21,7 @@ namespace UserInterface
             
             Console.WriteLine("\n##################################################################################\n");
             Console.WriteLine("\tEditing current user");
-            Console.WriteLine("\tName - " + client.FirstName);
+            Console.WriteLine("\tName - " + client.Name);
             Console.WriteLine("\tAddress - " + client.Address);
             Console.WriteLine("\tContact - " + client.Email);
             Console.WriteLine("\tusername - " + client.UserName);
@@ -95,7 +95,7 @@ namespace UserInterface
                     
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Name");
-                    client.FirstName = Console.ReadLine();
+                    client.Name = Console.ReadLine();
                     return MenuType.MyProfile;
                 case "2":
                     

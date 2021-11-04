@@ -17,10 +17,10 @@ namespace Tests
             Customer tester = new Customer();
             string _name = "TestName";
             //Act
-            tester.FirstName = _name;
+            tester.Name = _name;
             //Assert
-            Assert.NotNull(tester.FirstName);
-            Assert.Equal(tester.FirstName, _name);
+            Assert.NotNull(tester.Name);
+            Assert.Equal(tester.Name, _name);
         }
 
         /// <summary>
