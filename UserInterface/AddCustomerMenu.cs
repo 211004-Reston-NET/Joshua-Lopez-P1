@@ -23,14 +23,14 @@ namespace UserInterface
             Console.WriteLine("Adding a new Account");
             Console.WriteLine("---------------------------------------------------------------------\n");
             
-            Console.WriteLine("Name - " + client.CustomerName);
+            Console.WriteLine("Name - " + client.FirstName);
             Console.WriteLine("Address - " + client.Address);
-            Console.WriteLine("Contact - " + client.Contact);
+            Console.WriteLine("Contact - " + client.Email);
             Console.WriteLine("username - " + client.UserName);
             Console.WriteLine("password - " + client.Password);
-            Console.WriteLine("Age - " + client._age);
-            Console.WriteLine("Type: - " + client.Position);
-            Console.WriteLine("Added Balance: - $" + client.Currency);
+            Console.WriteLine("Age - " + client.Age);
+            Console.WriteLine("Type: - " + client.Category);
+            Console.WriteLine("Added Balance: - $" + client.CurrentCurrency);
             Console.WriteLine("\n##################################################################################\n");
 
             
@@ -84,7 +84,7 @@ namespace UserInterface
                 case "1":
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Name");
-                    client.CustomerName = Console.ReadLine();
+                    client.FirstName = Console.ReadLine();
 
                     return MenuType.AddCustomers;
                 case "2":
@@ -95,19 +95,19 @@ namespace UserInterface
                 case "3":
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Contact");
-                    client.Contact = Console.ReadLine();
+                    client.Email = Console.ReadLine();
                     return MenuType.AddCustomers;
                 case "4":
                     Console.WriteLine("\tType in the value for the age");
                     try
                     {
-                        client._age = Convert.ToInt32(Console.ReadLine());
+                        client.Age = Convert.ToInt32(Console.ReadLine());
                     }
                     catch (System.Exception)
                     {
 
                         
-                        client._age = 0;
+                        client.Age = 0;
                         Console.WriteLine("************************************************\n");
                         Console.WriteLine("you have entered something that was not a number please try again");
                         Console.WriteLine("Press Enter to continue");
@@ -129,7 +129,7 @@ namespace UserInterface
                 case "7":
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Position");
-                    client.Position = Console.ReadLine();
+                    client.Category = Console.ReadLine();
                     return MenuType.AddCustomers;
 
                 case "8":
@@ -137,12 +137,12 @@ namespace UserInterface
                     Console.WriteLine("\tType in the value for the Currency, do not add dollar sign nor commas");
                     try
                     {
-                        client.Currency = Convert.ToDecimal(Console.ReadLine());
+                        client.CurrentCurrency = Convert.ToDecimal(Console.ReadLine());
                     }
                     catch (System.Exception)
                     {
                         
-                        client.Currency = 0;
+                        client.CurrentCurrency = 0;
                         Console.WriteLine("************************************************\n");
                         Console.WriteLine("you have entered something that was not a number please try again");
                         Console.WriteLine("Press Enter to continue");

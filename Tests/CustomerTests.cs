@@ -17,10 +17,10 @@ namespace Tests
             Customer tester = new Customer();
             string _name = "TestName";
             //Act
-            tester.CustomerName = _name;
+            tester.FirstName = _name;
             //Assert
-            Assert.NotNull(tester.CustomerName);
-            Assert.Equal(tester.CustomerName, _name);
+            Assert.NotNull(tester.FirstName);
+            Assert.Equal(tester.FirstName, _name);
         }
 
         /// <summary>
@@ -51,10 +51,10 @@ namespace Tests
             Customer tester = new Customer();
             string _contact = "TestContact";
             //Act
-            tester.Contact = _contact;
+            tester.Email = _contact;
             //Assert
-            Assert.NotNull(tester.Contact);
-            Assert.Equal(tester.Contact, _contact);
+            Assert.NotNull(tester.Email);
+            Assert.Equal(tester.Email, _contact);
         }
 
         /// <summary>

@@ -13,15 +13,15 @@ namespace Models
          private string _name;
          private string _address;
          private string _contact;
-        private List<Orders> customerOrders = new List<Orders>();
+         private List<Orders> customerOrders = new List<Orders>();
 
         private string _username;
         private string _password;
-        public int _age { get; set; }
+        public int Age { get; set; }
         private decimal _currency;
         public int Id { get; set; }
-        public string Position { get; set; }
-        public decimal Currency
+        public string Category { get; set; }
+        public decimal CurrentCurrency
         {
             get { return decimal.Round(_currency,2); }
             set { _currency = decimal.Round(value,2); }
@@ -35,7 +35,7 @@ namespace Models
 
         //in the JSON file the information would be entered in the way the constructors are for each property
         //property that uses the field name
-        public string CustomerName
+        public string FirstName
         {
             get { return _name; }
             set { _name = value; }
@@ -50,7 +50,7 @@ namespace Models
         }
 
         
-        public string Contact
+        public string Email
         {
             get { return _contact; }
             set { _contact = value; }
@@ -85,7 +85,10 @@ namespace Models
         {
             return _name;
         }
+        public  List<OrderLines> orderline_ { get; set; }
+        
+       
 
-    
+
     }
 }

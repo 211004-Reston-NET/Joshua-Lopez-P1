@@ -17,7 +17,7 @@ namespace UserInterface
         {
             
             Console.WriteLine("\n##################################################################################\n");
-            Console.WriteLine("\tWelcome to the store select menu " + SingletonUser.currentuser.CustomerName.ToUpper());
+            Console.WriteLine("\tWelcome to the store select menu " + SingletonUser.currentuser.FirstName.ToUpper());
             Console.WriteLine("\tPlease select the store");
             Console.WriteLine("---------------------------------------------------------------------\n");
 

@@ -53,7 +53,7 @@ namespace UserInterface
             }
             Console.WriteLine("\tTotal of cart is $" + _details.TotalPrice);
             
-            Console.WriteLine("\nCurrent Balance in wallet: $" + SingletonUser.currentuser.Currency);
+            Console.WriteLine("\nCurrent Balance in wallet: $" + SingletonUser.currentuser.CurrentCurrency);
             Console.WriteLine("\n##################################################################################\n");
             
             Console.WriteLine("\t[5] - Add Items to cart");
@@ -392,9 +392,9 @@ namespace UserInterface
                             return MenuType.ProductBuyMenu;
 
                         }
-                        else if ((SingletonUser.currentuser.Currency - _details.TotalPrice) >= 0)
+                        else if ((SingletonUser.currentuser.CurrentCurrency - _details.TotalPrice) >= 0)
                         {
-                            SingletonUser.currentuser.Currency = SingletonUser.currentuser.Currency - _details.TotalPrice;
+                            SingletonUser.currentuser.CurrentCurrency = SingletonUser.currentuser.CurrentCurrency - _details.TotalPrice;
                             parameterInter.ModifyCustomerRecord(SingletonUser.currentuser);
 
                             Orders Test = new Orders();

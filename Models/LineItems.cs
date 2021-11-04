@@ -4,6 +4,8 @@ namespace Models
 {
     public class LineItems
     {
+        public int StoreID { get; set; }
+        public int ProductID { get; set; }
 
         private Products _product;
         public Products ProductEstablish
@@ -29,5 +31,8 @@ namespace Models
         {
             return _quantity;
         }
+
+        public  Products Product_obj { get; set; }
+        public  StoreFront Store_obj { get; set; }
     }
 }

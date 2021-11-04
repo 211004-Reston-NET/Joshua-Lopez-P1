@@ -21,9 +21,9 @@ namespace UserInterface
             
             Console.WriteLine("\n##################################################################################\n");
             Console.WriteLine("\tEditing current user");
-            Console.WriteLine("\tName - " + client.CustomerName);
+            Console.WriteLine("\tName - " + client.FirstName);
             Console.WriteLine("\tAddress - " + client.Address);
-            Console.WriteLine("\tContact - " + client.Contact);
+            Console.WriteLine("\tContact - " + client.Email);
             Console.WriteLine("\tusername - " + client.UserName);
             char[]test=client.Password.ToCharArray();
             string pass="";
@@ -32,10 +32,10 @@ namespace UserInterface
                 pass=pass+"*";
             }
             Console.WriteLine("\tPassword:"+pass);
-            Console.WriteLine("\tAge - " + client._age);
-            Console.WriteLine("\tPosition - " + client.Position);
+            Console.WriteLine("\tAge - " + client.Age);
+            Console.WriteLine("\tPosition - " + client.Category);
             Console.WriteLine("\tAccount number - " + client.Id);
-            Console.WriteLine("\tCurrent Balance: $" + client.Currency);
+            Console.WriteLine("\tCurrent Balance: $" + client.CurrentCurrency);
             client.MyOrders = parameterInter.GetMyOrderHistory(client.Id);
 
             Console.WriteLine("\n##################################################################################\n");
@@ -95,7 +95,7 @@ namespace UserInterface
                     
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Name");
-                    client.CustomerName = Console.ReadLine();
+                    client.FirstName = Console.ReadLine();
                     return MenuType.MyProfile;
                 case "2":
                     
@@ -108,7 +108,7 @@ namespace UserInterface
                     
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Contact");
-                    client.Contact = Console.ReadLine();
+                    client.Email = Console.ReadLine();
                     return MenuType.MyProfile;
                 case "4":
                     
@@ -116,7 +116,7 @@ namespace UserInterface
                     Console.WriteLine("\tType in the value for the age");
                     try
                     {
-                        client._age = Convert.ToInt32(Console.ReadLine());
+                        client.Age = Convert.ToInt32(Console.ReadLine());
                     }
                     catch (System.Exception)
                     {
@@ -171,7 +171,7 @@ namespace UserInterface
                     try
                     {
                         deposit = Convert.ToDecimal(Console.ReadLine());
-                        client.Currency = client.Currency + deposit;
+                        client.CurrentCurrency = client.CurrentCurrency + deposit;
                     }
                     catch (System.Exception)
                     {

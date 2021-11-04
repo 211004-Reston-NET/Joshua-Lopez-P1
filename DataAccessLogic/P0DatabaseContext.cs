@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Models;
 
 #nullable disable
 
-namespace DataAccessLogic.Entities
+namespace DataAccessLogic
 {
     public partial class P0DatabaseContext : DbContext
     {
@@ -18,10 +19,10 @@ namespace DataAccessLogic.Entities
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<OrderHistory> OrderHistories { get; set; }
-        public virtual DbSet<OrdersRecord> OrdersRecords { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<OrderLines> OrderHistories { get; set; }
+        public virtual DbSet<Orders> OrdersRecords { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<LineItems> Stocks { get; set; }
         public virtual DbSet<StoreFront> StoreFronts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,7 +36,7 @@ namespace DataAccessLogic.Entities
                 entity.HasIndex(e => e.UserName, "Customer_UN")
                     .IsUnique();
 
-                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+                entity.Property(e => e.Id).HasColumnName("CustomerID");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
@@ -72,7 +73,7 @@ namespace DataAccessLogic.Entities
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<OrderHistory>(entity =>
+            modelBuilder.Entity<OrderLines>(entity =>
             {
                 entity.HasKey(e => e.ReferenceId)
                     .HasName("PK__OrderHis__E1A99A79D614F7ED");
@@ -83,64 +84,64 @@ namespace DataAccessLogic.Entities
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
-                entity.Property(e => e.LineQuantity).HasColumnName("line_quantity");
+            entity.Property(e => e.LineQuantity).HasColumnName("line_quantity");
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.OrderHistories)
+                entity.HasOne(d => d.Customer_obj)
+                    .WithMany(p => p.orderline_)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderHist__Custo__1AD3FDA4");
 
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderHistories)
+                entity.HasOne(d => d.Order_obj)
+                    .WithMany(p => p.orderline_)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderHist__Order__19DFD96B");
 
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.OrderHistories)
+                entity.HasOne(d => d.Product_obj)
+                    .WithMany(p => p.OrderLine_)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderHist__Produ__1CBC4616");
 
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.OrderHistories)
+                entity.HasOne(d => d.Store_obj)
+                    .WithMany(p => p.orderline_)
                     .HasForeignKey(d => d.StoreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderHist__Store__1BC821DD");
             });
 
-            modelBuilder.Entity<OrdersRecord>(entity =>
+            modelBuilder.Entity<Orders>(entity =>
             {
-                entity.HasKey(e => e.OrderId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__OrdersRe__C3905BCF362EFFB7");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
-                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+                entity.Property(e => e.StoreFrontId).HasColumnName("StoreID");
 
-                entity.Property(e => e.Total).HasColumnType("money");
+                entity.Property(e => e.TotalPrice).HasColumnType("money");
 
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.OrdersRecords)
+                entity.HasOne(d => d.Customer_obj)
+                    .WithMany(p => p.MyOrders)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrdersRec__Custo__160F4887");
 
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.OrdersRecords)
-                    .HasForeignKey(d => d.StoreId)
+                entity.HasOne(d => d.Store_obj)
+                    .WithMany(p => p.EstablishOrders)
+                    .HasForeignKey(d => d.StoreFrontId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrdersRec__Store__17036CC0");
             });
 
-            modelBuilder.Entity<Product>(entity =>
+            modelBuilder.Entity<Products>(entity =>
             {
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+                entity.Property(e => e.Id).HasColumnName("ProductID");
 
                 entity.Property(e => e.Category)
                     .IsRequired()
@@ -162,45 +163,45 @@ namespace DataAccessLogic.Entities
                     .HasDefaultValueSql("((0.00))");
             });
 
-            modelBuilder.Entity<Stock>(entity =>
+            modelBuilder.Entity<LineItems>(entity =>
             {
-                entity.HasKey(e => new { e.StoreId, e.ProductId })
+                entity.HasKey(e => new { e.StoreID, e.ProductID})
                     .HasName("PK__Stock__F0C23C8FFE8CD921");
 
                 entity.ToTable("Stock");
 
-                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+                entity.Property(e => e.StoreID).HasColumnName("StoreID");
 
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+                entity.Property(e => e.ProductID).HasColumnName("ProductID");
 
-                entity.HasOne(d => d.Product)
+                entity.HasOne(d => d.Product_obj)
                     .WithMany(p => p.Stocks)
-                    .HasForeignKey(d => d.ProductId)
+                    .HasForeignKey(d => d.ProductID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Stock__ProductID__114A936A");
 
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.Stocks)
-                    .HasForeignKey(d => d.StoreId)
+                entity.HasOne(d => d.Store_obj)
+                    .WithMany(p => p.Stock)
+                    .HasForeignKey(d => d.StoreID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Stock__StoreID__10566F31");
             });
 
             modelBuilder.Entity<StoreFront>(entity =>
             {
-                entity.HasKey(e => e.StoreId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__StoreFro__3B82F0E1A4CC44F6");
 
                 entity.ToTable("StoreFront");
 
-                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+                entity.Property(e => e.Id).HasColumnName("StoreID");
 
-                entity.Property(e => e.Location)
+                entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.StoreName)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);

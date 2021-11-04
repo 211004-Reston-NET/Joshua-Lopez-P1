@@ -3,7 +3,6 @@ using DataAccessLogic;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using DataAccessLogic.Entities;
 namespace UserInterface
 {
     /// <summary>

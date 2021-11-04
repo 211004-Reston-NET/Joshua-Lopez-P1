@@ -8,6 +8,13 @@ namespace Models
     public class Orders
     {
         public int Id { get; set; }
+        public int CustomerId { get; set; }
+        public int StoreFrontId { get; set; }
+
+        public  Customer Customer_obj { get; set; }
+        public  StoreFront Store_obj { get; set; }
+        public  List<OrderLines> orderline_ { get; set; }
+
         private List<LineItems> itemslist = new List<LineItems>();
         public List<LineItems> ItemsList
             {

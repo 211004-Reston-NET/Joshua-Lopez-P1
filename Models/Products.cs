@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -31,6 +32,9 @@ namespace Models
         {
             return _price;
         }
+
+        public  List<OrderLines> OrderLine_ { get; set; }
+        public  List<LineItems> Stocks { get; set; }
 
     }
 }

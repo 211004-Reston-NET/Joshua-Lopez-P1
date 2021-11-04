@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Models;
-using Entity = DataAccessLogic.Entities;
 using Model = Models;
 
 namespace DataAccessLogic
 {
     public class RespositoryCloud : InterfaceRepository
     {
-        private Entity.P0DatabaseContext _context;
-        public RespositoryCloud(Entity.P0DatabaseContext p_context)
+        private P0DatabaseContext _context;
+        public RespositoryCloud(P0DatabaseContext p_context)
         {
             _context = p_context;
         }
@@ -21,19 +20,7 @@ namespace DataAccessLogic
             //a new customer of type Customer (db version) with the received information
             //setting each column of the customer table
             _context.Customers.Add
-            (
-                new Entity.Customer()
-                {
-                    FirstName = parameterobj.CustomerName,
-                    Email = parameterobj.Contact,
-                    UserName = parameterobj.UserName,
-                    Password = parameterobj.Password,
-                    Category = parameterobj.Position,
-                    Age = parameterobj._age,
-                    Address = parameterobj.Address,
-                    CurrentCurrency = parameterobj.Currency
-
-                }
+            (parameterobj
             );
 
             //This method will save the changes made to the database
@@ -50,21 +37,7 @@ namespace DataAccessLogic
             //add to list at the end to create it as a list after each created customer
             //essentially we are selecting all in this method because we created a new customer
             //_context .customers represents the table with all the rows 
-            List<Model.Customer> test = _context.Customers.Select(client =>
-                   new Model.Customer()
-                   {
-
-                       Id = client.CustomerId,
-                       CustomerName = client.FirstName,
-                       Contact = client.Email,
-                       UserName = client.UserName,
-                       Password = client.Password,
-                       Position = client.Category,
-                       Address = client.Address,
-                       _age = client.Age,
-                       Currency = client.CurrentCurrency
-                   }
-            ).ToList();
+            List<Model.Customer> test = _context.Customers.ToList();
             return test;
         }
         public Model.Customer GetCustomerDL(string username, string password)
@@ -85,24 +58,13 @@ namespace DataAccessLogic
         public Models.Customer ModifyCustomerRecordDL(Models.Customer currentSelection)
         {
             Models.Customer test = GetCustomerDL(currentSelection.UserName, currentSelection.Password);
+
             //Here we go to the database customers table
             //creates a new customer but with the purpose of using the received information
             //creates the customer using the received info and then matches the id to avoid any errors
 
             _context.Customers.Update
-            (
-                new Entity.Customer()
-                {
-                    FirstName = currentSelection.CustomerName,
-                    Email = currentSelection.Contact,
-                    UserName = currentSelection.UserName,
-                    Password = currentSelection.Password,
-                    Category = currentSelection.Position,
-                    Age = currentSelection._age,
-                    Address = currentSelection.Address,
-                    CustomerId = currentSelection.Id,
-                    CurrentCurrency = currentSelection.Currency
-                }
+            (test
             );
 
             //This method will save the changes made to the database
@@ -134,13 +96,7 @@ namespace DataAccessLogic
         {
             _context.StoreFronts.Add
            (
-               new Entity.StoreFront()
-               {
-                   StoreName = parameterobj.Name,
-                   Location = parameterobj.Address
-
-
-               }
+               parameterobj
            );
 
             //This method will save the changes made to the database
@@ -171,15 +127,7 @@ namespace DataAccessLogic
         }
         public List<Model.StoreFront> GetAllStoreFrontDL()
         {
-            List<Model.StoreFront> test = _context.StoreFronts.Select(storeobj =>
-                   new Model.StoreFront()
-                   {
-
-                       Id = storeobj.StoreId,
-                       Name = storeobj.StoreName,
-                       Address = storeobj.Location
-                   }
-            ).ToList();
+            List<Model.StoreFront> test = _context.StoreFronts.ToList();
             return test;
         }
 
@@ -205,14 +153,7 @@ namespace DataAccessLogic
         {
             _context.OrdersRecords.Add
             (
-                new Entity.OrdersRecord()
-                {
-                    Total = parameterobj.TotalPrice,
-                    CustomerId = client.Id,
-                    StoreId = store.Id
-
-
-                });
+                parameterobj);
             _context.SaveChanges();
             return parameterobj;
         }
@@ -220,14 +161,7 @@ namespace DataAccessLogic
 
         public List<Orders> GetAllOrdersDL()
         {
-            List<Orders> test = _context.OrdersRecords.Select(rest =>
-                   new Model.Orders()
-                   {
-
-                       Id = rest.OrderId,
-                       TotalPrice = rest.Total,
-                   }
-            ).ToList();
+            List<Orders> test = _context.OrdersRecords.ToList();
             return test;
         }
 
@@ -240,15 +174,8 @@ namespace DataAccessLogic
         {  //this line item is just to return something for test purposes
             LineItems test = new LineItems();
             _context.Stocks.Add
-           (
-               new Entity.Stock()
-               {
-                   StoreId = store.Id,
-                   ProductId = prod.Id,
-                   InStock = quantity
-
-
-               }
+           (test
+               
            );
 
             //This method will save the changes made to the database
@@ -259,18 +186,7 @@ namespace DataAccessLogic
 
         public List<Models.Products> GetAllProductsDL()
         {
-            List<Models.Products> test = _context.Products.Select(prodobj =>
-                   new Model.Products()
-                   {
-
-                       Id = prodobj.ProductId,
-                       Name = prodobj.Name,
-                       Price = prodobj.Price,
-                       Description = prodobj.Description,
-                       Category = prodobj.Category
-
-                   }
-            ).ToList();
+            List<Models.Products> test = _context.Products.ToList();
             return test;
         }
 
@@ -278,15 +194,7 @@ namespace DataAccessLogic
         {
             _context.Products.Add
             (
-                new Entity.Product()
-                {
-                    Name = parameterObj.Name,
-                    Price = parameterObj.Price,
-                    Description = parameterObj.Description,
-                    Category = parameterObj.Category,
-
-
-                }
+                parameterObj
             );
 
             //This method will save the changes made to the database
@@ -299,7 +207,7 @@ namespace DataAccessLogic
         {
             //creates a Product table object of the db and intializes it
             //initialized with a db search of products table with parameter of product id
-            Entity.Product looking = _context.Products.Find(identification);
+            Products looking = _context.Products.Find(identification);
             bool result = true;
             if (looking == null)//if value was not found then it will return a false value for whatever method called it
             {
@@ -318,9 +226,9 @@ namespace DataAccessLogic
             }
             else
             { //finds the product in the db and then we fill out our Model.Product with that found information
-                Entity.Product looking = _context.Products.Find(obj);
+                Products looking = _context.Products.Find(obj);
                 test.Name = looking.Name;
-                test.Id = looking.ProductId;
+                test.Id = looking.Id;
                 test.Price = looking.Price;
                 test.Category = looking.Category;
                 test.Description = looking.Description;
@@ -337,8 +245,8 @@ namespace DataAccessLogic
             //returns the product information and the quantity in stock
 
             var result = from compl in _context.Stocks
-                         where compl.StoreId == obj
-                         select new { compl.Product, compl.InStock };
+                         where compl.StoreID == obj
+                         select new { compl.Product_obj, compl.Quantity };
 
 
             //Mapping the Queryable<Entity.Stock> into a list<Model.LineItem>
@@ -350,14 +258,14 @@ namespace DataAccessLogic
                 //mapping /creating a new models product with the current info of the query
                 test.ProductEstablish = new Model.Products()
                 {
-                    Price = row.Product.Price,
-                    Name = row.Product.Name,
-                    Id = row.Product.ProductId,
-                    Description = row.Product.Description,
-                    Category = row.Product.Category
+                    //Price = row.Product.Price,
+                    //Name = row.Product.Name,
+                    //Id = row.Product.ProductId,
+                    //Description = row.Product.Description,
+                    //Category = row.Product.Category
 
                 };
-                test.Quantity = row.InStock;
+                //test.Quantity = row.InStock;
 
                 //adding to the list after establishing all values a line item needed
                 listofItems.Add(test);
@@ -379,10 +287,10 @@ namespace DataAccessLogic
             {
                 //if it reached then the store id is in the db so we create a new obj of Storefront db table type
                 //then match all the information needed to be a Model storefront
-                Entity.StoreFront looking = _context.StoreFronts.Find(number);
-                test.Name = looking.StoreName;
-                test.Id = looking.StoreId;
-                test.Address = looking.Location;
+                StoreFront looking = _context.StoreFronts.Find(number);
+                //test.Name = looking.StoreName;
+                //test.Id = looking.StoreId;
+                //test.Address = looking.Location;
                 return test;
             }
 
@@ -391,7 +299,7 @@ namespace DataAccessLogic
         {
             //creates a Storefront table object of the db and intializes it
             //initialized with a db search of Storefront table with parameter of product id
-            Entity.StoreFront looking = _context.StoreFronts.Find(number);
+            StoreFront looking = _context.StoreFronts.Find(number);
 
             bool result = true;
             if (looking == null)
@@ -404,18 +312,11 @@ namespace DataAccessLogic
 
         public void InsertHistory(int store, int prod, int order, int customer, int quantity)
         {
+            OrderLines test = new OrderLines();
             //essentially representing the line items of an order it is adding it to the db
             _context.OrderHistories.Add
-           (
-               new Entity.OrderHistory()
-               {
-                   StoreId = store,
-                   ProductId = prod,
-                   OrderId = order,
-                   CustomerId = customer,
-                   LineQuantity = quantity
-
-               }
+           (test
+               
            );
 
             //This method will save the changes made to the database
@@ -437,16 +338,11 @@ namespace DataAccessLogic
 
         public void ModifyStockTable(int storenumber, int productnumber, int quantity)
         {
+            LineItems test = new LineItems();
 
             _context.Stocks.Update
-            (
-                new Entity.Stock()
-                {
-                    StoreId = storenumber,
-                    ProductId = productnumber,
-                    InStock = quantity
-
-                }
+            (test
+             
             );
 
             //This method will save the changes made to the database
@@ -458,7 +354,7 @@ namespace DataAccessLogic
             //searchs the essentially Line Items table and takes all the rows where the customer id is equal to the received obj number
             var searchresult = from compl in _context.OrderHistories
                                where compl.CustomerId == objId
-                               select new { compl.Order, compl.Product, compl.Store };
+                               select new { compl.Order_obj, compl.Product_obj, compl.Store_obj };
 
 
             //Mapping the Queryable<Entity.Orders> into a list<Model.Orders>
@@ -471,21 +367,21 @@ namespace DataAccessLogic
 
                 test.ProductEstablish = new Model.Products()
                 {
-                    Price = row.Product.Price,
-                    Name = row.Product.Name,
-                    Id = row.Product.ProductId,
-                    Description = row.Product.Description,
-                    Category = row.Product.Category
+                    //Price = row.Product.Price,
+                    //Name = row.Product.Name,
+                    //Id = row.Product.ProductId,
+                    //Description = row.Product.Description,
+                    //Category = row.Product.Category
 
                 };
-                mine.Id = row.Order.OrderId;
-                mine.TotalPrice = row.Order.Total;
+                //mine.Id = row.Order.OrderId;
+                //mine.TotalPrice = row.Order.Total;
                 mine.ItemsList.Add(test);
                 mine.Location = new Model.StoreFront()
                 {
-                    Name = row.Store.StoreName,
-                    Address = row.Store.Location,
-                    Id = row.Store.StoreId
+                    //Name = row.Store.StoreName,
+                    //Address = row.Store.Location,
+                    //Id = row.Store.StoreId
                 };
 
                 listofItems.Add(mine);
@@ -499,7 +395,7 @@ namespace DataAccessLogic
         {
             var result = from compl in _context.OrderHistories
                          where compl.StoreId == objId
-                         select new { compl.Order, compl.Product, compl.Store };
+                         select new { compl.Order_obj, compl.Product_obj, compl.Store_obj };
 
 
             //Mapping the Queryable<Entity.Order> into a list<Model.Orders>
@@ -512,21 +408,21 @@ namespace DataAccessLogic
 
                 test.ProductEstablish = new Model.Products()
                 {
-                    Price = rev.Product.Price,
-                    Name = rev.Product.Name,
-                    Id = rev.Product.ProductId,
-                    Description = rev.Product.Description,
-                    Category = rev.Product.Category
+                    //Price = rev.Product.Price,
+                    //Name = rev.Product.Name,
+                    //Id = rev.Product.ProductId,
+                    //Description = rev.Product.Description,
+                    //Category = rev.Product.Category
 
                 };
-                mine.Id = rev.Order.OrderId;
-                mine.TotalPrice = rev.Order.Total;
+                //mine.Id = rev.Order.OrderId;
+                //mine.TotalPrice = rev.Order.Total;
                 mine.ItemsList.Add(test);
                 mine.Location = new Model.StoreFront()
                 {
-                    Name = rev.Store.StoreName,
-                    Address = rev.Store.Location,
-                    Id = rev.Store.StoreId
+                    //Name = rev.Store.StoreName,
+                    //Address = rev.Store.Location,
+                    //Id = rev.Store.StoreId
                 };
 
                 listofItems.Add(mine);

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace DataAccessLogic.Entities
+namespace Models
 {
-    public partial class OrderHistory
+    public class OrderLines
     {
         public int ReferenceId { get; set; }
         public int OrderId { get; set; }
@@ -14,9 +15,9 @@ namespace DataAccessLogic.Entities
         public int ProductId { get; set; }
         public int LineQuantity { get; set; }
 
-        public virtual Customer Customer { get; set; }
-        public virtual OrdersRecord Order { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual StoreFront Store { get; set; }
+        public  Customer Customer_obj { get; set; }
+        public  Orders Order_obj { get; set; }
+        public  Products Product_obj { get; set; }
+        public  StoreFront Store_obj { get; set; }
     }
 }

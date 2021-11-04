@@ -50,6 +50,9 @@ namespace Models
             return $"Id: {Id}\tStore Name : {_name}\tAddress: {_address}";
         }
 
+        public List<OrderLines> orderline_ { get; set; }
+       
+
 
     }
 }
