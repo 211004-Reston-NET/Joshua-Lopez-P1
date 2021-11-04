@@ -1,0 +1,96 @@
+[
+  {
+    "PurchaseList": [
+      {
+        "ProductEstablish": {
+          "Name": "Chicken",
+          "Price": 2.5
+        },
+        "Quantity": 43
+      },
+      {
+        "ProductEstablish": {
+          "Name": "Mash",
+          "Price": 1.25
+        },
+        "Quantity": 40
+      }
+    ],
+    "Location": {
+      "Name": "Church",
+      "Address": "Mayaguez",
+      "EstablishOrders": [],
+      "Stock": [
+        {
+          "ProductEstablish": {
+            "Name": "Soda bottles",
+            "Price": 1.59
+          },
+          "Quantity": 17
+        },
+        {
+          "ProductEstablish": {
+            "Name": "Chicken",
+            "Price": 2.5
+          },
+          "Quantity": 48
+        },
+        {
+          "ProductEstablish": {
+            "Name": "Mash",
+            "Price": 1.25
+          },
+          "Quantity": 48
+        }
+      ]
+    },
+    "TotalPrice": 22.5
+  },
+  {
+    "PurchaseList": [
+      {
+        "ProductEstablish": {
+          "Name": "Soda bottles",
+          "Price": 1.59
+        },
+        "Quantity": 16
+      },
+      {
+        "ProductEstablish": {
+          "Name": "Chicken",
+          "Price": 2.5
+        },
+        "Quantity": 40
+      }
+    ],
+    "Location": {
+      "Name": "Church",
+      "Address": "Mayaguez",
+      "EstablishOrders": [],
+      "Stock": [
+        {
+          "ProductEstablish": {
+            "Name": "Soda bottles",
+            "Price": 1.59
+          },
+          "Quantity": 17
+        },
+        {
+          "ProductEstablish": {
+            "Name": "Chicken",
+            "Price": 2.5
+          },
+          "Quantity": 43
+        },
+        {
+          "ProductEstablish": {
+            "Name": "Mash",
+            "Price": 1.25
+          },
+          "Quantity": 40
+        }
+      ]
+    },
+    "TotalPrice": 9.09
+  }
+]
