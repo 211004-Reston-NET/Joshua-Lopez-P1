@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLogic.Migrations
 {
     [DbContext(typeof(P0DatabaseContext))]
-    [Migration("20211104200034_testMigration2")]
-    partial class testMigration2
+    [Migration("20211105190751_testMigration4")]
+    partial class testMigration4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,18 +36,27 @@ namespace DataAccessLogic.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Contact")
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<decimal>("Currency")
+                    b.Property<decimal>("CurrentCurrency")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
                         .HasDefaultValueSql("((0.00))");
 
-                    b.Property<string>("CustomerName")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
@@ -59,20 +68,11 @@ namespace DataAccessLogic.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
-
-                    b.Property<int>("_age")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -92,9 +92,6 @@ namespace DataAccessLogic.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ProductID");
 
-                    b.Property<int?>("OrdersId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ProductEstablishId")
                         .HasColumnType("int");
 
@@ -103,8 +100,6 @@ namespace DataAccessLogic.Migrations
 
                     b.HasKey("StoreID", "ProductID")
                         .HasName("PK__Stock__F0C23C8FFE8CD921");
-
-                    b.HasIndex("OrdersId");
 
                     b.HasIndex("ProductEstablishId");
 
@@ -156,7 +151,7 @@ namespace DataAccessLogic.Migrations
 
             modelBuilder.Entity("Models.Orders", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -165,24 +160,19 @@ namespace DataAccessLogic.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CustomerID");
 
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StoreFrontId")
+                    b.Property<int>("StoreId")
                         .HasColumnType("int")
                         .HasColumnName("StoreID");
 
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<decimal>("Total")
                         .HasColumnType("money");
 
-                    b.HasKey("Id")
+                    b.HasKey("OrderId")
                         .HasName("PK__OrdersRe__C3905BCF362EFFB7");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("StoreFrontId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("OrdersRecords");
                 });
@@ -231,13 +221,13 @@ namespace DataAccessLogic.Migrations
                         .HasColumnName("StoreID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("StoreName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
@@ -251,10 +241,6 @@ namespace DataAccessLogic.Migrations
 
             modelBuilder.Entity("Models.LineItems", b =>
                 {
-                    b.HasOne("Models.Orders", null)
-                        .WithMany("ItemsList")
-                        .HasForeignKey("OrdersId");
-
                     b.HasOne("Models.Products", "ProductEstablish")
                         .WithMany()
                         .HasForeignKey("ProductEstablishId");
@@ -266,7 +252,7 @@ namespace DataAccessLogic.Migrations
                         .IsRequired();
 
                     b.HasOne("Models.StoreFront", "Store_obj")
-                        .WithMany("Stock")
+                        .WithMany("Stocks")
                         .HasForeignKey("StoreID")
                         .HasConstraintName("FK__Stock__StoreID__10566F31")
                         .IsRequired();
@@ -287,7 +273,7 @@ namespace DataAccessLogic.Migrations
                         .IsRequired();
 
                     b.HasOne("Models.Orders", "Order_obj")
-                        .WithMany("orderline_")
+                        .WithMany("OrderHistories")
                         .HasForeignKey("OrderId")
                         .HasConstraintName("FK__OrderHist__Order__19DFD96B")
                         .IsRequired();
@@ -321,19 +307,13 @@ namespace DataAccessLogic.Migrations
                         .HasConstraintName("FK__OrdersRec__Custo__160F4887")
                         .IsRequired();
 
-                    b.HasOne("Models.StoreFront", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("Models.StoreFront", "Store_obj")
-                        .WithMany("EstablishOrders")
-                        .HasForeignKey("StoreFrontId")
+                        .WithMany("OrdersRecords")
+                        .HasForeignKey("StoreId")
                         .HasConstraintName("FK__OrdersRec__Store__17036CC0")
                         .IsRequired();
 
                     b.Navigation("Customer_obj");
-
-                    b.Navigation("Location");
 
                     b.Navigation("Store_obj");
                 });
@@ -347,9 +327,7 @@ namespace DataAccessLogic.Migrations
 
             modelBuilder.Entity("Models.Orders", b =>
                 {
-                    b.Navigation("ItemsList");
-
-                    b.Navigation("orderline_");
+                    b.Navigation("OrderHistories");
                 });
 
             modelBuilder.Entity("Models.Products", b =>
@@ -361,11 +339,11 @@ namespace DataAccessLogic.Migrations
 
             modelBuilder.Entity("Models.StoreFront", b =>
                 {
-                    b.Navigation("EstablishOrders");
-
                     b.Navigation("orderline_");
 
-                    b.Navigation("Stock");
+                    b.Navigation("OrdersRecords");
+
+                    b.Navigation("Stocks");
                 });
 #pragma warning restore 612, 618
         }

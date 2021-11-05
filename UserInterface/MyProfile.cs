@@ -21,7 +21,7 @@ namespace UserInterface
             
             Console.WriteLine("\n##################################################################################\n");
             Console.WriteLine("\tEditing current user");
-            Console.WriteLine("\tName - " + client.FirstName);
+            Console.WriteLine("\tName - " + client.Name);
             Console.WriteLine("\tAddress - " + client.Address);
             Console.WriteLine("\tContact - " + client.Email);
             Console.WriteLine("\tusername - " + client.UserName);
@@ -95,7 +95,7 @@ namespace UserInterface
                     
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Name");
-                    client.FirstName = Console.ReadLine();
+                    client.Name = Console.ReadLine();
                     return MenuType.MyProfile;
                 case "2":
                     
@@ -149,14 +149,14 @@ namespace UserInterface
                     foreach (Orders history in SingletonUser.currentuser.MyOrders)
                     {
                         Console.WriteLine("====================");
-                        Console.WriteLine("\tOrder Id number: " + history.Id);
-                        Console.WriteLine("\tBought from the store: " + history.Location.Name + " located in " + history.Location.Address);
+                        Console.WriteLine("\tOrder Id number: " + history.OrderId);
+                        Console.WriteLine("\tBought from the store: " + history.Store_obj.StoreName + " located in " + history.Store_obj.Location);
                         Console.WriteLine("\tPurchase the following:");
                         foreach (LineItems s in history.ItemsList)
                         {
                             Console.WriteLine("\t" + s.ProductEstablish.Name);
                         }
-                        Console.WriteLine("\tTotal cost of order was: " + history.TotalPrice);
+                        Console.WriteLine("\tTotal cost of order was: " + history.Total);
                         Console.WriteLine("====================");
                     }
                     Console.WriteLine("\tpress enter to continue");

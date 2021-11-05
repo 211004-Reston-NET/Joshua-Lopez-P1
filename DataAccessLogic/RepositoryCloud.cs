@@ -117,7 +117,7 @@ namespace DataAccessLogic
             //Where method will give the actual element itself based on some condition
             //ToList method will convert into List that our method currently needs to return.
             //ToLower will lowercase the string to make it not case sensitive
-            listofstores = listofstores.Where(store => store.Name.ToLower().Contains(name.ToLower())).ToList();
+            listofstores = listofstores.Where(store => store.StoreName.ToLower().Contains(name.ToLower())).ToList();
             if (listofstores.Count < 1)
             {
                 throw new Exception("Store Not found");
@@ -149,7 +149,7 @@ namespace DataAccessLogic
         }
 
 
-        public Orders AddOrdersDL(Orders parameterobj, StoreFront store, Customer client)
+        public Orders AddOrdersDL(Orders parameterobj)
         {
             _context.OrdersRecords.Add
             (
@@ -329,10 +329,10 @@ namespace DataAccessLogic
 
             List<Model.Orders> test = new List<Model.Orders>();
             test = GetAllOrdersDL();//sent all of the ordrs from the db into this list obj
-            IEnumerable<Orders> query = test.OrderBy(x => x.Id);//inorder to use the last method we made an Inumerable list
+            IEnumerable<Orders> query = test.OrderBy(x => x.OrderId);//inorder to use the last method we made an Inumerable list
             //it had to be sorted first in order for this to function
             Models.Orders temp = query.Last();//looked for the last object in the last and gave it these values.
-            obj.Id = temp.Id;//set the received orders information and set it with the last id.
+            obj.OrderId = temp.OrderId;//set the received orders information and set it with the last id.
             return obj;
         }
 
@@ -375,9 +375,9 @@ namespace DataAccessLogic
 
                 };
                 //mine.Id = row.Order.OrderId;
-                //mine.TotalPrice = row.Order.Total;
-                mine.ItemsList.Add(test);
-                mine.Location = new Model.StoreFront()
+                ////mine.TotalPrice = row.Order.Total;
+                //mine.ItemsList.Add(test);
+                //mine.Location = new Model.StoreFront()
                 {
                     //Name = row.Store.StoreName,
                     //Address = row.Store.Location,
@@ -417,8 +417,8 @@ namespace DataAccessLogic
                 };
                 //mine.Id = rev.Order.OrderId;
                 //mine.TotalPrice = rev.Order.Total;
-                mine.ItemsList.Add(test);
-                mine.Location = new Model.StoreFront()
+                //mine.ItemsList.Add(test);
+                //mine.Location = new Model.StoreFront()
                 {
                     //Name = rev.Store.StoreName,
                     //Address = rev.Store.Location,

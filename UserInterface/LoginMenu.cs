@@ -14,6 +14,13 @@ namespace UserInterface
 
         public void Menu()
         {
+            List<Orders> test = parameterInter.GetAllOrdersBL();
+            for(int i=0;i<test.Count;i++)
+            {
+                Console.WriteLine("Spot "+i +" is " +test[i].CustomerId);
+            }
+
+            Console.WriteLine(test[1].CustomerId);
             
             Console.WriteLine("##################################################################################\n");
             if (SingletonUser.currentuser == null)
@@ -75,7 +82,7 @@ namespace UserInterface
                             SingletonUser.currentuser = parameterInter.GetCustomer(name, pass);
                             
                             Console.WriteLine("************************************************\n");
-                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.FirstName + "\t press enter to continue\n");
+                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.Name + "\t press enter to continue\n");
                             Console.WriteLine("************************************************\n");
                             Console.ReadLine();
                         }
@@ -133,7 +140,7 @@ namespace UserInterface
                             SingletonUser.currentuser = parameterInter.GetCustomer(name, pass);
                             
                             Console.WriteLine("************************************************\n");
-                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.FirstName + "\t press enter to continue\n");
+                            Console.WriteLine("\tWelcome Back " + SingletonUser.currentuser.Name + "\t press enter to continue\n");
                             Console.WriteLine("************************************************\n");
                             Console.ReadLine();
                         }

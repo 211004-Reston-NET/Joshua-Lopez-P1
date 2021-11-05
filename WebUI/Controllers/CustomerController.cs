@@ -30,6 +30,21 @@ namespace WebUI.Controllers
             );
         }
 
+         public ActionResult Index2()
+        {
+            //We got our list of restaurant from our business layer
+            //We converted that Model restaurant into RestaurantVM using Select method
+            //Finally we changed it to a List with ToList()
+            // return View(iObj.GetAllStoreFrontsBL()
+            //             .Select(rest => new StoreFrontVM(rest))
+            //             .ToList()
+            // );
+            return View(iObj.GetAllOrdersBL()
+                        .Select(rest => new OrdersVM(rest))
+                        .ToList());
+
+        }
+
         // GET: RestaurantController/Details/5
         public ActionResult Details(int id)
         {

@@ -11,9 +11,9 @@ namespace WebUI.Models
         public CustomerVM(Customer client)
         {
             this.Id = client.Id;
-            this.Name = client.FirstName;
+            this.Name = client.Name;
             this.Address=client.Address;
-            this.Contact=client.Address;
+            this.Contact=client.Email;
             this.UserName=client.UserName;
             this.Password=client.Password;
             this.Age=client.Age;

@@ -35,7 +35,7 @@ namespace Models
 
         //in the JSON file the information would be entered in the way the constructors are for each property
         //property that uses the field name
-        public string FirstName
+        public string Name
         {
             get { return _name; }
             set { _name = value; }

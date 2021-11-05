@@ -57,7 +57,7 @@ namespace DataAccessLogic
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.FirstName)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -84,7 +84,7 @@ namespace DataAccessLogic
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
-            entity.Property(e => e.LineQuantity).HasColumnName("line_quantity");
+                entity.Property(e => e.LineQuantity).HasColumnName("line_quantity");
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
@@ -97,7 +97,7 @@ namespace DataAccessLogic
                     .HasConstraintName("FK__OrderHist__Custo__1AD3FDA4");
 
                 entity.HasOne(d => d.Order_obj)
-                    .WithMany(p => p.orderline_)
+                    .WithMany(p => p.OrderHistories)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderHist__Order__19DFD96B");
@@ -117,14 +117,14 @@ namespace DataAccessLogic
 
             modelBuilder.Entity<Orders>(entity =>
             {
-                entity.HasKey(e => e.Id)
+                entity.HasKey(e => e.OrderId)
                     .HasName("PK__OrdersRe__C3905BCF362EFFB7");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
-                entity.Property(e => e.StoreFrontId).HasColumnName("StoreID");
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
-                entity.Property(e => e.TotalPrice).HasColumnType("money");
+                entity.Property(e => e.Total).HasColumnType("money");
 
                 entity.HasOne(d => d.Customer_obj)
                     .WithMany(p => p.MyOrders)
@@ -133,8 +133,8 @@ namespace DataAccessLogic
                     .HasConstraintName("FK__OrdersRec__Custo__160F4887");
 
                 entity.HasOne(d => d.Store_obj)
-                    .WithMany(p => p.EstablishOrders)
-                    .HasForeignKey(d => d.StoreFrontId)
+                    .WithMany(p => p.OrdersRecords)
+                    .HasForeignKey(d => d.StoreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrdersRec__Store__17036CC0");
             });
@@ -165,7 +165,7 @@ namespace DataAccessLogic
 
             modelBuilder.Entity<LineItems>(entity =>
             {
-                entity.HasKey(e => new { e.StoreID, e.ProductID})
+                entity.HasKey(e => new { e.StoreID, e.ProductID })
                     .HasName("PK__Stock__F0C23C8FFE8CD921");
 
                 entity.ToTable("Stock");
@@ -181,7 +181,7 @@ namespace DataAccessLogic
                     .HasConstraintName("FK__Stock__ProductID__114A936A");
 
                 entity.HasOne(d => d.Store_obj)
-                    .WithMany(p => p.Stock)
+                    .WithMany(p => p.Stocks)
                     .HasForeignKey(d => d.StoreID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Stock__StoreID__10566F31");
@@ -196,12 +196,12 @@ namespace DataAccessLogic
 
                 entity.Property(e => e.Id).HasColumnName("StoreID");
 
-                entity.Property(e => e.Address)
+                entity.Property(e => e.Location)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.StoreName)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);

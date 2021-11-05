@@ -23,7 +23,7 @@ namespace UserInterface
             Console.WriteLine("Adding a new Account");
             Console.WriteLine("---------------------------------------------------------------------\n");
             
-            Console.WriteLine("Name - " + client.FirstName);
+            Console.WriteLine("Name - " + client.Name);
             Console.WriteLine("Address - " + client.Address);
             Console.WriteLine("Contact - " + client.Email);
             Console.WriteLine("username - " + client.UserName);
@@ -84,7 +84,7 @@ namespace UserInterface
                 case "1":
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Name");
-                    client.FirstName = Console.ReadLine();
+                    client.Name = Console.ReadLine();
 
                     return MenuType.AddCustomers;
                 case "2":

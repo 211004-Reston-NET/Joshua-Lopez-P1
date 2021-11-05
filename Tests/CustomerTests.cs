@@ -17,10 +17,10 @@ namespace Tests
             Customer tester = new Customer();
             string _name = "TestName";
             //Act
-            tester.FirstName = _name;
+            tester.Name = _name;
             //Assert
-            Assert.NotNull(tester.FirstName);
-            Assert.Equal(tester.FirstName, _name);
+            Assert.NotNull(tester.Name);
+            Assert.Equal(tester.Name, _name);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Tests
             //Arrange
             Customer tester = new Customer();
             Orders item=new Orders();
-            item.TotalPrice=Convert.ToDecimal(10.2);
+            item.Total=Convert.ToDecimal(10.2);
 
             //Act
             tester.MyOrders.Add(item);

@@ -39,7 +39,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="p_rest">This is the product we are adding</param>
         /// <returns>It returns the product customer</returns>     
-        Orders AddOrdersBL(Orders parameterobj, StoreFront store, Customer client);
+        Orders AddOrdersBL(Orders parameterobj);
 
 
 
@@ -190,6 +190,10 @@ namespace BusinessLogic
         /// <param name="objId"></param>
         /// <returns>a list of all orders related to the received id</returns>
         List<Orders> GetStoreOrderHistory(int objId);
+
+        List<Orders> GetAllOrdersBL();
+
+        
 
     }
 }

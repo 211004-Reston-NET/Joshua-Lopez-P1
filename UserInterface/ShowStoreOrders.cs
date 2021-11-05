@@ -52,14 +52,14 @@ namespace UserInterface
                     foreach (Orders rest in listOfStoreOrders)
                     {
                         Console.WriteLine("====================");
-                        Console.WriteLine("Order Id number: " + rest.Id);
-                        Console.WriteLine("Bought from the store: " + rest.Location.Name + " located in " + rest.Location.Address);
+                        Console.WriteLine("Order Id number: " + rest.OrderId);
+                        Console.WriteLine("Bought from the store: " + rest.Store_obj.StoreName + " located in " + rest.Store_obj.Location);
                         Console.WriteLine("Purchase the following:");
                         foreach (LineItems s in rest.ItemsList)
                         {
                             Console.WriteLine(s.ProductEstablish.Name);
                         }
-                        Console.WriteLine("Total cost of order was: " + rest.TotalPrice);
+                        Console.WriteLine("Total cost of order was: " + rest.Total);
                         Console.WriteLine("====================");
                     }
                 }
