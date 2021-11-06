@@ -16,10 +16,10 @@ namespace UserInterface
         {
             
             Console.WriteLine("##################################################################################\n");
-            Console.WriteLine("\tWelcome to the " + SingletonUser.currentstore.Name + " products menu");
+            Console.WriteLine("\tWelcome to the " + SingletonUser.currentstore.StoreName + " products menu");
             Console.WriteLine("\tBelow is a list of products");
             Console.WriteLine("---------------------------------------------------------------------\n");
-            Console.WriteLine("\tList of Products in " + SingletonUser.currentstore.Name);
+            Console.WriteLine("\tList of Products in " + SingletonUser.currentstore.StoreName);
             StoreFront test = parameterInter.GetStoreByID(SingletonUser.currentstore.Id);
             
             foreach (LineItems rest in parameterInter.GetInventory(SingletonUser.currentstore.Id))

@@ -90,7 +90,6 @@ namespace Tests
             //Act
             tester.Quantity = amount;
             //Assert
-            Assert.NotNull(tester.Quantity);
             Assert.Equal(tester.Quantity, amount);
         }
 

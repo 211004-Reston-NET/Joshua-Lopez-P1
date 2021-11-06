@@ -43,9 +43,9 @@ namespace BusinessLogic
         }
 
      
-        public Orders AddOrdersBL(Orders parameterObj,StoreFront store, Customer client)
+        public Orders AddOrdersBL(Orders parameterObj)
         {
-            return _repo.AddOrdersDL(parameterObj,store,client);
+            return _repo.AddOrdersDL(parameterObj);
         }
 
         
@@ -168,5 +168,7 @@ namespace BusinessLogic
         {
             return _repo.GetStoreOrderHistory(objId);
         }
+
+       
     }
 }

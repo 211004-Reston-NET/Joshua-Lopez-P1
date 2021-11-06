@@ -20,8 +20,8 @@ namespace UserInterface
             
             Console.WriteLine("\n##################################################################################\n");
             Console.WriteLine("\tAdding a new Store Front");
-            Console.WriteLine("\tName of store- " + store.Name);
-            Console.WriteLine("\tAddress of store - " + store.Address);
+            Console.WriteLine("\tName of store- " + store.StoreName);
+            Console.WriteLine("\tAddress of store - " + store.Location);
             Console.WriteLine("\n##################################################################################\n");
             
             Console.WriteLine("\t[4] - Add StoreFront");
@@ -66,12 +66,12 @@ namespace UserInterface
                 case "3":
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Name");
-                    store.Name = Console.ReadLine();
+                    store.StoreName = Console.ReadLine();
                     return MenuType.AddStore;
                 case "2":
                     Console.WriteLine("\n##################################################################################\n");
                     Console.WriteLine("\tType in the value for the Address");
-                    store.Address = Console.ReadLine();
+                    store.Location = Console.ReadLine();
                     return MenuType.AddStore;
 
 

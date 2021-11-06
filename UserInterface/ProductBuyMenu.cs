@@ -22,12 +22,12 @@ namespace UserInterface
         public void Menu()
         {
             
-            _details.Location = SingletonUser.currentstore;
+            _details.Store_obj = SingletonUser.currentstore;
             Console.WriteLine("##################################################################################\n");
-            Console.WriteLine("\tWelcome to the " + SingletonUser.currentstore.Name + " products menu");
+            Console.WriteLine("\tWelcome to the " + SingletonUser.currentstore.StoreName + " products menu");
             Console.WriteLine("\tBelow is a list of products");
             Console.WriteLine("---------------------------------------------------------------------\n");
-            Console.WriteLine("\nList of Products in " + SingletonUser.currentstore.Name);
+            Console.WriteLine("\nList of Products in " + SingletonUser.currentstore.StoreName);
             StoreFront test = parameterInter.GetStoreByID(SingletonUser.currentstore.Id);
             
             foreach (LineItems rest in parameterInter.GetInventory(SingletonUser.currentstore.Id))
@@ -51,7 +51,7 @@ namespace UserInterface
                 Console.WriteLine(x);
 
             }
-            Console.WriteLine("\tTotal of cart is $" + _details.TotalPrice);
+            Console.WriteLine("\tTotal of cart is $" + _details.Total);
             
             Console.WriteLine("\nCurrent Balance in wallet: $" + SingletonUser.currentuser.CurrentCurrency);
             Console.WriteLine("\n##################################################################################\n");
@@ -138,7 +138,7 @@ namespace UserInterface
                                     {
 
                                         tempdb.Add(_lines);
-                                        _details.TotalPrice = 0;
+                                        _details.Total = 0;
                                         _details.ItemsList.Clear();
                                     }
                                 }
@@ -241,7 +241,7 @@ namespace UserInterface
 
                                     tempdb.RemoveAll(x => x.ProductEstablish.Name == _lines.ProductEstablish.Name);
                                     _details.ItemsList.RemoveAll(x => x.ProductEstablish.Name == _lines.ProductEstablish.Name);
-                                    _details.TotalPrice = 0;
+                                    _details.Total = 0;
 
                                 }
                                 loop = false;
@@ -330,7 +330,7 @@ namespace UserInterface
                             Console.ReadLine();
                             _details.ItemsList.Clear();
                             tempdb.Clear();
-                            _details.TotalPrice = 0;
+                            _details.Total = 0;
                             return MenuType.ProductBuyMenu;
                         }
                         // selectedamount = Convert.ToInt32(Console.ReadLine());
@@ -350,7 +350,7 @@ namespace UserInterface
 
                     }
                     total = decimal.Round(total, 2, MidpointRounding.AwayFromZero);
-                    _details.TotalPrice = total;
+                    _details.Total = total;
                     Console.WriteLine("\tTotal of cart is $" + total);
                     List<LineItems> values = _details.ItemsList;
                     for (int i = 0; i < _details.ItemsList.Count; i++)
@@ -381,25 +381,25 @@ namespace UserInterface
                     confirmation = Console.ReadLine();
                     if (confirmation == "yes" || confirmation == "Yes" || confirmation == "YES")
                     {
-                        if (_details.TotalPrice == 0)
+                        if (_details.Total == 0)
                         {
                             Console.WriteLine("\tError there is nothing in your cart, you must calculate the price before ordering");
                             Console.WriteLine("\tthe page and order will be reset. press enter to continue");
                             Console.ReadLine();
                             _details.ItemsList.Clear();
                             tempdb.Clear();
-                            _details.TotalPrice = 0;
+                            _details.Total = 0;
                             return MenuType.ProductBuyMenu;
 
                         }
-                        else if ((SingletonUser.currentuser.CurrentCurrency - _details.TotalPrice) >= 0)
+                        else if ((SingletonUser.currentuser.CurrentCurrency - _details.Total) >= 0)
                         {
-                            SingletonUser.currentuser.CurrentCurrency = SingletonUser.currentuser.CurrentCurrency - _details.TotalPrice;
+                            SingletonUser.currentuser.CurrentCurrency = SingletonUser.currentuser.CurrentCurrency - _details.Total;
                             parameterInter.ModifyCustomerRecord(SingletonUser.currentuser);
 
                             Orders Test = new Orders();
 
-                            parameterInter.AddOrdersBL(_details, SingletonUser.currentstore, SingletonUser.currentuser);
+                            // parameterInter.AddOrdersBL(_details, SingletonUser.currentstore, SingletonUser.currentuser);
                             Test = parameterInter.GetOrderByID(Test);
                             List<LineItems> valuesfinal = _details.ItemsList;
                             for (int i = 0; i < _details.ItemsList.Count; i++)
@@ -414,23 +414,23 @@ namespace UserInterface
                             }
                             foreach (LineItems s in _details.ItemsList)
                             {
-                                parameterInter.InsertHistory(SingletonUser.currentstore.Id, s.ProductEstablish.Id, Test.Id, SingletonUser.currentuser.Id, s.Quantity);
+                                parameterInter.InsertHistory(SingletonUser.currentstore.Id, s.ProductEstablish.Id, Test.OrderId, SingletonUser.currentuser.Id, s.Quantity);
 
                             }
 
 
                             Console.WriteLine("\nReceite:");
-                            Console.WriteLine("\tStore: " + _details.Location.Name + "\n\t Address: " + _details.Location.Address);
+                            Console.WriteLine("\tStore: " + _details.Store_obj.StoreName + "\n\t Address: " + _details.Store_obj.Location);
                             foreach (string s in cartResult)
                             {
                                 Console.WriteLine(s);
                             }
 
-                            Console.WriteLine("\tTotal cost $" + _details.TotalPrice);
+                            Console.WriteLine("\tTotal cost $" + _details.Total);
                             Console.WriteLine("\n##################################################################################\n");
                             _details.ItemsList.Clear();
                             tempdb.Clear();
-                            _details.TotalPrice = 0;
+                            _details.Total = 0;
                             Console.ReadLine();
                             return MenuType.ProductBuyMenu;
                         }
@@ -440,7 +440,7 @@ namespace UserInterface
                             Console.WriteLine("\t You will need to modify your cart by selecting the option.\tPress enter to continue");
                             Console.ReadLine();
                             _details.ItemsList.Clear();
-                            _details.TotalPrice = 0;
+                            _details.Total = 0;
                             return MenuType.ProductBuyMenu;
 
                         }
@@ -449,7 +449,7 @@ namespace UserInterface
                     {
                         _details.ItemsList.Clear();
                         tempdb.Clear();
-                        _details.TotalPrice = 0;
+                        _details.Total = 0;
                         Console.WriteLine("\tOrder has been canceled because you did not enter yes press enter to continue");
                         Console.ReadLine();
                         return MenuType.ProductBuyMenu;
@@ -459,13 +459,13 @@ namespace UserInterface
                 case "1":
                     tempdb.Clear();
                     _details.ItemsList.Clear();
-                    _details.TotalPrice = 0;
+                    _details.Total = 0;
 
                     return MenuType.ProductDisplayMenu;
                 case "0":
                     tempdb.Clear();
                     _details.ItemsList.Clear();
-                    _details.TotalPrice = 0;
+                    _details.Total = 0;
                     return MenuType.MainMenu;
                 default:
                     Console.WriteLine("Please input a valid response!");

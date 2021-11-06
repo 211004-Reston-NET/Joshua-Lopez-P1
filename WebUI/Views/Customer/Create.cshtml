@@ -1,0 +1,67 @@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model WebUI.Models.CustomerVM
+
+<h1 class="display-4">Create Restaurant</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input asp-for="Name" type="text" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label">Address</label>
+        <input asp-for="Address" type="text" class="form-control">
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Contact" class="form-label">Contact</label>
+        <input asp-for="Contact" type="Email" class="form-control">
+        <span asp-validation-for="Contact" class="text-danger"></span>
+    </div>
+
+        <div class="mb-3">
+        <label asp-for="Age" class="form-label">Age</label>
+        <input asp-for="Age" type="Number" step=1 class="form-control">
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+
+        <div class="mb-3">
+        <label asp-for="UserName" class="form-label">UserName</label>
+        <input asp-for="UserName" type="Text" class="form-control">
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+        <div class="mb-3">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" type="Password" class="form-control">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+        <div class="mb-3">
+        <label asp-for="Position" class="form-label">Position</label>
+        <input asp-for="Position" type="Text" class="form-control">
+        <span asp-validation-for="Position" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Currency" class="form-label">Currency</label>
+        <input asp-for="Currency" type="Number" step=0.01 class="form-control">
+        <span asp-validation-for="Currency" class="text-danger"></span>
+    </div>
+
+    
+
+
+
+    <button type="submit" class="btn btn-primary" value="Create">Submit</button>
+</form>

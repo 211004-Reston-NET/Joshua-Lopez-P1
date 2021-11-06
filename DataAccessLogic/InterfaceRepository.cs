@@ -37,7 +37,7 @@ namespace DataAccessLogic
         /// </summary>
         /// <param name="p_rest">This is the store front we will be adding to the database</param>
         /// <returns>It will just return the store front we are adding</returns>
-        Orders AddOrdersDL(Orders parameterobj, StoreFront store, Customer client);
+        Orders AddOrdersDL(Orders parameterobj);
 
         /// <summary>
         /// This will return a list of orders stored in the database

@@ -54,7 +54,6 @@ namespace Tests
             //Act
             tester.Price = _price;
             //Assert
-            Assert.NotNull(tester.Price);
             Assert.Equal(tester.Price, _price);
         }
 

@@ -101,7 +101,7 @@ namespace Tests
             //Arrange
             Customer tester = new Customer();
             Orders item=new Orders();
-            item.TotalPrice=Convert.ToDecimal(10.2);
+            item.Total=Convert.ToDecimal(10.2);
 
             //Act
             tester.MyOrders.Add(item);
