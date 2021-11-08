@@ -1,0 +1,39 @@
+@model WebUI.Models.ProductsVM
+
+<h1 class="display-4">Create Product</h1>
+
+<form asp-action="CreateProduct">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input asp-for="Name" type="text" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+       <div class="mb-3">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input asp-for="Price" type="Number" step=0.01 class="form-control">
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <input asp-for="Description" type="text" class="form-control">
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+      <div class="mb-3">
+        <label asp-for="Category" class="form-label">Category</label>
+        <input asp-for="Category" type="text" class="form-control">
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+
+
+
+
+
+
+
+    <button type="submit" class="btn btn-primary" value="CreateProduct">Submit</button>
+</form>

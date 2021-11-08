@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Models;
-using Model = Models;
 
 namespace DataAccessLogic
 {
@@ -14,7 +13,7 @@ namespace DataAccessLogic
             _context = p_context;
         }
 
-        public Model.Customer AddCustomersDL(Model.Customer parameterobj)
+        public Customer AddCustomersDL(Customer parameterobj)
         {
             //adds to the database (_context) into table Customers
             //a new customer of type Customer (db version) with the received information
@@ -28,7 +27,7 @@ namespace DataAccessLogic
 
             return parameterobj;
         }
-        public List<Model.Customer> GetAllCustomersDL()
+        public List<Customer> GetAllCustomersDL()
         {
             // this method makes a list Test of customers
             //from the db table
@@ -37,13 +36,13 @@ namespace DataAccessLogic
             //add to list at the end to create it as a list after each created customer
             //essentially we are selecting all in this method because we created a new customer
             //_context .customers represents the table with all the rows 
-            List<Model.Customer> test = _context.Customers.ToList();
+            List<Customer> test = _context.Customers.ToList();
             return test;
         }
-        public Model.Customer GetCustomerDL(string username, string password)
+        public Customer GetCustomerDL(string username, string password)
         {
-            Model.Customer obj = new Model.Customer();
-            List<Model.Customer> listOfStores = GetAllCustomersDL();
+            Customer obj = new Customer();
+            List<Customer> listOfStores = GetAllCustomersDL();
             bool result = VerifyCredentials(username, password);//method returns true or false based on entered information
             if (result == false)
             {
@@ -55,9 +54,9 @@ namespace DataAccessLogic
 
             return obj;
         }
-        public Models.Customer ModifyCustomerRecordDL(Models.Customer currentSelection)
+        public Customer ModifyCustomerRecordDL(Customer currentSelection)
         {
-            Models.Customer test = GetCustomerDL(currentSelection.UserName, currentSelection.Password);
+            Customer test = GetCustomerDL(currentSelection.UserName, currentSelection.Password);
 
             //Here we go to the database customers table
             //creates a new customer but with the purpose of using the received information
@@ -77,10 +76,10 @@ namespace DataAccessLogic
         public bool VerifyCredentials(string name, string password)
         {
             //gets all customers and makes a list that c# understands
-            List<Model.Customer> listOfCustomers = GetAllCustomersDL();
+            List<Customer> listOfCustomers = GetAllCustomersDL();
             bool result = true;
             //created customer object and looks for the first match of the username and Id
-            Model.Customer obj = listOfCustomers.FirstOrDefault(client => client.UserName == name && client.Password == password);
+            Customer obj = listOfCustomers.FirstOrDefault(client => client.UserName == name && client.Password == password);
             if (obj == null)
             {
                 result = false;
@@ -92,7 +91,7 @@ namespace DataAccessLogic
 
 
 
-        public Model.StoreFront AddStoreFrontDL(Model.StoreFront parameterobj)
+        public StoreFront AddStoreFrontDL(StoreFront parameterobj)
         {
             _context.StoreFronts.Add
            (
@@ -109,9 +108,9 @@ namespace DataAccessLogic
 
 
 
-        public List<Model.StoreFront> SearchStoresDL(string name)
+        public List<StoreFront> SearchStoresDL(string name)
         {
-            List<Model.StoreFront> listofstores = GetAllStoreFrontDL();
+            List<StoreFront> listofstores = GetAllStoreFrontDL();
 
             //Select method will give a list of boolean if the condition was true/false
             //Where method will give the actual element itself based on some condition
@@ -125,16 +124,16 @@ namespace DataAccessLogic
 
             return listofstores;
         }
-        public List<Model.StoreFront> GetAllStoreFrontDL()
+        public List<StoreFront> GetAllStoreFrontDL()
         {
-            List<Model.StoreFront> test = _context.StoreFronts.ToList();
+            List<StoreFront> test = _context.StoreFronts.ToList();
             return test;
         }
 
-        public Model.LineItems VerifyStockDL(int productnum, Model.StoreFront chosen)
+        public LineItems VerifyStockDL(int productnum, StoreFront chosen)
         {
-            Model.LineItems obj = new LineItems();
-            List<Model.LineItems> listofline = new List<Model.LineItems>();
+            LineItems obj = new LineItems();
+            List<LineItems> listofline = new List<LineItems>();
             //Gets all information in the Stock table related to the received store id 
             listofline = GetInventory(chosen.Id);
             //checks the now filled list of the stores if the store contains a line item with the received product number
@@ -184,9 +183,9 @@ namespace DataAccessLogic
             return test;
         }
 
-        public List<Models.Products> GetAllProductsDL()
+        public List<Products> GetAllProductsDL()
         {
-            List<Models.Products> test = _context.Products.ToList();
+            List<Products> test = _context.Products.ToList();
             return test;
         }
 
@@ -218,14 +217,14 @@ namespace DataAccessLogic
         }
         public Products GetProduct(int obj)
         {
-            Models.Products test = new Models.Products();
+            Products test = new Products();
             bool result = VerifyProduct(obj);
             if (result == false)
             {
                 throw new Exception("Product Was not found with entered ID number");
             }
             else
-            { //finds the product in the db and then we fill out our Model.Product with that found information
+            { //finds the product in the db and then we fill out our Product with that found information
                 Products looking = _context.Products.Find(obj);
                 test.Name = looking.Name;
                 test.Id = looking.Id;
@@ -249,23 +248,25 @@ namespace DataAccessLogic
                          select new { compl.Product_obj, compl.Quantity };
 
 
-            //Mapping the Queryable<Entity.Stock> into a list<Model.LineItem>
-            List<Model.LineItems> listofItems = new List<Model.LineItems>();
+            //Mapping the Queryable<Entity.Stock> into a list<LineItem>
+            List<LineItems> listofItems = new List<LineItems>();
 
             foreach (var row in result)
             {
                 LineItems test = new LineItems();
                 //mapping /creating a new models product with the current info of the query
-                test.ProductEstablish = new Model.Products()
+                test.ProductEstablish = new Products()
                 {
-                    //Price = row.Product.Price,
-                    //Name = row.Product.Name,
-                    //Id = row.Product.ProductId,
-                    //Description = row.Product.Description,
-                    //Category = row.Product.Category
+                    Price = row.Product_obj.Price,
+                    Name = row.Product_obj.Name,
+                    Id = row.Product_obj.Id,
+                    Description = row.Product_obj.Description,
+                    Category = row.Product_obj.Category
 
                 };
-                //test.Quantity = row.InStock;
+                test.StoreID=obj;
+                test.ProductID=row.Product_obj.Id;
+                test.Quantity = row.Quantity;
 
                 //adding to the list after establishing all values a line item needed
                 listofItems.Add(test);
@@ -276,7 +277,6 @@ namespace DataAccessLogic
 
         public StoreFront GetStoreByID(int number)
         {
-            Models.StoreFront test = new Models.StoreFront();
             //first calls the verify store id method to see if it is in the database
             bool result = VerifyStorebyID(number);
             if (result == false)
@@ -288,10 +288,7 @@ namespace DataAccessLogic
                 //if it reached then the store id is in the db so we create a new obj of Storefront db table type
                 //then match all the information needed to be a Model storefront
                 StoreFront looking = _context.StoreFronts.Find(number);
-                //test.Name = looking.StoreName;
-                //test.Id = looking.StoreId;
-                //test.Address = looking.Location;
-                return test;
+                return looking;
             }
 
         }
@@ -327,11 +324,11 @@ namespace DataAccessLogic
         {
             //method used to receive the last created id from the orders table and return that value
 
-            List<Model.Orders> test = new List<Model.Orders>();
+            List<Orders> test = new List<Orders>();
             test = GetAllOrdersDL();//sent all of the ordrs from the db into this list obj
             IEnumerable<Orders> query = test.OrderBy(x => x.OrderId);//inorder to use the last method we made an Inumerable list
             //it had to be sorted first in order for this to function
-            Models.Orders temp = query.Last();//looked for the last object in the last and gave it these values.
+            Orders temp = query.Last();//looked for the last object in the last and gave it these values.
             obj.OrderId = temp.OrderId;//set the received orders information and set it with the last id.
             return obj;
         }
@@ -357,32 +354,36 @@ namespace DataAccessLogic
                                select new { compl.Order_obj, compl.Product_obj, compl.Store_obj };
 
 
-            //Mapping the Queryable<Entity.Orders> into a list<Model.Orders>
-            List<Model.Orders> listofItems = new List<Model.Orders>();
+            //Mapping the Queryable<Entity.Orders> into a list<Orders>
+            List<Orders> listofItems = new List<Orders>();
 
             foreach (var row in searchresult)
             {
                 LineItems test = new LineItems();
-                Model.Orders mine = new Orders();
+                Orders mine = new Orders();
 
-                test.ProductEstablish = new Model.Products()
+                test.ProductEstablish = new Products()
                 {
-                    //Price = row.Product.Price,
-                    //Name = row.Product.Name,
-                    //Id = row.Product.ProductId,
-                    //Description = row.Product.Description,
-                    //Category = row.Product.Category
+                    Price = row.Product_obj.Price,
+                    Name = row.Product_obj.Name,
+                    Id = row.Product_obj.Id,
+                    Description = row.Product_obj.Description,
+                    Category = row.Product_obj.Category
 
                 };
-                //mine.Id = row.Order.OrderId;
-                ////mine.TotalPrice = row.Order.Total;
-                //mine.ItemsList.Add(test);
-                //mine.Location = new Model.StoreFront()
-                {
-                    //Name = row.Store.StoreName,
-                    //Address = row.Store.Location,
-                    //Id = row.Store.StoreId
-                };
+                // mine.OrderId = row.Order_obj.OrderId;
+                // mine.Total = row.Order_obj.Total;
+                // mine.ItemsList.Add(test);
+                // mine.Store_obj = new StoreFront()
+                // {
+                //     StoreName = row.Store_obj.StoreName,
+                //     Location = row.Store_obj.Location,
+                //     Id = row.Store_obj.Id
+                // };
+                mine.CustomerId=objId;
+                mine.StoreId=row.Store_obj.Id;
+                mine.Total=row.Order_obj.Total;
+                mine.ItemsList.Add(test);
 
                 listofItems.Add(mine);
             }
@@ -398,15 +399,15 @@ namespace DataAccessLogic
                          select new { compl.Order_obj, compl.Product_obj, compl.Store_obj };
 
 
-            //Mapping the Queryable<Entity.Order> into a list<Model.Orders>
-            List<Model.Orders> listofItems = new List<Model.Orders>();
+            //Mapping the Queryable<Entity.Order> into a list<Orders>
+            List<Orders> listofItems = new List<Orders>();
 
             foreach (var rev in result)
             {
                 LineItems test = new LineItems();
-                Model.Orders mine = new Orders();
+                Orders mine = new Orders();
 
-                test.ProductEstablish = new Model.Products()
+                test.ProductEstablish = new Products()
                 {
                     //Price = rev.Product.Price,
                     //Name = rev.Product.Name,
@@ -418,7 +419,7 @@ namespace DataAccessLogic
                 //mine.Id = rev.Order.OrderId;
                 //mine.TotalPrice = rev.Order.Total;
                 //mine.ItemsList.Add(test);
-                //mine.Location = new Model.StoreFront()
+                //mine.Location = new StoreFront()
                 {
                     //Name = rev.Store.StoreName,
                     //Address = rev.Store.Location,

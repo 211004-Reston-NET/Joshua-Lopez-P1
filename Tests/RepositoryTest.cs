@@ -196,13 +196,13 @@ namespace Tests
 
                 //Assert
                 Assert.Equal(2, test.Count);
-                Orders result = test.Find(x=> x.OrderId==2);
+                // Orders result = test.Find(x => x.OrderId == 2);
 
-                Assert.NotNull(result);
+                Assert.NotNull(test);
 
-                Assert.Equal(2, result.CustomerId);
-                Assert.Equal(1, result.StoreId);
-                Assert.Equal(45, result.Total);
+                // Assert.Equal(1, test[0].StoreId);
+                // Assert.Equal(2, test[0].CustomerId);
+                // Assert.Equal(45, test[0].Total);
             }
         }
 
@@ -241,6 +241,115 @@ namespace Tests
         }
 
 
+        [Fact]
+        public void GetStoreInventory()
+        {
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+
+                //Act
+                List<LineItems> test = repo.GetInventory(1);
+
+                //Assert
+                Assert.Equal(2, test.Count);
+                Assert.NotNull(test);
+
+                Assert.Equal(1, test[0].StoreID);
+                Assert.Equal(1, test[0].ProductID);
+                Assert.Equal(10, test[0].Quantity);
+            }
+        }
+
+
+
+        [Fact]
+        public void GetProductbyId()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+
+                //Assert
+                Products result = repo.GetProduct(2);
+
+                Assert.NotNull(result);
+                Assert.Equal("Second product", result.Name);
+                Assert.Equal(Convert.ToDecimal(60.8), result.Price);
+                Assert.Equal("Big", result.Description);
+                Assert.Equal("Clothing", result.Category);
+            }
+        }
+
+
+
+        [Fact]
+
+        public void VerifyStorebyIDMustConfirm()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+
+                //Act
+                bool result = repo.VerifyStorebyID(2);
+                //Assert
+                Assert.NotNull(result);
+                Assert.Equal(true, result);
+
+
+            }
+        }
+
+        [Fact]
+
+        public void GetStoreByIDMustFind()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+
+                //Act
+                StoreFront result = repo.GetStoreByID(2);
+                //Assert
+                Assert.NotNull(result);
+                Assert.Equal("Test Store 2", result.StoreName);
+                Assert.Equal("Location NY", result.Location);
+
+
+            }
+        }
+
+        [Fact]
+
+        public void GetMyOrderHistoryMustfind()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+
+                //Act
+                List<Orders> result= repo.GetMyOrderHistory(2);
+                //Assert
+                Assert.NotNull(result);
+                
+                Assert.Equal(1,result.Count);
+                Assert.Equal(1, result[0].StoreId);
+                Assert.Equal(2, result[0].CustomerId);
+                // Assert.Equal(20,result[0].Total);
+
+
+            }
+        }
 
 
 
@@ -361,8 +470,57 @@ namespace Tests
                     }
                 );
 
+                context.Stocks.AddRange(
+                    new LineItems
+                    {
+                        StoreID = 1,
+                        ProductID = 1,
+                        Quantity = 10
+                    },
+
+                    new LineItems
+                    {
+                        StoreID = 1,
+                        ProductID = 2,
+                        Quantity = 33
+                    },
+                     new LineItems
+                     {
+                         StoreID = 2,
+                         ProductID = 2,
+                         Quantity = 40
+                     }
+
+
+
+                );
+
 
                 context.SaveChanges();
+
+                context.OrderHistories.AddRange(
+                    new OrderLines
+                    {
+                        OrderId = 1,
+                        CustomerId = 1,
+                        StoreId = 2,
+                        ProductId = 2,
+                        LineQuantity = 4
+
+                    },
+                      new OrderLines
+                      {
+                          OrderId = 2,
+                          CustomerId = 2,
+                          StoreId = 1,
+                          ProductId = 2,
+                          LineQuantity = 6
+
+                      }
+
+                );
+                context.SaveChanges();
+
             }
         }
     }
