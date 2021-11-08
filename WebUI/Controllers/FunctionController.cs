@@ -21,7 +21,7 @@ namespace WebUI.Controllers
 
         // GET: RestaurantController
         public ActionResult Index()
-        
+
         {
             ViewBag.testname = testing.Name;
             return View();
@@ -189,41 +189,81 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
+            if (ModelState.IsValid)
+            {
 
-            //This if statement will check if the current model that is being passed through is valid
-            //If not, the asp-validation-for attribute elements will appear and autofill in the proper feedback for the user 
-            //to correct themselves
-            string s1 = UserName;//
-            string s2 = Password;//
 
-            Customer test = new Customer();
-            test = iObj.GetCustomer(s1,s2);
-            testing.Id = test.Id;
-            testing.Name = test.Name;
-            testing.Address = test.Address;
-            testing.Contact = test.Email;
-            ViewBag.testname = testing.Name;
+                string s1 = UserName;//
+                string s2 = Password;//
 
-            // iObj.AddCustomersBL(new Customer()
-            // {
-            //     Name = restVM.Name,
-            //     Address = restVM.Address,
-            //     Email = restVM.Contact,
-            //     UserName = restVM.UserName,
-            //     Password=restVM.Password,
-            //     Age=restVM.Age,
-            //     Category=restVM.Position,
-            //     CurrentCurrency=restVM.Currency
-            // });
+                Customer test = new Customer();
+                test = iObj.GetCustomer(s1, s2);
+                testing.Id = test.Id;
+                testing.Name = test.Name;
+                testing.Address = test.Address;
+                testing.Contact = test.Email;
+                testing.UserName = test.UserName;
+                testing.Password = test.Password;
+                testing.Age = test.Age;
+                testing.Position = test.Category;
+                testing.Currency = test.CurrentCurrency;
+
+                ViewBag.testname = testing.Name;
+
+
+                return RedirectToAction(nameof(Index));
+            }
 
 
 
             //Will return back to the create view if the user didn't specify the right input
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
 
 
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+                ViewBag.Id = testing.Id;
+                ViewBag.Name = testing.Name;
+                ViewBag.Address = testing.Address;
+                ViewBag.Contact = testing.Contact;
+                ViewBag.UserName = testing.UserName;
+                ViewBag.Password = testing.Password;
+                ViewBag.Age = testing.Age;
+                ViewBag.Position = testing.Position;
+                ViewBag.Currency = testing.Currency;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MyProfile(CustomerVM restVM)
+        {
+            //This if statement will check if the current model that is being passed through is valid
+            //If not, the asp-validation-for attribute elements will appear and autofill in the proper feedback for the user 
+            //to correct themselves
+            if (ModelState.IsValid)
+            {
+                iObj.ModifyCustomerRecord(new Customer()
+                {
+                    Id = testing.Id,
+                    Name = restVM.Name,
+                    Address = restVM.Address,
+                    Email = restVM.Contact,
+                    UserName = restVM.UserName,
+                    Password = restVM.Password,
+                    Age = restVM.Age,
+                    Category = restVM.Position,
+                    CurrentCurrency = restVM.Currency
+                });
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            //Will return back to the create view if the user didn't specify the right input
+            return View();
+        }
 
 
         // GET: RestaurantController/Details/5

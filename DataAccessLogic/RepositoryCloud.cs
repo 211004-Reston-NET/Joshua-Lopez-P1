@@ -56,15 +56,13 @@ namespace DataAccessLogic
         }
         public Customer ModifyCustomerRecordDL(Customer currentSelection)
         {
-            Customer test = GetCustomerDL(currentSelection.UserName, currentSelection.Password);
+            
 
             //Here we go to the database customers table
             //creates a new customer but with the purpose of using the received information
             //creates the customer using the received info and then matches the id to avoid any errors
 
-            _context.Customers.Update
-            (test
-            );
+            _context.Customers.Update(currentSelection);
 
             //This method will save the changes made to the database
             _context.SaveChanges();

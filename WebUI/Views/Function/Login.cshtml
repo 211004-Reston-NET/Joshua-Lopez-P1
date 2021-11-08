@@ -1,9 +1,22 @@
 
-@ViewBag.testname
+
 
 <form asp-action="Login">
-     <input type="text" name="Username" id="Username" />
-   <input type="Password" name="Password" id="Password" />
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label  class="form-label">UserName</label>
+        <input name="Username" id="Username" type="Text" class="form-control">
+        <span name="Username" id="Username" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input name="Password" id="Password" type="Password" class="form-control">
+        <span name="Password" id="Password" class="text-danger"></span>
+    </div>
+
+@* <input type="text" name="Username" id="Username" />
+   <input type="Password" name="Password" id="Password" /> *@
 
         
 
