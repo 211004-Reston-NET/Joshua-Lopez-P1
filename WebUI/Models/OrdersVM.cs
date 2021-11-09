@@ -16,7 +16,15 @@ namespace WebUI.Models
             this.CustomerId = facility.CustomerId;
             this.StoreFrontId=facility.StoreId;
             this.TotalPrice=facility.Total;
-           
+            //idk how this worked
+            foreach(LineItems x in facility.ItemsList)
+            {
+                this.ItemId=x.ProductEstablish.Id;
+                this.ItemName=x.ProductEstablish.Name;
+                this.Quantity=x.Quantity;
+
+            }
+            
         }
         public int Id { get; set; }
         [Required]
@@ -25,6 +33,9 @@ namespace WebUI.Models
         public int StoreFrontId { get; set; }
         [Required]
         public decimal TotalPrice {get;set;}
+        public string  ItemName {get;set;}
+        public int Quantity{get;set;}
+        public int ItemId{get;set;}
         
         
 

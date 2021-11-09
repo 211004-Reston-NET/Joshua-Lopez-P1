@@ -349,7 +349,7 @@ namespace DataAccessLogic
             //searchs the essentially Line Items table and takes all the rows where the customer id is equal to the received obj number
             var searchresult = from compl in _context.OrderHistories
                                where compl.CustomerId == objId
-                               select new { compl.Order_obj, compl.Product_obj, compl.Store_obj };
+                               select new { compl.Order_obj, compl.Product_obj, compl.Store_obj,compl.LineQuantity };
 
 
             //Mapping the Queryable<Entity.Orders> into a list<Orders>
@@ -381,6 +381,8 @@ namespace DataAccessLogic
                 mine.CustomerId=objId;
                 mine.StoreId=row.Store_obj.Id;
                 mine.Total=row.Order_obj.Total;
+                mine.OrderId=row.Order_obj.OrderId;
+                test.Quantity=row.LineQuantity;
                 mine.ItemsList.Add(test);
 
                 listofItems.Add(mine);
@@ -430,5 +432,7 @@ namespace DataAccessLogic
 
             return listofItems;
         }
+
+        
     }
 }

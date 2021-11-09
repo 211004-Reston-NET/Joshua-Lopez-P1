@@ -222,23 +222,57 @@ namespace WebUI.Controllers
 
 
 
-        [HttpGet]
-        public IActionResult MyProfile()
+        public ActionResult MyProfile()
         {
-                ViewBag.Id = testing.Id;
-                ViewBag.Name = testing.Name;
-                ViewBag.Address = testing.Address;
-                ViewBag.Contact = testing.Contact;
-                ViewBag.UserName = testing.UserName;
-                ViewBag.Password = testing.Password;
-                ViewBag.Age = testing.Age;
-                ViewBag.Position = testing.Position;
-                ViewBag.Currency = testing.Currency;
+            ViewBag.Id = testing.Id;
+            ViewBag.Name = testing.Name;
+            ViewBag.Address = testing.Address;
+            ViewBag.Contact = testing.Contact;
+            ViewBag.UserName = testing.UserName;
+            ViewBag.Password = testing.Password;
+            ViewBag.Age = testing.Age;
+            ViewBag.Position = testing.Position;
+            ViewBag.Currency = testing.Currency;
+            return View(iObj.GetMyOrderHistory(testing.Id)
+                        .Select(rest => new OrdersVM(rest))
+                        .ToList()
+            );
+
+
+        }
+
+
+        public void SetCurrentCustomer(CustomerVM user)
+        {
+            // testing.Id = testing.Id;
+            testing.Name = user.Name;
+            testing.Address = user.Address;
+            testing.Contact = user.Contact;
+            testing.UserName = user.UserName;
+            testing.Password = user.Password;
+            testing.Age = user.Age;
+            testing.Position = user.Position;
+            testing.Currency = user.Currency;
+
+        }
+
+        [HttpGet]
+        public IActionResult EditMyProfile()
+        {
+            ViewBag.Id = testing.Id;
+            ViewBag.Name = testing.Name;
+            ViewBag.Address = testing.Address;
+            ViewBag.Contact = testing.Contact;
+            ViewBag.UserName = testing.UserName;
+            ViewBag.Password = testing.Password;
+            ViewBag.Age = testing.Age;
+            ViewBag.Position = testing.Position;
+            ViewBag.Currency = testing.Currency;
             return View();
         }
 
         [HttpPost]
-        public IActionResult MyProfile(CustomerVM restVM)
+        public IActionResult EditMyProfile(CustomerVM restVM)
         {
             //This if statement will check if the current model that is being passed through is valid
             //If not, the asp-validation-for attribute elements will appear and autofill in the proper feedback for the user 
@@ -264,40 +298,6 @@ namespace WebUI.Controllers
 
             //Will return back to the create view if the user didn't specify the right input
             return View();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public void SetCurrentCustomer(CustomerVM user)
-        {
-            // testing.Id = testing.Id;
-                testing.Name = user.Name;
-                testing.Address = user.Address;
-                testing.Contact = user.Contact;
-                testing.UserName = user.UserName;
-                testing.Password = user.Password;
-                testing.Age = user.Age;
-                testing.Position = user.Position;
-                testing.Currency = user.Currency;
-
         }
 
 
