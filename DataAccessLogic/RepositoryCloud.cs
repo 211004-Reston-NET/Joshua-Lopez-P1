@@ -334,11 +334,17 @@ namespace DataAccessLogic
         public void ModifyStockTable(int storenumber, int productnumber, int quantity)
         {
             LineItems test = new LineItems();
+            test.Quantity = quantity;
+            test.ProductID = productnumber;
+            test.StoreID = storenumber;
+
 
             _context.Stocks.Update
-            (test
-             
-            );
+            (
+               test
+
+
+            ); 
 
             //This method will save the changes made to the database
             _context.SaveChanges();

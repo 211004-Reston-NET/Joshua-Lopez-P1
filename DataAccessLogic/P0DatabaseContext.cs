@@ -173,6 +173,7 @@ namespace DataAccessLogic
                 entity.Property(e => e.StoreID).HasColumnName("StoreID");
 
                 entity.Property(e => e.ProductID).HasColumnName("ProductID");
+                entity.Property(e => e.Quantity).HasColumnName("InStock");
 
                 entity.HasOne(d => d.Product_obj)
                     .WithMany(p => p.Stocks)

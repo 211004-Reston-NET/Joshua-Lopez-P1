@@ -351,6 +351,35 @@ namespace Tests
             }
         }
 
+ [Fact]
+        public void ModifyStock()
+        {
+            //First using block will add a Orderst
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+                LineItems test=new LineItems();
+                test.StoreID=2;
+                test.ProductID=2;
+                test.Quantity=99;
+
+                //Act
+                repo.ModifyStockTable(test.StoreID,test.ProductID,test.Quantity);
+            }
+
+            //Second using block will find that Customer and see if it is similar to what we added
+            //Assert
+            using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
+            {
+                InterfaceRepository repo = new RespositoryCloud(contexts);
+                List<LineItems> result=repo.GetInventory(2);
+
+
+                Assert.NotNull(result);
+                Assert.Equal(99, result[0].Quantity);
+            }
+        }
 
 
 
