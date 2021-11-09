@@ -65,7 +65,7 @@ namespace Tests
            public void DescriptionShouldBeSet()
         {
             //Arrange
-           Products tester = new Products();
+            Products tester = new Products();
             string _description = "Test Description";
             //Act
             tester.Description = _description;

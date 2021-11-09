@@ -1,37 +1,14 @@
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
-
+    ViewData["Title"] = "Home Page";
 }
 
-@* This tells you that this view will expect to retrieve a list of RestaurantVM *@
-@model IEnumerable<WebUI.Models.CustomerVM>
-
-
-<a class="btn btn-primary text-white" asp-controller="Customer" asp-action="Create">Add Restaurant</a>
-<br/> <!-- This br tag will space between elements -->
-<br />
-<h1>List of Customers</h1>
-
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Contact</th>
-        <th>Age</th>
-        <th>UserName</th>
-        <th>Currency</th>
-    </tr>
-    @foreach(CustomerVM item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Address)</td>
-            <td>@Html.DisplayFor(modelItem => item.Contact)</td>
-            <td>@Html.DisplayFor(modelItem => item.Age)</td>
-            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-            <td>@Html.DisplayFor(modelItem => item.Currency)</td>
-        </tr>
-    }
-</table>
+<div class="text-center">
+    <h1>Welcome @ViewBag.testname</h1>
+    <h6>This is the smallest heading you can have</h6>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+    <p></p>
+     <a asp-controller="Customer" asp-action="MyProfile">Click here myprofile</a>
+    <p></p>
+    
+</div>

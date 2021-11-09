@@ -10,28 +10,28 @@ namespace Tests
         ///Verifies the entered name will set the name value 
         /// </summary>
         [Fact]
-       
-           public void NameShouldSet()
+
+        public void NameShouldSet()
         {
             //Arrange
             LineItems tester = new LineItems();
-            Products test=new Products();
+            Products test = new Products();
             string _name = "TestName";
             //Act
-            test.Name=_name;
+            test.Name = _name;
             tester.ProductEstablish = test;
             //Assert
             Assert.NotNull(tester.ProductEstablish);
             Assert.Equal(tester.ProductEstablish, test);
         }
 
-        
+
 
         // /// <summary>
         // ///Verifies the entered contact will set the contact value 
         // /// </summary>
         // [Fact]
-       
+
         //    public void CategoryShouldBeSet()
         // {
         //     //Arrange
@@ -64,7 +64,7 @@ namespace Tests
         // ///Verifies the entered contact will set the contact value 
         // /// </summary>
         // [Fact]
-       
+
         //    public void DescriptionShouldBeSet()
         // {
         //     //Arrange
@@ -81,11 +81,11 @@ namespace Tests
         ///Verifies the entered contact will set the contact value 
         /// </summary>
         [Fact]
-       
-           public void QuantityShouldBeSet()
+
+        public void QuantityShouldBeSet()
         {
             //Arrange
-           LineItems tester = new LineItems();
+            LineItems tester = new LineItems();
             int amount = 5;
             //Act
             tester.Quantity = amount;
@@ -94,6 +94,6 @@ namespace Tests
         }
 
 
-        
+
     }
 }
