@@ -1,0 +1,47 @@
+@model WebUI.Models.ProductsVM
+
+<h1 class="display-4">Edit My Profile</h1>
+
+<div>
+    <dl>
+        <dt>
+            Store Id:
+            <span class="col-sm-10" style="font-weight: normal;">@ViewBag.Store</span>
+        </dt>
+        <dt>
+            Id:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Id)</span>
+        </dt>
+        <dt>
+            Name:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Name)</span>
+        </dt>
+        <dt>
+            City:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Description)</span>
+        </dt>
+        <dt>
+            State:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Category)</span>
+        </dt>
+   
+        <!--We need a form to do a post request-->
+        <form asp-action="EditStock">
+            <!--
+                This input element is hidden because we don't want the user to input some id instead we are just supplying the id w
+                Already have
+            -->
+            <div class="mb-3">
+
+        <label  class="form-label">Age</label>
+        <input  type="Number" step=1 class="form-control" name="p_quantity"value=@ViewBag.Amount >
+        
+        <span  class="text-danger"></span>
+    </div>
+    <input type ="hidden"  name="p_id"value =@ViewBag.Product>
+    <input type ="hidden"  name ="p_sid"value=@ViewBag.Store>
+
+            <input type ="submit" value="EditStock" class="btn btn-danger"/>
+        </form>
+    </dl>
+</div>

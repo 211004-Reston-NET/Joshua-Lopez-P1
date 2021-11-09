@@ -12,7 +12,7 @@ namespace WebUI.Controllers
 {
     public class FunctionController : Controller
     {
-        static CustomerVM testing = new CustomerVM();
+        //static CustomerVM testing = new CustomerVM();
         private InterfaceBL iObj;
         public FunctionController(InterfaceBL p_Inter)
         {
@@ -23,7 +23,7 @@ namespace WebUI.Controllers
         public ActionResult Index()
 
         {
-            ViewBag.testname = testing.Name;
+            ViewBag.testname = SingletonVM.currentuser.Name;
             return View();
         }
 
@@ -54,7 +54,7 @@ namespace WebUI.Controllers
                         .ToList());
 
         }
-        public ActionResult AllStores()
+        public ActionResult AllStores(int p_sid)
         {
             //We got our list of restaurant from our business layer
             //We converted that Model restaurant into RestaurantVM using Select method
@@ -198,17 +198,19 @@ namespace WebUI.Controllers
 
                 Customer test = new Customer();
                 test = iObj.GetCustomer(s1, s2);
-                testing.Id = test.Id;
-                testing.Name = test.Name;
-                testing.Address = test.Address;
-                testing.Contact = test.Email;
-                testing.UserName = test.UserName;
-                testing.Password = test.Password;
-                testing.Age = test.Age;
-                testing.Position = test.Category;
-                testing.Currency = test.CurrentCurrency;
+                CustomerVM x = new CustomerVM();
+                x.Id = test.Id;
+                x.Name = test.Name;
+                x.Address = test.Address;
+                x.Contact = test.Email;
+                x.UserName = test.UserName;
+                x.Password = test.Password;
+                x.Age = test.Age;
+                x.Position = test.Category;
+                x.Currency = test.CurrentCurrency;
+                SingletonVM.currentuser = x;
 
-                ViewBag.testname = testing.Name;
+                ViewBag.testname = SingletonVM.currentuser.Name;
 
 
                 return RedirectToAction(nameof(Index));
@@ -224,16 +226,16 @@ namespace WebUI.Controllers
 
         public ActionResult MyProfile()
         {
-            ViewBag.Id = testing.Id;
-            ViewBag.Name = testing.Name;
-            ViewBag.Address = testing.Address;
-            ViewBag.Contact = testing.Contact;
-            ViewBag.UserName = testing.UserName;
-            ViewBag.Password = testing.Password;
-            ViewBag.Age = testing.Age;
-            ViewBag.Position = testing.Position;
-            ViewBag.Currency = testing.Currency;
-            return View(iObj.GetMyOrderHistory(testing.Id)
+            ViewBag.Id = SingletonVM.currentuser.Id;
+            ViewBag.Name = SingletonVM.currentuser.Name;
+            ViewBag.Address = SingletonVM.currentuser.Address;
+            ViewBag.Contact = SingletonVM.currentuser.Contact;
+            ViewBag.UserName = SingletonVM.currentuser.UserName;
+            ViewBag.Password = SingletonVM.currentuser.Password;
+            ViewBag.Age = SingletonVM.currentuser.Age;
+            ViewBag.Position = SingletonVM.currentuser.Position;
+            ViewBag.Currency = SingletonVM.currentuser.Currency;
+            return View(iObj.GetMyOrderHistory(SingletonVM.currentuser.Id)
                         .Select(rest => new OrdersVM(rest))
                         .ToList()
             );
@@ -245,29 +247,29 @@ namespace WebUI.Controllers
         public void SetCurrentCustomer(CustomerVM user)
         {
             // testing.Id = testing.Id;
-            testing.Name = user.Name;
-            testing.Address = user.Address;
-            testing.Contact = user.Contact;
-            testing.UserName = user.UserName;
-            testing.Password = user.Password;
-            testing.Age = user.Age;
-            testing.Position = user.Position;
-            testing.Currency = user.Currency;
+            SingletonVM.currentuser.Name = user.Name;
+            SingletonVM.currentuser.Address = user.Address;
+            SingletonVM.currentuser.Contact = user.Contact;
+            SingletonVM.currentuser.UserName = user.UserName;
+            SingletonVM.currentuser.Password = user.Password;
+            SingletonVM.currentuser.Age = user.Age;
+            SingletonVM.currentuser.Position = user.Position;
+            SingletonVM.currentuser.Currency = user.Currency;
 
         }
 
         [HttpGet]
         public IActionResult EditMyProfile()
         {
-            ViewBag.Id = testing.Id;
-            ViewBag.Name = testing.Name;
-            ViewBag.Address = testing.Address;
-            ViewBag.Contact = testing.Contact;
-            ViewBag.UserName = testing.UserName;
-            ViewBag.Password = testing.Password;
-            ViewBag.Age = testing.Age;
-            ViewBag.Position = testing.Position;
-            ViewBag.Currency = testing.Currency;
+            ViewBag.Id = SingletonVM.currentuser.Id;
+            ViewBag.Name = SingletonVM.currentuser.Name;
+            ViewBag.Address = SingletonVM.currentuser.Address;
+            ViewBag.Contact = SingletonVM.currentuser.Contact;
+            ViewBag.UserName = SingletonVM.currentuser.UserName;
+            ViewBag.Password = SingletonVM.currentuser.Password;
+            ViewBag.Age = SingletonVM.currentuser.Age;
+            ViewBag.Position = SingletonVM.currentuser.Position;
+            ViewBag.Currency = SingletonVM.currentuser.Currency;
             return View();
         }
 
@@ -281,7 +283,7 @@ namespace WebUI.Controllers
             {
                 iObj.ModifyCustomerRecord(new Customer()
                 {
-                    Id = testing.Id,
+                    Id = SingletonVM.currentuser.Id,
                     Name = restVM.Name,
                     Address = restVM.Address,
                     Email = restVM.Contact,
@@ -348,5 +350,62 @@ namespace WebUI.Controllers
                 return View();
             }
         }
+
+        public ActionResult StoreItems(int p_id,int p_sid)
+        {
+            //Passing the restaurant to the ReplenishInventory view
+            return View(iObj.GetInventory(p_id)
+                        .Select(rest => new LineItemVM(rest))
+                        .ToList());
+        }
+        // GET: RestaurantController/Delete/5
+        public ActionResult ShowProduct(int p_id,int p_quantity,int p_sid)
+        {
+            ViewBag.Amount=p_quantity.ToString();
+            ViewBag.Store=p_sid;
+            
+            //Passing the restaurant to the ShowProduct view
+            return View(new ProductsVM(iObj.GetProduct(p_id)));
+        }
+
+        [HttpGet]
+        public IActionResult EditStock(int p_id,int p_quantity,int p_sid)
+        {
+            ViewBag.Amount=p_quantity;
+            ViewBag.Store=p_sid;
+            ViewBag.Product=p_id;
+            
+            return View(new ProductsVM(iObj.GetProduct(p_id)));
+        }
+
+
+        // POST: RestaurantController/ShowProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStock(int p_id,int p_quantity,int p_sid, IFormCollection collection)
+        {
+            // int store=p_sid;
+            // int prod=p_sid;
+            // int total=p_quantity;
+           
+                iObj.ModifyStockTable(p_sid,p_id,p_quantity);
+                // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
+                // _restBL.DeleteRestaurant(toBeDeleted);
+                return RedirectToAction(nameof(Index));
+            
+          
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
     }
 }
