@@ -257,12 +257,47 @@ namespace WebUI.Controllers
                     Category = restVM.Position,
                     CurrentCurrency = restVM.Currency
                 });
+                SetCurrentCustomer(restVM);
 
                 return RedirectToAction(nameof(Index));
             }
 
             //Will return back to the create view if the user didn't specify the right input
             return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public void SetCurrentCustomer(CustomerVM user)
+        {
+            // testing.Id = testing.Id;
+                testing.Name = user.Name;
+                testing.Address = user.Address;
+                testing.Contact = user.Contact;
+                testing.UserName = user.UserName;
+                testing.Password = user.Password;
+                testing.Age = user.Age;
+                testing.Position = user.Position;
+                testing.Currency = user.Currency;
+
         }
 
 
