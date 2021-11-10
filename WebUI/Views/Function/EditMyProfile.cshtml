@@ -5,7 +5,7 @@
 <form asp-action="EditMyProfile">
     <div asp-validation-summary="ModelOnly"></div>
     <div class="mb-3">
-        
+
         <label asp-for="Name" class="form-label">Name</label>
         <input asp-for="Name" type="text" class="form-control" value=@ViewBag.Name>
         <span asp-validation-for="Name" class="text-danger"></span>
@@ -20,8 +20,8 @@
 
     <div class="mb-3">
 
-        <label asp-for="Contact" class="form-label">Contact</label> 
-        <input asp-for="Contact" type="Email" class="form-control" value=@ViewBag.Contact >
+        <label asp-for="Contact" class="form-label">Contact</label>
+        <input asp-for="Contact" type="Email" class="form-control" value=@ViewBag.Contact>
         <span asp-validation-for="Contact" class="text-danger"></span>
     </div>
 
@@ -34,14 +34,14 @@
 
 
     <div class="mb-3">
-        
+
         <label asp-for="UserName" class="form-label">UserName</label>
         <input asp-for="UserName" type="Text" class="form-control" value=@ViewBag.UserName>
         <span asp-validation-for="UserName" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        
+
         <label asp-for="Password" class="form-label">Password</label>
         <input asp-for="Password" type="Password" class="form-control" value=@ViewBag.Password>
         <span asp-validation-for="Password" class="text-danger"></span>
@@ -49,8 +49,8 @@
 
     <div class="mb-3">
 
-        <label asp-for="Position" class="form-label">Position</label> 
-        <input asp-for="Position" type="Text" class="form-control" value=@ViewBag.Position >
+        <label asp-for="Position" class="form-label">Position</label>
+        <input asp-for="Position" type="Text" class="form-control" value=@ViewBag.Position>
         <span asp-validation-for="Position" class="text-danger"></span>
     </div>
 
@@ -66,4 +66,6 @@
 
 
     <button type="submit" class="btn btn-primary" value="EditMyProfile">Submit</button>
+    
 </form>
+

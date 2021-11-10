@@ -400,7 +400,7 @@ namespace UserInterface
                             Orders Test = new Orders();
 
                             // parameterInter.AddOrdersBL(_details, SingletonUser.currentstore, SingletonUser.currentuser);
-                            Test = parameterInter.GetOrderByID(Test);
+                            Test = parameterInter.GetOrderID(Test);
                             List<LineItems> valuesfinal = _details.ItemsList;
                             for (int i = 0; i < _details.ItemsList.Count; i++)
                             {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebUI.Controllers
 {
@@ -65,10 +66,10 @@ namespace WebUI.Controllers
                     Address = restVM.Address,
                     Email = restVM.Contact,
                     UserName = restVM.UserName,
-                    Password=restVM.Password,
-                    Age=restVM.Age,
-                    Category=restVM.Position,
-                    CurrentCurrency=restVM.Currency
+                    Password = restVM.Password,
+                    Age = restVM.Age,
+                    Category = restVM.Position,
+                    CurrentCurrency = restVM.Currency
                 });
 
                 return RedirectToAction(nameof(Index));
@@ -125,5 +126,6 @@ namespace WebUI.Controllers
                 return View();
             }
         }
+       
     }
 }

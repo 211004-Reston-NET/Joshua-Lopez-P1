@@ -56,7 +56,7 @@ namespace DataAccessLogic
         }
         public Customer ModifyCustomerRecordDL(Customer currentSelection)
         {
-            
+
 
             //Here we go to the database customers table
             //creates a new customer but with the purpose of using the received information
@@ -172,7 +172,7 @@ namespace DataAccessLogic
             LineItems test = new LineItems();
             _context.Stocks.Add
            (test
-               
+
            );
 
             //This method will save the changes made to the database
@@ -262,8 +262,8 @@ namespace DataAccessLogic
                     Category = row.Product_obj.Category
 
                 };
-                test.StoreID=obj;
-                test.ProductID=row.Product_obj.Id;
+                test.StoreID = obj;
+                test.ProductID = row.Product_obj.Id;
                 test.Quantity = row.Quantity;
 
                 //adding to the list after establishing all values a line item needed
@@ -308,11 +308,14 @@ namespace DataAccessLogic
         public void InsertHistory(int store, int prod, int order, int customer, int quantity)
         {
             OrderLines test = new OrderLines();
+            test.CustomerId = customer;
+            test.LineQuantity = quantity;
+            test.OrderId = order;
+            test.ProductId = prod;
+            test.StoreId = store;
             //essentially representing the line items of an order it is adding it to the db
             _context.OrderHistories.Add
-           (test
-               
-           );
+           (test);
 
             //This method will save the changes made to the database
             _context.SaveChanges();
@@ -327,7 +330,10 @@ namespace DataAccessLogic
             IEnumerable<Orders> query = test.OrderBy(x => x.OrderId);//inorder to use the last method we made an Inumerable list
             //it had to be sorted first in order for this to function
             Orders temp = query.Last();//looked for the last object in the last and gave it these values.
-            obj.OrderId = temp.OrderId;//set the received orders information and set it with the last id.
+            obj.OrderId = temp.OrderId;
+            obj.CustomerId = temp.CustomerId;
+            obj.StoreId = temp.StoreId;
+            obj.Total = temp.Total;//set the received orders information and set it with the last id.
             return obj;
         }
 
@@ -344,7 +350,7 @@ namespace DataAccessLogic
                test
 
 
-            ); 
+            );
 
             //This method will save the changes made to the database
             _context.SaveChanges();
@@ -355,7 +361,7 @@ namespace DataAccessLogic
             //searchs the essentially Line Items table and takes all the rows where the customer id is equal to the received obj number
             var searchresult = from compl in _context.OrderHistories
                                where compl.CustomerId == objId
-                               select new { compl.Order_obj, compl.Product_obj, compl.Store_obj,compl.LineQuantity };
+                               select new { compl.Order_obj, compl.Product_obj, compl.Store_obj, compl.LineQuantity };
 
 
             //Mapping the Queryable<Entity.Orders> into a list<Orders>
@@ -384,11 +390,11 @@ namespace DataAccessLogic
                 //     Location = row.Store_obj.Location,
                 //     Id = row.Store_obj.Id
                 // };
-                mine.CustomerId=objId;
-                mine.StoreId=row.Store_obj.Id;
-                mine.Total=row.Order_obj.Total;
-                mine.OrderId=row.Order_obj.OrderId;
-                test.Quantity=row.LineQuantity;
+                mine.CustomerId = objId;
+                mine.StoreId = row.Store_obj.Id;
+                mine.Total = row.Order_obj.Total;
+                mine.OrderId = row.Order_obj.OrderId;
+                test.Quantity = row.LineQuantity;
                 mine.ItemsList.Add(test);
 
                 listofItems.Add(mine);
@@ -439,6 +445,6 @@ namespace DataAccessLogic
             return listofItems;
         }
 
-        
+
     }
 }

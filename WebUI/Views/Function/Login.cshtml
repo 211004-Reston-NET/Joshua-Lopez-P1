@@ -1,5 +1,13 @@
 
-
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Login</title>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+</head>
 
 <form asp-action="Login">
     <div asp-validation-summary="ModelOnly"></div>
@@ -26,3 +34,11 @@
 
     <button type="submit" class="btn btn-primary" value="Login">Submit</button>
 </form>
+@if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }

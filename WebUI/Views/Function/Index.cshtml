@@ -7,6 +7,14 @@
     <h2>This is Heading 2</h2>
     <h6>This is the smallest heading you can have</h6>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (ViewBag.Classified!="Manager")
+    {
+        <a asp-controller="Function" asp-action="MyProfile">Click here myprofile</a>
+    <p></p>
+    }
+    else
+    {
+
     
 
     <a asp-controller="Function" asp-action="AllCustomers">Click here to go to see all customer in db</a>
@@ -28,6 +36,6 @@
     <a class="btn btn-primary text-white" asp-controller="Function" asp-action="CreateCustomer">Add Customer</a>
     <a class="btn btn-primary text-white" asp-controller="Function" asp-action="CreateStore">Add Store</a>
     <a class="btn btn-primary text-white" asp-controller="Function" asp-action="CreateProduct">Add Product</a>
-    
+    }
 </div>
 
