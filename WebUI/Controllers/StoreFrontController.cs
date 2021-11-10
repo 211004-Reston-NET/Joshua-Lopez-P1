@@ -120,7 +120,9 @@ namespace WebUI.Controllers
             // int store=p_sid;
             // int prod=p_sid;
             // int total=p_quantity;
-           
+           try{
+
+          
                Orders test=new Orders();
                test.StoreId=p_sid;
                test.CustomerId=SingletonVM.currentuser.Id;
@@ -131,13 +133,13 @@ namespace WebUI.Controllers
                 iObj.InsertHistory(p_sid, p_id, test.OrderId, SingletonVM.currentuser.Id, p_quantity);
                 // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
                 // _restBL.DeleteRestaurant(toBeDeleted);
-                return RedirectToAction(nameof(CustomerController.Index));
-           
-        //    catch (System.Exception)
-        //    {
+                return RedirectToAction("Index", "Customer");
+            }
+           catch (System.Exception)
+           {
                
-        //        return View();
-        //    }
+               return View();
+           }
                 
             
           
