@@ -24,6 +24,7 @@ namespace WebUI.Controllers
 
         {
             ViewBag.testname = SingletonVM.currentuser.Name;
+            ViewBag.Classified=SingletonVM.currentuser.Position;
             return View();
         }
 
@@ -94,7 +95,18 @@ namespace WebUI.Controllers
                 string s2 = Password;//
 
                 Customer test = new Customer();
-                test = iObj.GetCustomer(s1, s2);
+                try
+                {
+                     test = iObj.GetCustomer(s1, s2);
+                }
+                catch (System.Exception)
+                {
+                    
+                    ViewBag.Message="Username or password was not found";
+                    return View();
+                }
+                
+
                 CustomerVM x = new CustomerVM();
                 x.Id = test.Id;
                 x.Name = test.Name;
@@ -105,7 +117,7 @@ namespace WebUI.Controllers
                 x.Age = test.Age;
                 x.Position = test.Category;
                 x.Currency = test.CurrentCurrency;
-                SingletonVM.currentuser=x;
+                SingletonVM.currentuser = x;
 
                 ViewBag.testname = SingletonVM.currentuser.Name;
 

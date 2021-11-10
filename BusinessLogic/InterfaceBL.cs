@@ -166,7 +166,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="obj"></param>
         /// <returns>obj.Id</returns>
-        Orders GetOrderByID(Orders obj);
+        Orders GetOrderID(Orders obj);
 
         /// <summary>
         /// This method occurs in replenish inventory and purchasing
@@ -192,6 +192,7 @@ namespace BusinessLogic
         List<Orders> GetStoreOrderHistory(int objId);
 
         List<Orders> GetAllOrdersBL();
+        
 
         
 

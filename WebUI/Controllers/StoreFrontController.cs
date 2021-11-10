@@ -84,6 +84,67 @@ namespace WebUI.Controllers
 
 
 
+
+         public ActionResult ShoppingIndex(int p_sid)
+
+        {
+            return View(iObj.GetAllStoreFrontsBL()
+                        .Select(rest => new StoreFrontVM(rest))
+                        .ToList());
+        }
+        public ActionResult SeeItems(int p_id,int p_sid,double p_total)
+        {
+            //Passing the restaurant to the ReplenishInventory view
+            return View(iObj.GetInventory(p_id)
+                        .Select(rest => new LineItemVM(rest))
+                        .ToList());
+        }
+        [HttpGet]
+        public IActionResult Purchase(int p_id,int p_quantity,int p_sid, double p_total)
+        {
+            ViewBag.Amount=p_quantity;
+            ViewBag.Store=p_sid;
+            ViewBag.Product=p_id;
+            ViewBag.Price=p_total;
+            
+            
+            return View(new ProductsVM(iObj.GetProduct(p_id)));
+        }
+
+
+        // POST: RestaurantController/ShowProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Purchase(int p_id,int p_quantity,int p_sid,double p_total, IFormCollection collection)
+        {
+            // int store=p_sid;
+            // int prod=p_sid;
+            // int total=p_quantity;
+           
+               Orders test=new Orders();
+               test.StoreId=p_sid;
+               test.CustomerId=SingletonVM.currentuser.Id;
+               test.Total=Convert.ToDecimal(p_quantity*p_total);
+
+                iObj.AddOrdersBL(test);
+                test=iObj.GetOrderID(test);
+                iObj.InsertHistory(p_sid, p_id, test.OrderId, SingletonVM.currentuser.Id, p_quantity);
+                // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
+                // _restBL.DeleteRestaurant(toBeDeleted);
+                return RedirectToAction(nameof(CustomerController.Index));
+           
+        //    catch (System.Exception)
+        //    {
+               
+        //        return View();
+        //    }
+                
+            
+          
+        }
+
+
+
         
 
        

@@ -338,11 +338,11 @@ namespace Tests
                 InterfaceRepository repo = new RespositoryCloud(context);
 
                 //Act
-                List<Orders> result= repo.GetMyOrderHistory(2);
+                List<Orders> result = repo.GetMyOrderHistory(2);
                 //Assert
                 Assert.NotNull(result);
-                
-                Assert.Equal(1,result.Count);
+
+                Assert.Equal(1, result.Count);
                 Assert.Equal(1, result[0].StoreId);
                 Assert.Equal(2, result[0].CustomerId);
                 // Assert.Equal(20,result[0].Total);
@@ -351,7 +351,7 @@ namespace Tests
             }
         }
 
- [Fact]
+        [Fact]
         public void ModifyStock()
         {
             //First using block will add a Orderst
@@ -359,13 +359,13 @@ namespace Tests
             {
                 //Arrange
                 InterfaceRepository repo = new RespositoryCloud(context);
-                LineItems test=new LineItems();
-                test.StoreID=2;
-                test.ProductID=2;
-                test.Quantity=99;
+                LineItems test = new LineItems();
+                test.StoreID = 2;
+                test.ProductID = 2;
+                test.Quantity = 99;
 
                 //Act
-                repo.ModifyStockTable(test.StoreID,test.ProductID,test.Quantity);
+                repo.ModifyStockTable(test.StoreID, test.ProductID, test.Quantity);
             }
 
             //Second using block will find that Customer and see if it is similar to what we added
@@ -373,13 +373,90 @@ namespace Tests
             using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
             {
                 InterfaceRepository repo = new RespositoryCloud(contexts);
-                List<LineItems> result=repo.GetInventory(2);
+                List<LineItems> result = repo.GetInventory(2);
 
 
                 Assert.NotNull(result);
                 Assert.Equal(99, result[0].Quantity);
             }
         }
+
+        [Fact]
+
+        public void GetStoreID()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+                Orders createdOrder = new Orders
+                {
+                    CustomerId = 1,
+                    StoreId = 1,
+                    Total = Convert.ToDecimal(3.50)
+
+
+
+                };
+
+                //Act
+                repo.AddOrdersDL(createdOrder);
+            }
+
+            //Second using block will find that Customer and see if it is similar to what we added
+            //Assert
+            using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
+            {
+                InterfaceRepository repo = new RespositoryCloud(contexts);
+                Orders result = new Orders();
+                result = repo.GetOrderID(result);
+
+
+                Assert.NotNull(result);
+                Assert.Equal(3, result.OrderId);
+                Assert.Equal(1, result.CustomerId);
+                Assert.Equal(1, result.StoreId);
+            }
+
+        }
+
+        
+        [Fact]
+
+        public void InsertHistoryworks()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+                Orders createdOrder = new Orders
+                {
+                    CustomerId = 1,
+                    StoreId = 1,
+                    Total = Convert.ToDecimal(3.50)
+
+
+
+                };
+
+                //Act
+                repo.AddOrdersDL(createdOrder);
+            }
+
+            //Second using block will find that Customer and see if it is similar to what we added
+            //Assert
+            using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
+            {
+                InterfaceRepository repo = new RespositoryCloud(contexts);
+                Orders result = new Orders();
+                result = repo.GetOrderID(result);
+                repo.InsertHistory(result.StoreId,1,result.OrderId,result.CustomerId,1);
+            }
+
+        }
+
 
 
 

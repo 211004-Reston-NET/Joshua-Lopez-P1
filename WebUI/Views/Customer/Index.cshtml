@@ -4,11 +4,39 @@
 
 <div class="text-center">
     <h1>Welcome @ViewBag.testname</h1>
+    <h2>This is Heading 2</h2>
     <h6>This is the smallest heading you can have</h6>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    
-    <p></p>
-     <a asp-controller="Customer" asp-action="MyProfile">Click here myprofile</a>
-    <p></p>
-    
+    @if (ViewBag.Classified != "Manager")
+    {
+        <a asp-controller="Customer" asp-action="MyProfile">Click here myprofile</a>
+        <p></p>
+        <a asp-controller="StoreFront" asp-action="ShoppingIndex">Click here to shop</a>
+        <p></p>
+    }
+    else
+    {
+
+
+
+        <a asp-controller="Function" asp-action="AllCustomers">Click here to go to see all customer in db</a>
+        <p></p>
+
+        <a asp-controller="Function" asp-action="AllOrders">Click here to see all Orders in db</a>
+        <p></p>
+        <a asp-controller="Function" asp-action="AllStores">Click here to see all stores in db</a>
+        <p></p>
+        <a asp-controller="Function" asp-action="AllProducts">Click here to see all Products in db</a>
+        <p></p>
+        <a asp-controller="Function" asp-action="AllStock">Click here to see all stock for store in db</a>
+        <p></p>
+        <a asp-controller="StoreFront" asp-action="ShoppingIndex">Click here to shop</a>
+        <p></p>
+        <a asp-controller="StoreFront" asp-action="SelectStore">Click here to start replenishing inventory</a>
+        <p></p>
+
+        <a class="btn btn-primary text-white" asp-controller="Function" asp-action="CreateCustomer">Add Customer</a>
+        <a class="btn btn-primary text-white" asp-controller="Function" asp-action="CreateStore">Add Store</a>
+        <a class="btn btn-primary text-white" asp-controller="Function" asp-action="CreateProduct">Add Product</a>
+    }
 </div>

@@ -149,7 +149,7 @@ namespace BusinessLogic
             _repo.InsertHistory(store,prod,order,customer,quantity);
         }
 
-        public Orders GetOrderByID(Orders obj)
+        public Orders GetOrderID(Orders obj)
         {
             return _repo.GetOrderID(obj);
         }
