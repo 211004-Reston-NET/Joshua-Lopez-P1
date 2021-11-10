@@ -122,7 +122,7 @@ namespace WebUI.Controllers
                 ViewBag.testname = SingletonVM.currentuser.Name;
 
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ShoppingIndex", "StoreFront");
             }
 
 

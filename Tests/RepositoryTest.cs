@@ -457,6 +457,27 @@ namespace Tests
 
         }
 
+        [Fact]
+        public void SearchMustFindResult()
+        {
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+
+                //Act
+                List<StoreFront> test = repo.SearchStoresDL("Test");
+
+                //Assert
+                Assert.Equal(2, test.Count);
+                Assert.NotNull(test);
+
+                // Assert.Equal(1, test[0].StoreID);
+                // Assert.Equal(1, test[0].ProductID);
+                // Assert.Equal(10, test[0].Quantity);
+            }
+        }
+
 
 
 

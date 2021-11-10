@@ -12,7 +12,7 @@ namespace WebUI.Controllers
 {
     public class StoreFrontController : Controller
     {
-        // static CustomerVM testing = new CustomerVM();
+        static List<LineItems> test=new List<LineItems>();
         private InterfaceBL iObj;
         public StoreFrontController(InterfaceBL p_Inter)
         {
@@ -99,6 +99,22 @@ namespace WebUI.Controllers
                         .Select(rest => new LineItemVM(rest))
                         .ToList());
         }
+        public ActionResult Cart(int p_id,int p_sid,double p_total)
+        {
+            LineItems cartitem= new LineItems();
+            cartitem.ProductID=p_id;
+            cartitem.StoreID=p_sid;
+            test.Add(cartitem);
+
+            
+
+            return View(test.Select(rest => new LineItemVM(rest))
+                        .ToList());
+        }
+
+        
+
+
         [HttpGet]
         public IActionResult Purchase(int p_id,int p_quantity,int p_sid, double p_total)
         {
@@ -141,15 +157,33 @@ namespace WebUI.Controllers
                return View();
            }
                 
-            
-          
         }
 
 
 
         
 
-       
+       [HttpGet]
+        public IActionResult Search()
+        {
+            ViewBag.testing=null;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(string UserName, string Password)
+        {
+            ViewBag.testing="show";
+
+
+                
+
+                return   View(iObj.SearchStores(UserName)
+                        .Select(rest => new StoreFrontVM(rest))
+                        .ToList()
+            );
+        
+        }
 
 
         // GET: RestaurantController/Details/5
