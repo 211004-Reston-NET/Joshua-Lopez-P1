@@ -1,32 +1,19 @@
-@model IEnumerable<WebUI.Models.StoreFrontVM>
+@{
+    ViewData["Title"] = "Home Page";
+}
 
-<h1>List of StoreFronts</h1>
+<div class="text-center">
+    <h1>Welcome To the Store Controller</h1>
+    <p>Click one of the following options.</p>
 
-<table class="table table-striped table-hover">
-    <tr>
-        <th>Id Number</th>
-        <th>Store Name </th>
-        <th>Store Location</th>
+    <a asp-controller="StoreFront" asp-action="SelectStore">Click here to start replenishing inventory</a>
+    <p></p>
+    <a asp-controller="StoreFront" asp-action="ShoppingIndex">Click here to start Shopping</a>
+    <p></p>
 
 
-    </tr>
-    @foreach(StoreFrontVM item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Id)</td>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                 <td>
-                <!--First parameter of ActionLink is the name it will give for this element -->
-                <!--Second parameter will point to the action of the restaurant controller-->
-                <!--Third parameter will give the information from the view to the controller-->
-                <button class="btn btn-danger">@Html.ActionLink("ViewProducts","SeeItems",new {p_id = item.Id,p_sid=item.Id}, new {@style="color: white;"})</button>
-              </td>
-            
-            
-        </tr>
-    }
-    
-        
-    
-</table>
+
+
+
+    @* <a asp-controller="Customer" asp-action="Index2">Click here to go to Store View</a> *@
+</div>

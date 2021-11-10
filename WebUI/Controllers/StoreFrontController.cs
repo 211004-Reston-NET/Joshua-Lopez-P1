@@ -12,7 +12,7 @@ namespace WebUI.Controllers
 {
     public class StoreFrontController : Controller
     {
-        // static CustomerVM testing = new CustomerVM();
+        static List<LineItems> test=new List<LineItems>();
         private InterfaceBL iObj;
         public StoreFrontController(InterfaceBL p_Inter)
         {
@@ -20,65 +20,11 @@ namespace WebUI.Controllers
         }
 
         // GET: RestaurantController
-        public ActionResult Index(int p_sid)
+        public ActionResult Index()
 
         {
-            return View(iObj.GetAllStoreFrontsBL()
-                        .Select(rest => new StoreFrontVM(rest))
-                        .ToList());
+            return View();
         }
-        public ActionResult SeeItems(int p_id,int p_sid,double p_total)
-        {
-            //Passing the restaurant to the ReplenishInventory view
-            return View(iObj.GetInventory(p_id)
-                        .Select(rest => new LineItemVM(rest))
-                        .ToList());
-        }
-        [HttpGet]
-        public IActionResult Purchase(int p_id,int p_quantity,int p_sid, double p_total)
-        {
-            ViewBag.Amount=p_quantity;
-            ViewBag.Store=p_sid;
-            ViewBag.Product=p_id;
-            ViewBag.Price=p_total;
-            
-            
-            return View(new ProductsVM(iObj.GetProduct(p_id)));
-        }
-
-
-        // POST: RestaurantController/ShowProduct/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Purchase(int p_id,int p_quantity,int p_sid,double p_total, IFormCollection collection)
-        {
-            // int store=p_sid;
-            // int prod=p_sid;
-            // int total=p_quantity;
-           
-               Orders test=new Orders();
-               test.StoreId=p_sid;
-               test.CustomerId=SingletonVM.currentuser.Id;
-               test.Total=Convert.ToDecimal(p_quantity*p_total);
-
-                iObj.AddOrdersBL(test);
-                test=iObj.GetOrderID(test);
-                iObj.InsertHistory(p_sid, p_id, test.OrderId, SingletonVM.currentuser.Id, p_quantity);
-                // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
-                // _restBL.DeleteRestaurant(toBeDeleted);
-                return RedirectToAction(nameof(Index));
-           
-        //    catch (System.Exception)
-        //    {
-               
-        //        return View();
-        //    }
-                
-            
-          
-        }
-
-
         public ActionResult SelectStore(int p_sid)
         {
             //We got our list of restaurant from our business layer
@@ -138,9 +84,106 @@ namespace WebUI.Controllers
 
 
 
+
+         public ActionResult ShoppingIndex(int p_sid)
+
+        {
+            return View(iObj.GetAllStoreFrontsBL()
+                        .Select(rest => new StoreFrontVM(rest))
+                        .ToList());
+        }
+        public ActionResult SeeItems(int p_id,int p_sid,double p_total)
+        {
+            //Passing the restaurant to the ReplenishInventory view
+            return View(iObj.GetInventory(p_id)
+                        .Select(rest => new LineItemVM(rest))
+                        .ToList());
+        }
+        public ActionResult Cart(int p_id,int p_sid,double p_total)
+        {
+            LineItems cartitem= new LineItems();
+            cartitem.ProductID=p_id;
+            cartitem.StoreID=p_sid;
+            test.Add(cartitem);
+
+            
+
+            return View(test.Select(rest => new LineItemVM(rest))
+                        .ToList());
+        }
+
         
 
-       
+
+        [HttpGet]
+        public IActionResult Purchase(int p_id,int p_quantity,int p_sid, double p_total)
+        {
+            ViewBag.Amount=p_quantity;
+            ViewBag.Store=p_sid;
+            ViewBag.Product=p_id;
+            ViewBag.Price=p_total;
+            
+            
+            return View(new ProductsVM(iObj.GetProduct(p_id)));
+        }
+
+
+        // POST: RestaurantController/ShowProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Purchase(int p_id,int p_quantity,int p_sid,double p_total, IFormCollection collection)
+        {
+            // int store=p_sid;
+            // int prod=p_sid;
+            // int total=p_quantity;
+           try{
+
+          
+               Orders test=new Orders();
+               test.StoreId=p_sid;
+               test.CustomerId=SingletonVM.currentuser.Id;
+               test.Total=Convert.ToDecimal(p_quantity*p_total);
+
+                iObj.AddOrdersBL(test);
+                test=iObj.GetOrderID(test);
+                iObj.InsertHistory(p_sid, p_id, test.OrderId, SingletonVM.currentuser.Id, p_quantity);
+                // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
+                // _restBL.DeleteRestaurant(toBeDeleted);
+                return RedirectToAction("Index", "Customer");
+            }
+           catch (System.Exception)
+           {
+               
+               return View();
+           }
+                
+        }
+
+
+
+        
+
+       [HttpGet]
+        public IActionResult Search()
+        {
+            ViewBag.testing=null;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(string UserName, string Password)
+        {
+            ViewBag.testing="show";
+
+
+                
+
+                return   View(iObj.SearchStores(UserName)
+                        .Select(rest => new StoreFrontVM(rest))
+                        .ToList()
+            );
+        
+        }
 
 
         // GET: RestaurantController/Details/5
