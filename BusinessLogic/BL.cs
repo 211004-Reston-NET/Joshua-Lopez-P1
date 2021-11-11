@@ -54,27 +54,6 @@ namespace BusinessLogic
             return _repo.GetAllOrdersDL();
         }
 
-        
-        
-
-        public Products CreateProduct()
-        {
-            Products obj = new Products();
-            Console.WriteLine("Type in the line item/ product name\n");
-            obj.Name = Console.ReadLine();
-            Console.WriteLine("\nType in the line item/ products price\n");
-            obj.Price = Convert.ToDecimal(Console.ReadLine());
-            Console.WriteLine("Type in the line item/ product Description\n");
-            obj.Description = Console.ReadLine();
-            Console.WriteLine("Type in the line item/ product Category\n");
-            obj.Category = Console.ReadLine();
-
-
-            return obj;
-
-        }
-
-
         public List<StoreFront> SearchStores(string name)
         {
             return _repo.SearchStoresDL(name);

@@ -92,36 +92,68 @@ namespace WebUI.Controllers
                         .Select(rest => new StoreFrontVM(rest))
                         .ToList());
         }
-        public ActionResult SeeItems(int p_id,int p_sid,double p_total)
+        public ActionResult SeeItems(int p_id,int p_sid,double p_price,string p_name)
         {
             //Passing the restaurant to the ReplenishInventory view
             return View(iObj.GetInventory(p_id)
                         .Select(rest => new LineItemVM(rest))
                         .ToList());
         }
-        public ActionResult Cart(int p_id,int p_sid,double p_total)
+        [HttpGet]
+        public ActionResult Cart(int p_id,int p_sid,double p_price,string p_name)
         {
             LineItems cartitem= new LineItems();
             cartitem.ProductID=p_id;
             cartitem.StoreID=p_sid;
+            Products x = new Products();
+            x.Name = p_name;
+            x.Price = Convert.ToDecimal(p_price);
+            cartitem.ProductEstablish=x;
+            
             test.Add(cartitem);
+            
+            
+            
 
             
 
             return View(test.Select(rest => new LineItemVM(rest))
                         .ToList());
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Cart(int [] p_quantity,int [] p_StoreId,int [] p_ProductId)
+        {
+            for(int i=0;i<p_ProductId.Length;i++)
+            {
+                Orders test=new Orders();
+                test.CustomerId=SingletonVM.currentuser.Id;
+                test.StoreId=p_StoreId[i];
+                // test.Total=p_quantity[i]*//add get product value
+            }
+            
+
+            
+            return View();
+
+        }
+
+
+        // POST: RestaurantController/ShowProduct/5
+        
+        
+
 
         
 
 
         [HttpGet]
-        public IActionResult Purchase(int p_id,int p_quantity,int p_sid, double p_total)
+        public IActionResult Purchase(int p_id,int p_quantity,int p_sid, double p_price)
         {
             ViewBag.Amount=p_quantity;
             ViewBag.Store=p_sid;
             ViewBag.Product=p_id;
-            ViewBag.Price=p_total;
+            ViewBag.Price=p_price;
             
             
             return View(new ProductsVM(iObj.GetProduct(p_id)));
@@ -131,7 +163,7 @@ namespace WebUI.Controllers
         // POST: RestaurantController/ShowProduct/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Purchase(int p_id,int p_quantity,int p_sid,double p_total, IFormCollection collection)
+        public ActionResult Purchase(int p_id,int p_quantity,int p_sid,double p_price, IFormCollection collection)
         {
             // int store=p_sid;
             // int prod=p_sid;
@@ -142,7 +174,7 @@ namespace WebUI.Controllers
                Orders test=new Orders();
                test.StoreId=p_sid;
                test.CustomerId=SingletonVM.currentuser.Id;
-               test.Total=Convert.ToDecimal(p_quantity*p_total);
+               test.Total=Convert.ToDecimal(p_quantity*p_price);
 
                 iObj.AddOrdersBL(test);
                 test=iObj.GetOrderID(test);
@@ -171,14 +203,14 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search(string UserName, string Password)
+        public IActionResult Search(string SearchWord)
         {
             ViewBag.testing="show";
 
 
                 
 
-                return   View(iObj.SearchStores(UserName)
+                return   View(iObj.SearchStores(SearchWord)
                         .Select(rest => new StoreFrontVM(rest))
                         .ToList()
             );

@@ -195,14 +195,14 @@ namespace Tests
                 List<Orders> test = repo.GetAllOrdersDL();
 
                 //Assert
-                Assert.Equal(2, test.Count);
+                Assert.Equal(3, test.Count);
                 // Orders result = test.Find(x => x.OrderId == 2);
 
                 Assert.NotNull(test);
 
-                // Assert.Equal(1, test[0].StoreId);
-                // Assert.Equal(2, test[0].CustomerId);
-                // Assert.Equal(45, test[0].Total);
+                Assert.Equal(2, test[2].StoreId);
+                Assert.Equal(1, test[2].CustomerId);
+                Assert.Equal(50, test[2].Total);
             }
         }
 
@@ -587,14 +587,21 @@ namespace Tests
                     {
                         CustomerId = 1,
                         StoreId = 2,
-                        Total = 20
+                        Total = 50
                     },
-                    new Orders
+                   new Orders
                     {
-                        CustomerId = 2,
+                     CustomerId = 2,
                         StoreId = 1,
-                        Total = 45
-                    }
+                       Total = 45
+                    },
+                   new Orders
+                   {
+                       CustomerId = 1,
+                       StoreId = 1,
+                       Total = 6
+                   }
+
                 );
 
                 context.Stocks.AddRange(
