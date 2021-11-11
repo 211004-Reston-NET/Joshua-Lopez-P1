@@ -17,12 +17,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Setup Asp .NET
+    - name: Setup ASP .NET
       uses: nuget/setup-nuget@v1
       with:
-       nuget-version: ${{env.NUGET_VERSION}}
+        nuget-version: ${{env.NUGET_VERSION}}
     - name: Restore dependencies
-      run: dotnet restore 
+      run: dotnet restore # The filepath will differ for yours
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
@@ -32,6 +32,6 @@ jobs:
     - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
-        app-name: P1-Web-App
+        app-name: P1-Web-App # Replace this with your web app name
         publish-profile: ${{secrets.AZURE_WEBAPP_PUBLISH}}
         package: ./publish
