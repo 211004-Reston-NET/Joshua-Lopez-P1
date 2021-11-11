@@ -34,4 +34,4 @@ jobs:
       with:
         app-name: P1-Web-App # Replace this with your web app name
         publish-profile: ${{secrets.AZURE_WEBAPP_PUBLISH}}
-        package: ./WebUI/publish
+        package: ./publish
