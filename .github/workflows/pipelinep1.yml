@@ -24,9 +24,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore P1-Draft/
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build P1-Draft/--configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test P1-Draft/--no-restore --verbosity normal
     - name: Publish
       run: dotnet publish P1-Draft/ --configuration Release -o ./publish
     - name: Deploy
