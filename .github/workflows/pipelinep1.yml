@@ -22,13 +22,13 @@ jobs:
       with:
        nuget-version: ${{env.NUGET_VERSION}}
     - name: Restore dependencies
-      run: dotnet restore P1-Draft/
+      run: dotnet restore 
     - name: Build
-      run: dotnet build P1-Draft/--configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test P1-Draft/--no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity normal
     - name: Publish
-      run: dotnet publish P1-Draft/ --configuration Release -o ./publish
+      run: dotnet publish --configuration Release -o ./publish
     - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
