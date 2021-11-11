@@ -22,16 +22,16 @@ jobs:
       with:
         nuget-version: ${{env.NUGET_VERSION}}
     - name: Restore dependencies
-      run: dotnet restore # The filepath will differ for yours
+      run: dotnet restore WebUI/ # The filepath will differ for yours
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build WebUI/ --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Publish
-      run: dotnet publish --configuration Release -o ./publish
+      run: dotnet publish WebUI/ --configuration Release -o ./publish
     - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
         app-name: P1-Web-App # Replace this with your web app name
         publish-profile: ${{secrets.AZURE_WEBAPP_PUBLISH}}
-        package: ./publish
+        package: ./WebUI/publish
