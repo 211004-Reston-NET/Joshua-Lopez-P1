@@ -1,5 +1,6 @@
 @model WebUI.Models.ProductsVM
-
+@if (ViewBag.Error == null)
+    {
 <h1 class="display-4">Confirm Addition</h1>
 
 <div>
@@ -45,3 +46,15 @@
         </form>
     </dl>
 </div>
+        
+    }
+    else
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Error");
+            };
+        </script>
+        <button class="btn btn-danger">@Html.ActionLink("Return To Store Manager","SelectStore", new {@style="color: white;"})</button>
+              
+    }

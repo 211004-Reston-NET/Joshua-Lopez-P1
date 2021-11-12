@@ -138,11 +138,6 @@ namespace BusinessLogic
             _repo.ModifyStockTable(storenumber,productnumber,quantity);
         }
 
-        public List<Orders> GetMyOrderHistory(int objId)
-        {
-            return _repo.GetMyOrderHistory(objId);
-        }
-
         public List<Orders> GetStoreOrderHistory(int objId)
         {
             return _repo.GetStoreOrderHistory(objId);
@@ -151,6 +146,11 @@ namespace BusinessLogic
         public decimal FindProductPrice(int p_productId)
         {
            return  _repo.FindProductPrice(p_productId);;
+        }
+
+        public List<OrderLines> GetMyOrderHistory(int objId)
+        {
+            return _repo.GetMyOrderHistory(objId);
         }
     }
 }

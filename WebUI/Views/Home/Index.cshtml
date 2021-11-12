@@ -2,7 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
-
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Login</title>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+</head>
 <div class="text-center">
     <h1>Welcome To the Lopez shopping center</h1>
     <p>Click one of the following options.</p>

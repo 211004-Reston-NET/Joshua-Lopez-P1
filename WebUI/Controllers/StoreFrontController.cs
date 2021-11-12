@@ -62,14 +62,18 @@ namespace WebUI.Controllers
         {
             
             
-           
+           try
+           {
                 iObj.AddStock(p_sid, p_id, p_quantity);
-                // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
-                // _restBL.DeleteRestaurant(toBeDeleted);
                 return RedirectToAction("SelectStore", "StoreFront");
-            
+           }
+           catch (System.Exception)
+           {
+               ViewBag.Error="This Store Already has this item";
 
-
+               
+               return View();
+           }
 
         }
 

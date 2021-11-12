@@ -338,7 +338,7 @@ namespace Tests
                 InterfaceRepository repo = new RespositoryCloud(context);
 
                 //Act
-                List<Orders> result = repo.GetMyOrderHistory(2);
+                List<OrderLines> result = repo.GetMyOrderHistory(2);
                 //Assert
                 Assert.NotNull(result);
 

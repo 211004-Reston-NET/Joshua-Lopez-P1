@@ -186,15 +186,15 @@ namespace DataAccessLogic
         /// </summary>
         /// <param name="objId"></param>
         /// <returns>a list of all orders related to the received id</returns>
-        List<Orders> GetMyOrderHistory(int objId);
-        /// <summary>
-        /// Receives the Id of the store in order to search for that stores order history in the db
-        /// </summary>
-        /// <param name="objId"></param>
-        /// <returns>a list of all orders related to the received id</returns>
         List<Orders> GetStoreOrderHistory(int objId);
 
          decimal FindProductPrice(int p_productId);
+          /// <summary>
+        /// Receives the Id of the Customer/current user in order to search for that users order history in the db
+        /// </summary>
+        /// <param name="objId"></param>
+        /// <returns>a list of all orders related to the received id</returns>
+         List<OrderLines> GetMyOrderHistory(int objId);
 
     }
 }

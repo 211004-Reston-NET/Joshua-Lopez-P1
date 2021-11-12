@@ -50,9 +50,7 @@ namespace WebUI.Controllers
             //             .Select(rest => new StoreFrontVM(rest))
             //             .ToList()
             // );
-            return View(iObj.GetAllOrdersBL()
-                        .Select(rest => new OrdersVM(rest))
-                        .ToList());
+            return View();
 
         }
         public ActionResult AllStores(int p_sid)

@@ -10,15 +10,15 @@ namespace WebUI.Models
     public class OrdersVM
     {
         public OrdersVM() { }
-        public OrdersVM(Orders facility)
+        public OrdersVM(OrderLines facility)
         {
             this.Id = facility.OrderId;
             this.CustomerId = facility.CustomerId;
             this.StoreFrontId=facility.StoreId;
-            this.TotalPrice=facility.Total;
-                // this.ItemId=x.Product_obj.Id;
-                // this.ItemName=x.Product_obj.Name;
-                // this.Quantity=x.Quantity;
+            this.TotalPrice=facility.Order_obj.Total;
+                this.ItemId=facility.Product_obj.Id;
+                this.ItemName=facility.Product_obj.Name;
+                this.Quantity=facility.LineQuantity;
 
             
             
