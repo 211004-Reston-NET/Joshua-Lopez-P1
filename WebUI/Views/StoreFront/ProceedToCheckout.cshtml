@@ -20,7 +20,7 @@
             <td>@Html.DisplayFor(modelItem => line.item.Price)</td>
             @Html.TextBox("p_StoreId",line.StoreID, new { style="color:red",type="hidden",Value=line.StoreID }) 
             @Html.TextBox("p_ProductId",line.ProductID, new { style="color:red",type="hidden",Value=line.ProductID  }) 
-             <td>@Html.TextBox("p_quantity",line.Quantity, new { style="color:red",type="Number",Value=line.Quantity }) </td>
+             <td>@Html.TextBox("p_quantity",line.Quantity, new { style="color:red",type="Number",Value=line.Quantity, @readonly = "readonly"}) </td>
             @* @Html.TextBox("p_Price",line.ProductPrice, new { style="color:red",type="hidden",Value=line.ProductPrice})
             @Html.TextBox("p_Name",line.ProductName, new { style="color:red",type="hidden",Value=line.ProductName}) *@
 
@@ -44,11 +44,10 @@
     
 
 </table>
- <input type ="submit" value="Calculate total" class="btn btn-danger" formaction="Cart" formmethod="post"/>
  
+  <input type ="submit" value="Confirm" class="btn btn-danger" formaction="ConfirmPurchase" formmethod="post"/>
         </form>       
-        @if(Convert.ToDecimal(ViewBag.purchase) > 0)
-        {<button class="btn btn-danger">@Html.ActionLink("Confirm Purchase","ProceedToCheckout",new {p_total=@ViewBag.purchase}, new {@style="color: white;"})</button>
-            <p>The Total of your order is $@ViewBag.purchase</p>
+        @if(ViewBag.xyz != null)
+        {
+            <p>The Total of your order is $@ViewBag.xyz</p>
         }
-

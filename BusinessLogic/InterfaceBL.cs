@@ -181,6 +181,9 @@ namespace BusinessLogic
 
         List<Orders> GetAllOrdersBL();
         
+        decimal FindProductPrice(int p_productId);
+
+        
 
         
 

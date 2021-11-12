@@ -148,6 +148,9 @@ namespace BusinessLogic
             return _repo.GetStoreOrderHistory(objId);
         }
 
-       
+        public decimal FindProductPrice(int p_productId)
+        {
+           return  _repo.FindProductPrice(p_productId);;
+        }
     }
 }

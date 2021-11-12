@@ -445,6 +445,23 @@ namespace DataAccessLogic
             return listofItems;
         }
 
+        public decimal FindProductPrice(int p_productId)
+        { 
+            decimal itemPrice=0;
 
+            Products test = new Products();
+            bool result = VerifyProduct(p_productId);
+            if (result == false)
+            {
+                throw new Exception("Product Was not found with entered ID number");
+            }
+            else
+            { //finds the product in the db and then we fill out our Product with that found information
+                Products looking = _context.Products.Find(p_productId);
+                itemPrice = looking.Price;
+           
+                return itemPrice;
+            }
+        }
     }
 }

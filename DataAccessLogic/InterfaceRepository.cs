@@ -194,5 +194,7 @@ namespace DataAccessLogic
         /// <returns>a list of all orders related to the received id</returns>
         List<Orders> GetStoreOrderHistory(int objId);
 
+         decimal FindProductPrice(int p_productId);
+
     }
 }
