@@ -20,11 +20,13 @@ namespace WebUI.Controllers
         }
 
         // GET: RestaurantController
-        public ActionResult Index()
+        public ActionResult Index(decimal cost)
 
         {
             ViewBag.testname = SingletonVM.currentuser.Name;
             ViewBag.Classified=SingletonVM.currentuser.Position;
+            ViewBag.test=cost;
+
             return View();
         }
 

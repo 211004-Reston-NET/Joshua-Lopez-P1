@@ -41,18 +41,6 @@ namespace BusinessLogic
         /// <returns>It returns the product customer</returns>     
         Orders AddOrdersBL(Orders parameterobj);
 
-
-
-
-
-        /// <summary>
-        /// This creates a Product and returns the value 
-        /// This method is more for establishing the payment of the order
-        /// </summary>
-        /// <returns>It will return a  product</returns>
-        Products CreateProduct();
-
-
         /// <summary>
         /// Verifies in the database if the entered store name and address is located in the database
         /// and retrieves the found store or an exception
@@ -192,6 +180,9 @@ namespace BusinessLogic
         List<Orders> GetStoreOrderHistory(int objId);
 
         List<Orders> GetAllOrdersBL();
+        
+        decimal FindProductPrice(int p_productId);
+
         
 
         
