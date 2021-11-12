@@ -27,18 +27,18 @@ namespace Models
 
 
 
-        private List<LineItems> itemslist = new List<LineItems>();
-        public List<LineItems> ItemsList
-        {
-           set { itemslist = value; }
-           get { return itemslist; }
-        }
-        ////private StoreFront _location;
-        ////public StoreFront Location
-        ////{
-        ////    get { return _location; }
-        ////    set { _location = value; }
-        ////}
+        // private List<LineItems> itemslist = new List<LineItems>();
+        // public List<LineItems> ItemsList
+        // {
+        //    set { itemslist = value; }
+        //    get { return itemslist; }
+        // }
+        // ////private StoreFront _location;
+        // ////public StoreFront Location
+        // ////{
+        // ////    get { return _location; }
+        // ////    set { _location = value; }
+        // ////}
 
         
 

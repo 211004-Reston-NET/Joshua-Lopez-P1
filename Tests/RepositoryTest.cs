@@ -232,7 +232,7 @@ namespace Tests
             //Assert
             using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
             {
-                Orders result = contexts.OrdersRecords.Find(3);
+                Orders result = contexts.OrdersRecords.Find(4);
 
                 Assert.NotNull(result);
                 Assert.Equal(1, result.CustomerId);
@@ -414,7 +414,7 @@ namespace Tests
 
 
                 Assert.NotNull(result);
-                Assert.Equal(3, result.OrderId);
+                Assert.Equal(4, result.OrderId);
                 Assert.Equal(1, result.CustomerId);
                 Assert.Equal(1, result.StoreId);
             }
@@ -476,6 +476,37 @@ namespace Tests
                 // Assert.Equal(1, test[0].ProductID);
                 // Assert.Equal(10, test[0].Quantity);
             }
+        }
+        [Fact]
+
+        public void AddStocktodb()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+                int store=2;
+                int prod=1;
+                int quantity=20;
+
+                //Act
+                repo.AddStockToDB(store,prod,quantity);
+            }
+
+            //Second using block will find that Customer and see if it is similar to what we added
+            //Assert
+            using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
+            {
+                InterfaceRepository repo = new RespositoryCloud(contexts);
+                List<LineItems> result = repo.GetInventory(2);
+
+
+                Assert.NotNull(result);
+                Assert.Equal(2,result.Count);
+                
+            }
+
         }
 
 

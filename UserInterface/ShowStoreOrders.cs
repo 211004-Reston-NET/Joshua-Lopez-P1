@@ -55,10 +55,10 @@ namespace UserInterface
                         Console.WriteLine("Order Id number: " + rest.OrderId);
                         Console.WriteLine("Bought from the store: " + rest.Store_obj.StoreName + " located in " + rest.Store_obj.Location);
                         Console.WriteLine("Purchase the following:");
-                        foreach (LineItems s in rest.ItemsList)
-                        {
-                            Console.WriteLine(s.ProductEstablish.Name);
-                        }
+                        // foreach (LineItems s in rest.ItemsList)
+                        // {
+                        //     Console.WriteLine(s.Product_obj.Name);
+                        // }
                         Console.WriteLine("Total cost of order was: " + rest.Total);
                         Console.WriteLine("====================");
                     }

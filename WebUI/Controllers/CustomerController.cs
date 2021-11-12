@@ -146,6 +146,21 @@ namespace WebUI.Controllers
             ViewBag.Age = SingletonVM.currentuser.Age;
             ViewBag.Position = SingletonVM.currentuser.Position;
             ViewBag.Currency = SingletonVM.currentuser.Currency;
+            List<Orders> myorders=iObj.GetMyOrderHistory(SingletonVM.currentuser.Id);
+            List<OrdersVM> x= new List<OrdersVM>();
+            foreach(Orders data in myorders)
+            {
+                OrdersVM obj=new OrdersVM();
+                Products item= new Products();
+                obj.CustomerId=SingletonVM.currentuser.Id;
+                obj.Id=data.OrderId;
+                obj.StoreFrontId=data.StoreId;
+                obj.TotalPrice=data.Total;
+
+            }
+
+
+            
             return View(iObj.GetMyOrderHistory(SingletonVM.currentuser.Id)
                         .Select(rest => new OrdersVM(rest))
                         .ToList()

@@ -103,7 +103,7 @@ namespace BusinessLogic
         /// <param name="prod"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        LineItems AddStock(StoreFront id, Products Id, int quantity);
+        LineItems AddStock(int storenumber, int productnumber, int quantity);
 
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace BusinessLogic
         /// <returns></returns>
         bool VerifyProduct(int identification);
         /// <summary>
-        /// Returns a Product with information retrieved from the db
+        /// Returns a Product with information retrieved from the db uses product id number as parameter
         /// </summary>
         /// <param name="productid"></param>
         /// <returns>Product if not an exception</returns>

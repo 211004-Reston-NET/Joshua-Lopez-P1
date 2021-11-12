@@ -25,7 +25,7 @@ namespace UserInterface
             Console.WriteLine("---------------------------------------------------------------------\n");
             
             Console.WriteLine(store);
-            Console.WriteLine(items.ProductEstablish);
+            Console.WriteLine(items.Product_obj);
             Console.WriteLine("\tAmmount of Item : " + items.Quantity);
             
             Console.WriteLine("\n##################################################################################\n");
@@ -48,7 +48,7 @@ namespace UserInterface
                 case "4":
                     try
                     {
-                        parameterInter.AddStock(store, items.ProductEstablish, items.Quantity);
+                        // parameterInter.AddStock(store, items.Product_obj, items.Quantity);
                         Console.WriteLine("\t Product Added to store");
                         Console.WriteLine("\tPress enter to continue");
                         Console.ReadLine();
@@ -106,13 +106,13 @@ namespace UserInterface
                     Console.WriteLine("\n##################################################################################\n");
                     try
                     {
-                        items.ProductEstablish = parameterInter.GetProduct(num);
+                        items.Product_obj = parameterInter.GetProduct(num);
                     }
                     catch (System.Exception)
                     {
 
                         
-                        items.ProductEstablish = null;
+                        items.Product_obj = null;
                         Console.WriteLine("\n************************************************\n");
                         Console.WriteLine("\tplease try again you have entered an Id that is not listed");
                         Console.WriteLine("\tPress enter to continue");

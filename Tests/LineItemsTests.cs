@@ -19,10 +19,10 @@ namespace Tests
             string _name = "TestName";
             //Act
             test.Name = _name;
-            tester.ProductEstablish = test;
+            tester.Product_obj = test;
             //Assert
-            Assert.NotNull(tester.ProductEstablish);
-            Assert.Equal(tester.ProductEstablish, test);
+            Assert.NotNull(tester.Product_obj);
+            Assert.Equal(tester.Product_obj, test);
         }
 
 
@@ -38,10 +38,10 @@ namespace Tests
         //    LineItems tester = new LineItems();
         //     string _category = "Food";
         //     //Act
-        //     tester.ProductEstablish.Category = _category;
+        //     tester.Product_obj.Category = _category;
         //     //Assert
-        //     Assert.NotNull(tester.ProductEstablish.Category);
-        //     Assert.Equal(tester.ProductEstablish.Category, _category);
+        //     Assert.NotNull(tester.Product_obj.Category);
+        //     Assert.Equal(tester.Product_obj.Category, _category);
         // }
         //     /// <summary>
         // ///Verifies the entered contact will set the contact value 
@@ -54,10 +54,10 @@ namespace Tests
         //    LineItems tester = new LineItems();
         //     decimal _price = 25;
         //     //Act
-        //     tester.ProductEstablish.Price = _price;
+        //     tester.Product_obj.Price = _price;
         //     //Assert
-        //     Assert.NotNull(tester.ProductEstablish.Price);
-        //     Assert.Equal(tester.ProductEstablish.Price, _price);
+        //     Assert.NotNull(tester.Product_obj.Price);
+        //     Assert.Equal(tester.Product_obj.Price, _price);
         // }
 
         //  /// <summary>
@@ -71,10 +71,10 @@ namespace Tests
         //    LineItems tester = new LineItems();
         //     string _description = "Test Description";
         //     //Act
-        //     tester.ProductEstablish.Description = _description;
+        //     tester.Product_obj.Description = _description;
         //     //Assert
-        //     Assert.NotNull(tester.ProductEstablish.Description);
-        //     Assert.Equal(tester.ProductEstablish.Description, _description);
+        //     Assert.NotNull(tester.Product_obj.Description);
+        //     Assert.Equal(tester.Product_obj.Description, _description);
         // }
 
         /// <summary>

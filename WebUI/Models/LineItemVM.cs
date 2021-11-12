@@ -17,7 +17,7 @@ namespace WebUI.Models
         {
 
             this.Quantity = client.Quantity;
-            this.item=client.ProductEstablish;
+            this.item=client.Product_obj;
             this.ProductID=client.ProductID;
             this.StoreID=client.StoreID;
          

@@ -30,8 +30,7 @@
                 <!--Second parameter will point to the action of the restaurant controller-->
                 <!--Third parameter will give the information from the view to the controller-->
                 <button class="btn btn-danger">@Html.ActionLink("ShowProduct","ShowProduct",new {p_id = line.item.Id , p_quantity = line.Quantity,p_sid=line.StoreID}, new {@style="color: white;"})</button>
-                <button class="btn btn-primary">@Html.ActionLink("Reviews","Index","Review",new {p_id = line.item.Id}, new {@style="color: white"})</button>
-                 <button class="btn btn-danger">@Html.ActionLink("Edit Quantity","EditStock",new {p_id = line.item.Id, p_quantity = line.Quantity,p_sid=line.StoreID}, new {@style="color: white;"})</button>
+                <button class="btn btn-danger">@Html.ActionLink("Edit Quantity","EditStock",new {p_id = line.item.Id, p_quantity = line.Quantity,p_sid=line.StoreID}, new {@style="color: white;"})</button>
             </td>
         </tr>
     }

@@ -98,7 +98,7 @@ namespace DataAccessLogic
         /// <param name="prod"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        LineItems AddStockToDB(StoreFront store, Products prod, int quantity);
+        LineItems AddStockToDB(int storenumber, int productnumber, int quantity);
 
         /// <summary>
         /// Returns A list of all products currently in the Database

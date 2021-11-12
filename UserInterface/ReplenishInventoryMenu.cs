@@ -120,7 +120,7 @@ namespace UserInterface
 
                         _lines = parameterInter.VerifyStock(productsname, store);
                         loop = false;
-                        if (mod.Exists(x => x.ProductEstablish.Name == _lines.ProductEstablish.Name))
+                        if (mod.Exists(x => x.Product_obj.Name == _lines.Product_obj.Name))
                         {
                             Console.WriteLine("\tThis item is already in the queue to restock");
 
@@ -189,7 +189,7 @@ namespace UserInterface
                 }//end of while
                 foreach (LineItems s in mod)
                 {
-                    parameterInter.ModifyStockTable(store.Id, s.ProductEstablish.Id, s.Quantity);
+                    parameterInter.ModifyStockTable(store.Id, s.Product_obj.Id, s.Quantity);
                     Console.WriteLine("Record has been updated");
                 }
 

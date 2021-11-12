@@ -152,10 +152,10 @@ namespace UserInterface
                         Console.WriteLine("\tOrder Id number: " + history.OrderId);
                         Console.WriteLine("\tBought from the store: " + history.Store_obj.StoreName + " located in " + history.Store_obj.Location);
                         Console.WriteLine("\tPurchase the following:");
-                        foreach (LineItems s in history.ItemsList)
-                        {
-                            Console.WriteLine("\t" + s.ProductEstablish.Name);
-                        }
+                        // foreach (LineItems s in history.ItemsList)
+                        // {
+                        //     Console.WriteLine("\t" + s.Product_obj.Name);
+                        // }
                         Console.WriteLine("\tTotal cost of order was: " + history.Total);
                         Console.WriteLine("====================");
                     }

@@ -80,6 +80,7 @@ namespace DataAccessLogic
 
                 entity.ToTable("OrderHistory");
 
+                entity.Property(e => e.OrderId).HasColumnName("OrderId");
                 entity.Property(e => e.ReferenceId).HasColumnName("ReferenceID");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");

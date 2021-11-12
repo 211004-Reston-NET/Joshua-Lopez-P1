@@ -16,14 +16,11 @@ namespace WebUI.Models
             this.CustomerId = facility.CustomerId;
             this.StoreFrontId=facility.StoreId;
             this.TotalPrice=facility.Total;
-            //idk how this worked
-            foreach(LineItems x in facility.ItemsList)
-            {
-                this.ItemId=x.ProductEstablish.Id;
-                this.ItemName=x.ProductEstablish.Name;
-                this.Quantity=x.Quantity;
+                // this.ItemId=x.Product_obj.Id;
+                // this.ItemName=x.Product_obj.Name;
+                // this.Quantity=x.Quantity;
 
-            }
+            
             
         }
         public int Id { get; set; }

@@ -93,9 +93,9 @@ namespace BusinessLogic
            return _repo.GetAllProductsDL();
         }
 
-        public LineItems AddStock(StoreFront id, Products Id, int quantity)
+        public LineItems AddStock(int storenumber, int productnumber, int quantity)
         {
-            return _repo.AddStockToDB(id,Id,quantity);
+            return _repo.AddStockToDB(storenumber,productnumber,quantity);
         }
 
         public bool VerifyProduct(int identification)

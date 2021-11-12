@@ -7,13 +7,6 @@ namespace Models
         public int StoreID { get; set; }
         public int ProductID { get; set; }
 
-        private Products _product;
-        public Products ProductEstablish
-        {
-            get { return _product; }
-            set { _product = value; }
-        }
-
 
         private int _quantity;
         public int Quantity
@@ -22,10 +15,6 @@ namespace Models
             set { _quantity = value; }
         }
 
-        public override string ToString()
-        {
-            return $"{_product}\tquantity available : {_quantity}\n";
-        }
 
         public int AmountGrab()
         {
