@@ -93,9 +93,9 @@ namespace BusinessLogic
            return _repo.GetAllProductsDL();
         }
 
-        public LineItems AddStock(StoreFront id, Products Id, int quantity)
+        public LineItems AddStock(int storenumber, int productnumber, int quantity)
         {
-            return _repo.AddStockToDB(id,Id,quantity);
+            return _repo.AddStockToDB(storenumber,productnumber,quantity);
         }
 
         public bool VerifyProduct(int identification)
@@ -138,11 +138,6 @@ namespace BusinessLogic
             _repo.ModifyStockTable(storenumber,productnumber,quantity);
         }
 
-        public List<Orders> GetMyOrderHistory(int objId)
-        {
-            return _repo.GetMyOrderHistory(objId);
-        }
-
         public List<Orders> GetStoreOrderHistory(int objId)
         {
             return _repo.GetStoreOrderHistory(objId);
@@ -151,6 +146,11 @@ namespace BusinessLogic
         public decimal FindProductPrice(int p_productId)
         {
            return  _repo.FindProductPrice(p_productId);;
+        }
+
+        public List<OrderLines> GetMyOrderHistory(int objId)
+        {
+            return _repo.GetMyOrderHistory(objId);
         }
     }
 }

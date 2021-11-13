@@ -103,7 +103,7 @@ namespace BusinessLogic
         /// <param name="prod"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        LineItems AddStock(StoreFront id, Products Id, int quantity);
+        LineItems AddStock(int storenumber, int productnumber, int quantity);
 
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace BusinessLogic
         /// <returns></returns>
         bool VerifyProduct(int identification);
         /// <summary>
-        /// Returns a Product with information retrieved from the db
+        /// Returns a Product with information retrieved from the db uses product id number as parameter
         /// </summary>
         /// <param name="productid"></param>
         /// <returns>Product if not an exception</returns>
@@ -167,12 +167,6 @@ namespace BusinessLogic
         void ModifyStockTable(int storenumber, int productnumber, int quantity);
 
         /// <summary>
-        /// Receives the Id of the Customer/current user in order to search for that users order history in the db
-        /// </summary>
-        /// <param name="objId"></param>
-        /// <returns>a list of all orders related to the received id</returns>
-        List<Orders> GetMyOrderHistory(int objId);
-        /// <summary>
         /// Receives the Id of the store in order to search for that stores order history in the db
         /// </summary>
         /// <param name="objId"></param>
@@ -182,6 +176,14 @@ namespace BusinessLogic
         List<Orders> GetAllOrdersBL();
         
         decimal FindProductPrice(int p_productId);
+
+        /// <summary>
+        /// Receives the Id of the Customer/current user in order to search for that users order history in the db
+        /// </summary>
+        /// <param name="CustomerId"></param>
+        /// <returns>a list of all orders related to the received id</returns>
+
+        List<OrderLines> GetMyOrderHistory(int objId);
 
         
 

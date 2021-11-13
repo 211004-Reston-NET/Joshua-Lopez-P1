@@ -20,14 +20,23 @@ namespace WebUI.Controllers
         }
 
         // GET: RestaurantController
-        public ActionResult Index(decimal cost)
+        public ActionResult Index()
 
         {
             ViewBag.testname = SingletonVM.currentuser.Name;
             ViewBag.Classified=SingletonVM.currentuser.Position;
-            ViewBag.test=cost;
+           
 
             return View();
+        }
+        
+
+        public ActionResult LogOut()
+
+        {
+            SingletonVM.currentuser=null;
+            return RedirectToAction("Index", "Home");
+
         }
 
         public ActionResult AllCustomers()
@@ -146,10 +155,23 @@ namespace WebUI.Controllers
             ViewBag.Age = SingletonVM.currentuser.Age;
             ViewBag.Position = SingletonVM.currentuser.Position;
             ViewBag.Currency = SingletonVM.currentuser.Currency;
-            return View(iObj.GetMyOrderHistory(SingletonVM.currentuser.Id)
+            List<OrderLines> myorders=iObj.GetMyOrderHistory(SingletonVM.currentuser.Id);
+            List<OrdersVM> x= new List<OrdersVM>();
+            foreach(OrderLines data in myorders)
+            {
+                OrdersVM obj=new OrdersVM();
+                obj.CustomerId=SingletonVM.currentuser.Id;
+                obj.Id=data.OrderId;
+                obj.StoreFrontId=data.StoreId;
+                obj.TotalPrice=data.Order_obj.Total;
+                obj.ItemId=data.ProductId;
+                obj.ItemName=data.Product_obj.Name;
+
+            }
+
+            return View(myorders
                         .Select(rest => new OrdersVM(rest))
-                        .ToList()
-            );
+                        .ToList());
 
 
         }

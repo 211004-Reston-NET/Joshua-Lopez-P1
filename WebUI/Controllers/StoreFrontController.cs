@@ -35,6 +35,50 @@ namespace WebUI.Controllers
                         .ToList()
             );
         }
+        public ActionResult AddItemToStore(int p_sid)
+        {
+            ViewBag.StoreIdentifier=p_sid;
+            //Passing the restaurant to the ReplenishInventory view
+            return View(iObj.GetAllProductsBL()
+                        .Select(rest => new ProductsVM(rest))
+                        .ToList());
+        }
+
+        [HttpGet]
+        public IActionResult ConfirmAddition(int p_ProductId, int p_quantity, int p_StoreId)
+        {
+            ViewBag.Amount = p_quantity;
+            ViewBag.Store = p_StoreId;
+            ViewBag.Product = p_ProductId;
+
+            return View(new ProductsVM(iObj.GetProduct(p_ProductId)));
+        }
+
+
+        // POST: RestaurantController/ShowProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmAddition(int p_id, int p_quantity, int p_sid, IFormCollection collection)
+        {
+            
+            
+           try
+           {
+                iObj.AddStock(p_sid, p_id, p_quantity);
+                return RedirectToAction("SelectStore", "StoreFront");
+           }
+           catch (System.Exception)
+           {
+               ViewBag.Error="This Store Already has this item";
+
+               
+               return View();
+           }
+
+        }
+
+
+
 
 
         public ActionResult StoreItems(int p_id, int p_sid)
@@ -77,9 +121,6 @@ namespace WebUI.Controllers
 
                 return View();
             }
-
-
-
         }
 
 
@@ -99,11 +140,7 @@ namespace WebUI.Controllers
                         .Select(rest => new LineItemVM(rest))
                         .ToList());
         }
-        // public ActionResult ModifyCart()
-        // {
 
-        //     return RedirectToAction("Cart","StoreFront");
-        // }
 
         [HttpGet]
         public ActionResult Cart(int p_id, int p_sid, double p_price, string p_name)
@@ -113,7 +150,7 @@ namespace WebUI.Controllers
                 decimal cost = 0;
                 for (int i = 0; i < test.Count; i++)
                 {
-                    cost = cost+ test[i].Quantity * test[i].ProductEstablish.Price;
+                    cost = cost + test[i].Quantity * test[i].Product_obj.Price;
 
                 }
 
@@ -132,13 +169,13 @@ namespace WebUI.Controllers
                 Products x = new Products();
                 x.Name = p_name;
                 x.Price = Convert.ToDecimal(p_price);
-                cartitem.ProductEstablish = x;
+                cartitem.Product_obj = x;
 
                 test.Add(cartitem);
                 decimal cost = 0;
                 for (int i = 0; i < test.Count; i++)
                 {
-                    cost = cost+ test[i].Quantity * test[i].ProductEstablish.Price;
+                    cost = cost + test[i].Quantity * test[i].Product_obj.Price;
 
                 }
 
@@ -227,50 +264,50 @@ namespace WebUI.Controllers
 
 
 
-        [HttpGet]
-        public IActionResult Purchase(int p_id, int p_quantity, int p_sid, double p_price)
-        {
-            ViewBag.Amount = p_quantity;
-            ViewBag.Store = p_sid;
-            ViewBag.Product = p_id;
-            ViewBag.Price = p_price;
+        // [HttpGet]
+        // public IActionResult Purchase(int p_id, int p_quantity, int p_sid, double p_price)
+        // {
+        //     ViewBag.Amount = p_quantity;
+        //     ViewBag.Store = p_sid;
+        //     ViewBag.Product = p_id;
+        //     ViewBag.Price = p_price;
 
 
-            return View(new ProductsVM(iObj.GetProduct(p_id)));
-        }
+        //     return View(new ProductsVM(iObj.GetProduct(p_id)));
+        // }
 
 
-        // POST: RestaurantController/ShowProduct/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Purchase(int p_id, int p_quantity, int p_sid, double p_price, IFormCollection collection)
-        {
-            // int store=p_sid;
-            // int prod=p_sid;
-            // int total=p_quantity;
-            try
-            {
+        // // POST: RestaurantController/ShowProduct/5
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public ActionResult Purchase(int p_id, int p_quantity, int p_sid, double p_price, IFormCollection collection)
+        // {
+        //     // int store=p_sid;
+        //     // int prod=p_sid;
+        //     // int total=p_quantity;
+        //     try
+        //     {
 
 
-                Orders test = new Orders();
-                test.StoreId = p_sid;
-                test.CustomerId = SingletonVM.currentuser.Id;
-                test.Total = Convert.ToDecimal(p_quantity * p_price);
+        //         Orders test = new Orders();
+        //         test.StoreId = p_sid;
+        //         test.CustomerId = SingletonVM.currentuser.Id;
+        //         test.Total = Convert.ToDecimal(p_quantity * p_price);
 
-                iObj.AddOrdersBL(test);
+        //         iObj.AddOrdersBL(test);
 
-                iObj.InsertHistory(p_sid, p_id, test.OrderId, SingletonVM.currentuser.Id, p_quantity);
-                // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
-                // _restBL.DeleteRestaurant(toBeDeleted);
-                return RedirectToAction("Index", "Customer");
-            }
-            catch (System.Exception)
-            {
+        //         iObj.InsertHistory(p_sid, p_id, test.OrderId, SingletonVM.currentuser.Id, p_quantity);
+        //         // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
+        //         // _restBL.DeleteRestaurant(toBeDeleted);
+        //         return RedirectToAction("Index", "Customer");
+        //     }
+        //     catch (System.Exception)
+        //     {
 
-                return View();
-            }
+        //         return View();
+        //     }
 
-        }
+        // }
 
 
 

@@ -1,5 +1,13 @@
 @model IEnumerable<WebUI.Models.StoreFrontVM>
-
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Login</title>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+</head>
 <a class="btn btn-primary text-white" asp-controller="StoreFront" asp-action="Search">Search Store</a>
 <h1>List of StoreFronts</h1>
 
@@ -27,8 +35,5 @@
             
         </tr>
     }
-    
-    
-        
     
 </table>

@@ -10,20 +10,17 @@ namespace WebUI.Models
     public class OrdersVM
     {
         public OrdersVM() { }
-        public OrdersVM(Orders facility)
+        public OrdersVM(OrderLines facility)
         {
             this.Id = facility.OrderId;
             this.CustomerId = facility.CustomerId;
             this.StoreFrontId=facility.StoreId;
-            this.TotalPrice=facility.Total;
-            //idk how this worked
-            foreach(LineItems x in facility.ItemsList)
-            {
-                this.ItemId=x.ProductEstablish.Id;
-                this.ItemName=x.ProductEstablish.Name;
-                this.Quantity=x.Quantity;
+            this.TotalPrice=facility.Order_obj.Total;
+                this.ItemId=facility.Product_obj.Id;
+                this.ItemName=facility.Product_obj.Name;
+                this.Quantity=facility.LineQuantity;
 
-            }
+            
             
         }
         public int Id { get; set; }

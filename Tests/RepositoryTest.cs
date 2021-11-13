@@ -195,14 +195,14 @@ namespace Tests
                 List<Orders> test = repo.GetAllOrdersDL();
 
                 //Assert
-                Assert.Equal(2, test.Count);
+                Assert.Equal(3, test.Count);
                 // Orders result = test.Find(x => x.OrderId == 2);
 
                 Assert.NotNull(test);
 
-                // Assert.Equal(1, test[0].StoreId);
-                // Assert.Equal(2, test[0].CustomerId);
-                // Assert.Equal(45, test[0].Total);
+                Assert.Equal(2, test[2].StoreId);
+                Assert.Equal(1, test[2].CustomerId);
+                Assert.Equal(50, test[2].Total);
             }
         }
 
@@ -232,7 +232,7 @@ namespace Tests
             //Assert
             using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
             {
-                Orders result = contexts.OrdersRecords.Find(3);
+                Orders result = contexts.OrdersRecords.Find(4);
 
                 Assert.NotNull(result);
                 Assert.Equal(1, result.CustomerId);
@@ -338,7 +338,7 @@ namespace Tests
                 InterfaceRepository repo = new RespositoryCloud(context);
 
                 //Act
-                List<Orders> result = repo.GetMyOrderHistory(2);
+                List<OrderLines> result = repo.GetMyOrderHistory(2);
                 //Assert
                 Assert.NotNull(result);
 
@@ -414,7 +414,7 @@ namespace Tests
 
 
                 Assert.NotNull(result);
-                Assert.Equal(3, result.OrderId);
+                Assert.Equal(4, result.OrderId);
                 Assert.Equal(1, result.CustomerId);
                 Assert.Equal(1, result.StoreId);
             }
@@ -476,6 +476,37 @@ namespace Tests
                 // Assert.Equal(1, test[0].ProductID);
                 // Assert.Equal(10, test[0].Quantity);
             }
+        }
+        [Fact]
+
+        public void AddStocktodb()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+                int store=2;
+                int prod=1;
+                int quantity=20;
+
+                //Act
+                repo.AddStockToDB(store,prod,quantity);
+            }
+
+            //Second using block will find that Customer and see if it is similar to what we added
+            //Assert
+            using (P0DatabaseContext contexts = new P0DatabaseContext(_options))
+            {
+                InterfaceRepository repo = new RespositoryCloud(contexts);
+                List<LineItems> result = repo.GetInventory(2);
+
+
+                Assert.NotNull(result);
+                Assert.Equal(2,result.Count);
+                
+            }
+
         }
 
 
@@ -587,14 +618,21 @@ namespace Tests
                     {
                         CustomerId = 1,
                         StoreId = 2,
-                        Total = 20
+                        Total = 50
                     },
-                    new Orders
+                   new Orders
                     {
-                        CustomerId = 2,
+                     CustomerId = 2,
                         StoreId = 1,
-                        Total = 45
-                    }
+                       Total = 45
+                    },
+                   new Orders
+                   {
+                       CustomerId = 1,
+                       StoreId = 1,
+                       Total = 6
+                   }
+
                 );
 
                 context.Stocks.AddRange(

@@ -135,13 +135,13 @@ namespace DataAccessLogic
             //Gets all information in the Stock table related to the received store id 
             listofline = GetInventory(chosen.Id);
             //checks the now filled list of the stores if the store contains a line item with the received product number
-            bool result = listofline.Exists(x => x.ProductEstablish.Id == productnum);//exists returns a boolean value
+            bool result = listofline.Exists(x => x.Product_obj.Id == productnum);//exists returns a boolean value
             if (result == false)
             {
                 throw new Exception("Product Not found in store");
             }
             //if an exception was never thrown then it will look for that received identification number and set it to the created line item
-            obj = listofline.FirstOrDefault(prodobj => prodobj.ProductEstablish.Id == productnum);
+            obj = listofline.FirstOrDefault(prodobj => prodobj.Product_obj.Id == productnum);
             return obj;
         }
 
@@ -167,9 +167,12 @@ namespace DataAccessLogic
 
 
 
-        public LineItems AddStockToDB(StoreFront store, Products prod, int quantity)
+        public LineItems AddStockToDB(int storenumber, int productnumber, int quantity)
         {  //this line item is just to return something for test purposes
             LineItems test = new LineItems();
+            test.StoreID=storenumber;
+            test.ProductID=productnumber;
+            test.Quantity=quantity;
             _context.Stocks.Add
            (test
 
@@ -253,7 +256,7 @@ namespace DataAccessLogic
             {
                 LineItems test = new LineItems();
                 //mapping /creating a new models product with the current info of the query
-                test.ProductEstablish = new Products()
+                test.Product_obj = new Products()
                 {
                     Price = row.Product_obj.Price,
                     Name = row.Product_obj.Name,
@@ -356,54 +359,6 @@ namespace DataAccessLogic
             _context.SaveChanges();
         }
 
-        public List<Orders> GetMyOrderHistory(int objId)
-        {
-            //searchs the essentially Line Items table and takes all the rows where the customer id is equal to the received obj number
-            var searchresult = from compl in _context.OrderHistories
-                               where compl.CustomerId == objId
-                               select new { compl.Order_obj, compl.Product_obj, compl.Store_obj, compl.LineQuantity };
-
-
-            //Mapping the Queryable<Entity.Orders> into a list<Orders>
-            List<Orders> listofItems = new List<Orders>();
-
-            foreach (var row in searchresult)
-            {
-                LineItems test = new LineItems();
-                Orders mine = new Orders();
-
-                test.ProductEstablish = new Products()
-                {
-                    Price = row.Product_obj.Price,
-                    Name = row.Product_obj.Name,
-                    Id = row.Product_obj.Id,
-                    Description = row.Product_obj.Description,
-                    Category = row.Product_obj.Category
-
-                };
-                // mine.OrderId = row.Order_obj.OrderId;
-                // mine.Total = row.Order_obj.Total;
-                // mine.ItemsList.Add(test);
-                // mine.Store_obj = new StoreFront()
-                // {
-                //     StoreName = row.Store_obj.StoreName,
-                //     Location = row.Store_obj.Location,
-                //     Id = row.Store_obj.Id
-                // };
-                mine.CustomerId = objId;
-                mine.StoreId = row.Store_obj.Id;
-                mine.Total = row.Order_obj.Total;
-                mine.OrderId = row.Order_obj.OrderId;
-                test.Quantity = row.LineQuantity;
-                mine.ItemsList.Add(test);
-
-                listofItems.Add(mine);
-            }
-
-
-            return listofItems;
-        }
-
         public List<Orders> GetStoreOrderHistory(int objId)
         {
             var result = from compl in _context.OrderHistories
@@ -419,7 +374,7 @@ namespace DataAccessLogic
                 LineItems test = new LineItems();
                 Orders mine = new Orders();
 
-                test.ProductEstablish = new Products()
+                test.Product_obj = new Products()
                 {
                     //Price = rev.Product.Price,
                     //Name = rev.Product.Name,
@@ -463,5 +418,45 @@ namespace DataAccessLogic
                 return itemPrice;
             }
         }
+
+        public List<OrderLines> GetMyOrderHistory(int objId)
+        {
+            var searchresult = from compl in _context.OrderHistories
+                               where compl.CustomerId == objId
+                               select new { compl.Order_obj, compl.Product_obj, compl.Store_obj, compl.LineQuantity };
+
+
+            //Mapping the Queryable<Entity.Orders> into a list<Orders>
+            List<OrderLines> listofItems = new List<OrderLines>();
+
+            foreach (var row in searchresult)
+            {
+                LineItems test = new LineItems();
+                OrderLines mine = new OrderLines();
+
+                test.Product_obj = new Products()
+                {
+                    Price = row.Product_obj.Price,
+                    Name = row.Product_obj.Name,
+                    Id = row.Product_obj.Id,
+                    Description = row.Product_obj.Description,
+                    Category = row.Product_obj.Category
+
+                };
+          
+                mine.CustomerId = objId;
+                mine.StoreId = row.Store_obj.Id;
+                mine.Order_obj = row.Order_obj;
+                mine.OrderId = row.Order_obj.OrderId;
+                mine.LineQuantity = row.LineQuantity;
+
+                mine.Product_obj=row.Product_obj;
+
+                listofItems.Add(mine);
+            }
+
+
+            return listofItems;
+        }
+        }
     }
-}
