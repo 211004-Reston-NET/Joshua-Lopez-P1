@@ -1,25 +1,30 @@
 @model WebUI.Models.StoreFrontVM
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CreateStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
      <script type="text/javascript">
         function preventBack() { window.history.forward(); }
         setTimeout("preventBack()", 0);
         window.onunload = function () { null };
     </script>
-</head>
-
+</head> 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <h1 class="display-4">Create Store</h1>
 
 <form asp-action="CreateStore">
     <div asp-validation-summary="ModelOnly"></div>
-    <div class="col-auto">
+    <div class="mb-3">
         <label asp-for="Name" class="form-label">Name</label>
-        <input asp-for="Name" type="text" class="form-control">
+        <input asp-for="Name" type="text" class="w3-input w3-border w3-animate-input" style="width:30%">
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Address" class="form-label">Address</label>
-        <input asp-for="Address" type="text" class="form-control">
+        <input asp-for="Address" type="text" class="w3-input w3-border w3-animate-input" style="width:30%">
         <span asp-validation-for="Address" class="text-danger"></span>
     </div>
 
