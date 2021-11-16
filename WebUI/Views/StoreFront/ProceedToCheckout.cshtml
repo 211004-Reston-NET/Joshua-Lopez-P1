@@ -10,11 +10,15 @@
         setTimeout("preventBack()", 0);
         window.onunload = function () { null };
     </script>
+<link rel="stylesheet" href="~/css/Tables.css" />    
 </head>
-<link rel="stylesheet" href="~/css/Tables.css" />
+
+
+
 <h1>List of Products</h1>
 <form asp-action="">
 <table class="table table-striped table-hover">
+    <caption>Confirming your purchase of the following products</caption>
     <tr>
         <th scope="col">Store Id Number</th>
         <th scope="col">Id Number</th>

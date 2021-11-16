@@ -12,18 +12,22 @@
         setTimeout("preventBack()", 0);
         window.onunload = function () { null };
     </script>
+    <style>
+        body {
+  background-image: url('images/logo.JPG');
+  background-size: cover;
+}
+    </style>
 </head>
 
 
 <div class="text-center">
-    <h1>Welcome To the Lopez shopping center</h1>
-    <p>Click one of the following options.</p>
-
     <a asp-controller="Customer" asp-action="CreateCustomer"><img alt="Create Account" src="https://thumbs.dreamstime.com/b/create-account-189901743.jpg"
-         width="250" height="170"></a>
+         width="250" height="170" align="Left"></a>
     <a asp-controller="Customer" asp-action="Login">
          <img alt="Login" src="https://thumbs.dreamstime.com/b/vector-illustration-isolated-white-background-login-button-icon-127000119.jpg"
-         width="250" height="170">
+         width="250" height="170" align="Right">
       </a>
+      
 
 </div>

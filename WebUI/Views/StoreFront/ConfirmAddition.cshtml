@@ -1,5 +1,5 @@
 @model WebUI.Models.ProductsVM
-<link rel="stylesheet" href="~/css/Tables.css" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 @if (ViewBag.Error == null)
     {
 <h1 class="display-4">Confirm Addition</h1>
@@ -19,11 +19,11 @@
             <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Name)</span>
         </dt>
         <dt>
-            City:
+            Description:
             <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Description)</span>
         </dt>
         <dt>
-            State:
+            Category:
             <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Category)</span>
         </dt>
    
@@ -36,7 +36,7 @@
             <div class="mb-3">
 
         <label  class="form-label">Amount</label>
-        <input  type="Number" step=1 class="form-control" name="p_quantity">
+        <input  type="Number" step=1 class="w3-input w3-border w3-animate-input" style="width:30%" name="p_quantity">
         
         <span  class="text-danger"></span>
     </div>

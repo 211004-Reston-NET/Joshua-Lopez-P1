@@ -1,5 +1,5 @@
 @model WebUI.Models.ProductsVM
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <h1 class="display-4">Edit Stock</h1>
 
 <div >
@@ -34,7 +34,7 @@
             <div class="mb-3">
 
         <label  class="form-label">Amount</label>
-        <input  type="Number" step=1 class="form-control" name="p_quantity"value=@ViewBag.Amount >
+        <input  type="Number" step=1 class="w3-input w3-border w3-animate-input" style="width:30%" name="p_quantity"value=@ViewBag.Amount >
         
         <span  class="text-danger"></span>
     </div>
