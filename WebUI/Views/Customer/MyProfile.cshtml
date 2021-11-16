@@ -1,4 +1,5 @@
 @model IEnumerable<WebUI.Models.OrdersVM>
+<link rel="stylesheet" href="~/css/Tables.css" />
 
 <h2>My Information:</h2>
 <table class="table table-striped">
@@ -31,7 +32,7 @@
         <td>$@ViewBag.Currency</td>
     </tr>
 
-
+    <a class="btn btn-primary text-white" asp-controller="Customer" asp-action="EditMyProfile">Edit Profile</a>
 
 </table>
 <h2> My List of Orders</h2>
@@ -49,20 +50,11 @@
 
 
     </tr>
-    @* @foreach(StoreFrontVM item in Model)
-        {
-        <tr>
-        <td>@Html.DisplayFor(modelItem => item.Id)</td>
-        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-        <td>@Html.DisplayFor(modelItem => item.Address)</td>
 
-        </tr>
-        } *@
     @foreach (OrdersVM item in Model)
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Id)</td>
-            @* <td>@Html.DisplayFor(modelItem => item.CustomerId)</td> *@
             <td>@Html.DisplayFor(modelItem => item.StoreFrontId)</td>
             <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
             <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
@@ -73,4 +65,3 @@
 
     }
 </table>
-<a class="btn btn-primary text-white" asp-controller="Customer" asp-action="EditMyProfile">Edit Profile</a>

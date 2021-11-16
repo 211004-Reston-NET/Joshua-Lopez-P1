@@ -19,9 +19,15 @@ namespace WebUI.Models
                 this.ItemId=facility.Product_obj.Id;
                 this.ItemName=facility.Product_obj.Name;
                 this.Quantity=facility.LineQuantity;
+        }
 
-            
-            
+         public OrdersVM(Orders facility)
+        {
+            this.Id = facility.OrderId;
+            this.CustomerId = facility.CustomerId;
+            this.StoreFrontId=facility.StoreId;
+            this.TotalPrice=facility.Total;
+
         }
         public int Id { get; set; }
         [Required]

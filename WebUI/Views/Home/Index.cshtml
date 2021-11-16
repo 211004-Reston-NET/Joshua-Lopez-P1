@@ -1,26 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
 <head>
-    <meta name="viewport" content="width=device-width"/>
-    <title>Login</title>
-    <script type="text/javascript">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
         setTimeout("preventBack()", 0);
         window.onunload = function () { null };
     </script>
 </head>
+
+
 <div class="text-center">
     <h1>Welcome To the Lopez shopping center</h1>
     <p>Click one of the following options.</p>
 
-    <a asp-controller="Customer" asp-action="CreateCustomer">Click here to Create an account</a>
-    <p></p>
-    <a asp-controller="Customer" asp-action="Login">Click here to go to Login Menu</a>
-    <p></p>
- 
+    <a asp-controller="Customer" asp-action="CreateCustomer"><img alt="Create Account" src="https://thumbs.dreamstime.com/b/create-account-189901743.jpg"
+         width="250" height="170"></a>
+    <a asp-controller="Customer" asp-action="Login">
+         <img alt="Login" src="https://thumbs.dreamstime.com/b/vector-illustration-isolated-white-background-login-button-icon-127000119.jpg"
+         width="250" height="170">
+      </a>
 
-
-    @* <a asp-controller="Customer" asp-action="Index2">Click here to go to Store View</a> *@
 </div>

@@ -8,23 +8,21 @@
         window.onunload = function () { null };
     </script>
 </head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <form asp-action="Login">
     <div asp-validation-summary="ModelOnly"></div>
     <div class="mb-3">
         <label  class="form-label">UserName</label>
-        <input name="Username" id="Username" type="Text" class="form-control">
+        <input name="Username" id="Username" type="Text" class="w3-input w3-border w3-animate-input" style="width:30%">
         <span name="Username" id="Username" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label class="form-label">Password</label>
-        <input name="Password" id="Password" type="Password" class="form-control">
+        <input name="Password" id="Password" type="Password" class="w3-input w3-border w3-animate-input" style="width:30%">
         <span name="Password" id="Password" class="text-danger"></span>
     </div>
-
-@* <input type="text" name="Username" id="Username" />
-   <input type="Password" name="Password" id="Password" /> *@
 
         
 

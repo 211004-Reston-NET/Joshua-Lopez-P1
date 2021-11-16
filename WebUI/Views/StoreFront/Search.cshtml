@@ -1,15 +1,12 @@
 @model IEnumerable<WebUI.Models.StoreFrontVM>
+    <link rel="stylesheet" href="~/css/Tables.css" />
     <form asp-action="Search">
     <div asp-validation-summary="ModelOnly"></div>
     <div class="mb-3">
         <label  class="form-label">Search Store Name</label>
-        <input name="Username" id="Username" type="Text" class="form-control">
-        <span name="Username" id="Username" class="text-danger"></span>
+        <input name="SearchWord"  type="Text" class="form-control">
+        <span name="SearchWord"  class="text-danger"></span>
     </div>
-
-
-@* <input type="text" name="Username" id="Username" />
-   <input type="Password" name="Password" id="Password" /> *@
 
     <button type="submit" class="btn btn-primary" value="Search">Submit</button>
 </form>
@@ -33,9 +30,6 @@
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Address)</td>
                  <td>
-                <!--First parameter of ActionLink is the name it will give for this element -->
-                <!--Second parameter will point to the action of the restaurant controller-->
-                <!--Third parameter will give the information from the view to the controller-->
                 <button class="btn btn-danger">@Html.ActionLink("ViewProducts","SeeItems",new {p_id = item.Id,p_sid=item.Id}, new {@style="color: white;"})</button>
               </td>
             

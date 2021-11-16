@@ -12,8 +12,8 @@ namespace WebUI.Controllers
 {
     public class CustomerController : Controller
     {
-        // static CustomerVM testing = new CustomerVM();
-        private InterfaceBL iObj;
+     
+        private readonly InterfaceBL iObj;
         public CustomerController(InterfaceBL p_Inter)
         {
             iObj = p_Inter;
@@ -35,6 +35,7 @@ namespace WebUI.Controllers
 
         {
             SingletonVM.currentuser=null;
+            
             return RedirectToAction("Index", "Home");
 
         }

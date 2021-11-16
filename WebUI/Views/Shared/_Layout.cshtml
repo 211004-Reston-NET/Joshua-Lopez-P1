@@ -9,15 +9,19 @@
     <title>@ViewData["Title"] - WebUI</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-     <script type="text/javascript">
-        function preventBack() { window.history.forward(); }
-        setTimeout("preventBack()", 0);
-        window.onunload = function () { null };
-    </script>
+    
+     <style>
+        body {
+  background-image: url('https://cdn.impactinit.com/cdn/x/x@07483fc938/smss53/smsimg27/pv/ingram/02i99245.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 105% 100%;
+}
+</style>
 </head>
 
 
-<body>
+<body >
 
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -28,11 +32,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="nav nav-tabs">
                         @if (SingletonVM.currentuser is null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home"
@@ -54,12 +58,10 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="StoreFront"
-                                   asp-action="Cart">Cart</a>
+                                   asp-action="Cart"><img alt="Cart" src="https://thumbs.dreamstime.com/b/shopping-cart-icon-vector-eps-trolley-logo-web-icons-shop-button-182252657.jpg"
+                                   width="30" height="30"></a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer"
-                                   asp-action="LogOut">Log Out</a>
-                            </li>
+                            
 
                             @if (SingletonVM.currentuser.Position is "Manager")
                             {
@@ -69,6 +71,10 @@
                                 </li>
 
                             }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="StoreFront"
+                                   asp-action="LogOut">Log Out</a>
+                            </li>
 
                         }
 
