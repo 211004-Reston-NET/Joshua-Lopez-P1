@@ -13,7 +13,7 @@ namespace WebUI.Controllers
     public class StoreFrontController : Controller
     {
         static List<LineItems> test = new List<LineItems>();
-        private InterfaceBL iObj;
+        private readonly InterfaceBL iObj;
         public StoreFrontController(InterfaceBL p_Inter)
         {
             iObj = p_Inter;
@@ -25,11 +25,18 @@ namespace WebUI.Controllers
         {
             return View();
         }
+        public ActionResult LogOut()
+
+        {
+            SingletonVM.currentuser=null;
+            test.Clear();
+            
+            return RedirectToAction("Index", "Home");
+
+        }
         public ActionResult SelectStore(int p_sid)
         {
-            //We got our list of restaurant from our business layer
-            //We converted that Model restaurant into RestaurantVM using Select method
-            //Finally we changed it to a List with ToList()
+
             return View(iObj.GetAllStoreFrontsBL()
                         .Select(rest => new StoreFrontVM(rest))
                         .ToList()
@@ -37,7 +44,7 @@ namespace WebUI.Controllers
         }
         public ActionResult AddItemToStore(int p_sid)
         {
-            ViewBag.StoreIdentifier=p_sid;
+            ViewBag.StoreIdentifier = p_sid;
             //Passing the restaurant to the ReplenishInventory view
             return View(iObj.GetAllProductsBL()
                         .Select(rest => new ProductsVM(rest))
@@ -60,20 +67,20 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ConfirmAddition(int p_id, int p_quantity, int p_sid, IFormCollection collection)
         {
-            
-            
-           try
-           {
+
+
+            try
+            {
                 iObj.AddStock(p_sid, p_id, p_quantity);
                 return RedirectToAction("SelectStore", "StoreFront");
-           }
-           catch (System.Exception)
-           {
-               ViewBag.Error="This Store Already has this item";
+            }
+            catch (System.Exception)
+            {
+                ViewBag.Error = "This Store Already has this item";
 
-               
-               return View();
-           }
+
+                return View();
+            }
 
         }
 
@@ -83,12 +90,12 @@ namespace WebUI.Controllers
 
         public ActionResult StoreItems(int p_id, int p_sid)
         {
-            //Passing the restaurant to the ReplenishInventory view
+       
             return View(iObj.GetInventory(p_id)
                         .Select(rest => new LineItemVM(rest))
                         .ToList());
         }
-        // GET: RestaurantController/Delete/5
+        
 
         [HttpGet]
         public IActionResult EditStock(int p_id, int p_quantity, int p_sid)
@@ -106,14 +113,11 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditStock(int p_id, int p_quantity, int p_sid, IFormCollection collection)
         {
-            // int store=p_sid;
-            // int prod=p_sid;
-            // int total=p_quantity;
+
             try
             {
                 iObj.ModifyStockTable(p_sid, p_id, p_quantity);
-                // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
-                // _restBL.DeleteRestaurant(toBeDeleted);
+
                 return RedirectToAction(nameof(Index));
             }
             catch (System.Exception)
@@ -121,6 +125,15 @@ namespace WebUI.Controllers
 
                 return View();
             }
+        }
+
+        public ActionResult ShowStoreHistory(int p_sid)
+        {
+
+            return View(iObj.GetStoreOrderHistory(p_sid)
+                        .Select(rest => new OrdersVM(rest))
+                        .ToList()
+            );
         }
 
 
@@ -135,7 +148,7 @@ namespace WebUI.Controllers
         }
         public ActionResult SeeItems(int p_id, int p_sid, double p_price, string p_name)
         {
-            //Passing the restaurant to the ReplenishInventory view
+            
             return View(iObj.GetInventory(p_id)
                         .Select(rest => new LineItemVM(rest))
                         .ToList());
@@ -166,12 +179,33 @@ namespace WebUI.Controllers
                 LineItems cartitem = new LineItems();
                 cartitem.ProductID = p_id;
                 cartitem.StoreID = p_sid;
+                cartitem.Quantity=1;
                 Products x = new Products();
                 x.Name = p_name;
                 x.Price = Convert.ToDecimal(p_price);
                 cartitem.Product_obj = x;
+                bool verified=false;
+                for(int i =0;i<test.Count;i++)
+                {
+                    if(test[i].ProductID==p_id)
+                    {
+                        verified=true;
+                        ViewBag.Message="You already have this product in cart";
+                    }
+                    if(test[i].StoreID!=p_sid)
+                    {
+                        verified=true;
+                        ViewBag.Message="Do not add product from a different store";
+                    }
 
-                test.Add(cartitem);
+                    
+                }
+                if(verified==false)
+                {
+                    test.Add(cartitem);
+                }
+
+                
                 decimal cost = 0;
                 for (int i = 0; i < test.Count; i++)
                 {
@@ -213,6 +247,16 @@ namespace WebUI.Controllers
 
         }
 
+        public IActionResult RemoveCart(int p_StoreId, int p_ProductId)
+        {
+            test.RemoveAll(x => x.ProductID == p_ProductId);
+
+            return RedirectToAction("Cart", "StoreFront");
+
+        }
+
+
+
         [HttpGet]
 
         public IActionResult ProceedToCheckout(decimal p_total)
@@ -220,9 +264,6 @@ namespace WebUI.Controllers
             ViewBag.xyz = p_total;
 
 
-
-
-            // test = iObj.GetOrderID(test);
             return View(test.Select(rest => new LineItemVM(rest))
                         .ToList());
 
@@ -250,65 +291,9 @@ namespace WebUI.Controllers
             ViewBag.purchase = cost;
             test.Clear();
 
-            // test = iObj.GetOrderID(test);
             return RedirectToAction("MyProfile", "Customer");
 
         }
-
-
-        // POST: RestaurantController/ShowProduct/5
-
-
-
-
-
-
-
-        // [HttpGet]
-        // public IActionResult Purchase(int p_id, int p_quantity, int p_sid, double p_price)
-        // {
-        //     ViewBag.Amount = p_quantity;
-        //     ViewBag.Store = p_sid;
-        //     ViewBag.Product = p_id;
-        //     ViewBag.Price = p_price;
-
-
-        //     return View(new ProductsVM(iObj.GetProduct(p_id)));
-        // }
-
-
-        // // POST: RestaurantController/ShowProduct/5
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public ActionResult Purchase(int p_id, int p_quantity, int p_sid, double p_price, IFormCollection collection)
-        // {
-        //     // int store=p_sid;
-        //     // int prod=p_sid;
-        //     // int total=p_quantity;
-        //     try
-        //     {
-
-
-        //         Orders test = new Orders();
-        //         test.StoreId = p_sid;
-        //         test.CustomerId = SingletonVM.currentuser.Id;
-        //         test.Total = Convert.ToDecimal(p_quantity * p_price);
-
-        //         iObj.AddOrdersBL(test);
-
-        //         iObj.InsertHistory(p_sid, p_id, test.OrderId, SingletonVM.currentuser.Id, p_quantity);
-        //         // Restaurant toBeDeleted = _restBL.GetRestaurantById(Id);
-        //         // _restBL.DeleteRestaurant(toBeDeleted);
-        //         return RedirectToAction("Index", "Customer");
-        //     }
-        //     catch (System.Exception)
-        //     {
-
-        //         return View();
-        //     }
-
-        // }
-
 
 
 
@@ -335,53 +320,60 @@ namespace WebUI.Controllers
 
         }
 
-
-        // GET: RestaurantController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public IActionResult CreateStore()
         {
             return View();
         }
 
-        // GET: RestaurantController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: RestaurantController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult CreateStore(StoreFrontVM p_StoreVM)
         {
-            try
+            //This if statement will check if the current model that is being passed through is valid
+            //If not, the asp-validation-for attribute elements will appear and autofill in the proper feedback for the user 
+            //to correct themselves
+            if (ModelState.IsValid)
             {
+                iObj.AddStoreFrontBL(new StoreFront()
+                {
+                    StoreName = p_StoreVM.Name,
+                    Location = p_StoreVM.Address,
+                });
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            //Will return back to the create view if the user didn't specify the right input
+            return View();
         }
 
-        // GET: RestaurantController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public IActionResult CreateProduct()
         {
             return View();
         }
 
-        // POST: RestaurantController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult CreateProduct(ProductsVM p_ViewModel)
         {
-            try
+            //This if statement will check if the current model that is being passed through is valid
+            //If not, the asp-validation-for attribute elements will appear and autofill in the proper feedback for the user 
+            //to correct themselves
+            if (ModelState.IsValid)
             {
+                iObj.AddProductsBL(new Products()
+                {
+                    Name = p_ViewModel.Name,
+                    Price = p_ViewModel.Price,
+                    Description = p_ViewModel.Description,
+                    Category = p_ViewModel.Category
+                });
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            //Will return back to the create view if the user didn't specify the right input
+            return View();
         }
     }
 }

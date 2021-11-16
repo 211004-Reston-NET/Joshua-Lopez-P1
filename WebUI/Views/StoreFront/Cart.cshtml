@@ -1,5 +1,5 @@
 @model IEnumerable<WebUI.Models.LineItemVM>
-
+<link rel="stylesheet" href="~/css/Tables.css" />
 <h1>List of Products</h1>
 <form asp-action="">
 <table class="table table-striped table-hover">
@@ -21,10 +21,8 @@
             @Html.TextBox("p_StoreId",line.StoreID, new { style="color:red",type="hidden",Value=line.StoreID }) 
             @Html.TextBox("p_ProductId",line.ProductID, new { style="color:red",type="hidden",Value=line.ProductID  }) 
              <td>@Html.TextBox("p_quantity",line.Quantity, new { style="color:red",type="Number",Value=line.Quantity }) </td>
-            @* @Html.TextBox("p_Price",line.ProductPrice, new { style="color:red",type="hidden",Value=line.ProductPrice})
-            @Html.TextBox("p_Name",line.ProductName, new { style="color:red",type="hidden",Value=line.ProductName}) *@
-
-            @* <td><input type="Number" step=1 class="form-control" name="p_quantity"> </td> *@
+            <td><button class="btn btn-danger">@Html.ActionLink("Remove from Cart","RemoveCart",new {p_ProductId = line.ProductID,p_StoreId=line.StoreID}, new {@style="color: white;"})</button>
+              </td>
            
 
         </tr>

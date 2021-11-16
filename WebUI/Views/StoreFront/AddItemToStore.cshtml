@@ -1,5 +1,6 @@
 @model IEnumerable<WebUI.Models.ProductsVM>
 
+<link rel="stylesheet" href="~/css/Tables.css" />
 <h1>List of Products</h1>
 
 <table class="table table-striped table-hover">
@@ -27,7 +28,7 @@
                 <!--First parameter of ActionLink is the name it will give for this element -->
                 <!--Second parameter will point to the action of the restaurant controller-->
                 <!--Third parameter will give the information from the view to the controller-->
-                <button class="btn btn-danger">@Html.ActionLink("Confirm","ConfirmAddition",new {p_ProductId = line.Id,p_StoreId=ViewBag.StoreIdentifier}, new {@style="color: white;"})</button>
+                <button class="btn btn-danger">@Html.ActionLink("Select Product","ConfirmAddition",new {p_ProductId = line.Id,p_StoreId=ViewBag.StoreIdentifier}, new {@style="color: white;"})</button>
                 </td>
         </tr>
     }

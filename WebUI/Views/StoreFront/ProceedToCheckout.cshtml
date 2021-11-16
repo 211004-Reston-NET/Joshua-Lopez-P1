@@ -1,5 +1,17 @@
 @model IEnumerable<WebUI.Models.LineItemVM>
-
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+     <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+</head>
+<link rel="stylesheet" href="~/css/Tables.css" />
 <h1>List of Products</h1>
 <form asp-action="">
 <table class="table table-striped table-hover">
@@ -21,11 +33,7 @@
             @Html.TextBox("p_StoreId",line.StoreID, new { style="color:red",type="hidden",Value=line.StoreID }) 
             @Html.TextBox("p_ProductId",line.ProductID, new { style="color:red",type="hidden",Value=line.ProductID  }) 
              <td>@Html.TextBox("p_quantity",line.Quantity, new { style="color:red",type="Number",Value=line.Quantity, @readonly = "readonly"}) </td>
-            @* @Html.TextBox("p_Price",line.ProductPrice, new { style="color:red",type="hidden",Value=line.ProductPrice})
-            @Html.TextBox("p_Name",line.ProductName, new { style="color:red",type="hidden",Value=line.ProductName}) *@
 
-            @* <td><input type="Number" step=1 class="form-control" name="p_quantity"> </td> *@
-           
 
         </tr>
     

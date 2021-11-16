@@ -361,9 +361,9 @@ namespace DataAccessLogic
 
         public List<Orders> GetStoreOrderHistory(int objId)
         {
-            var result = from compl in _context.OrderHistories
+            var result = from compl in _context.OrdersRecords
                          where compl.StoreId == objId
-                         select new { compl.Order_obj, compl.Product_obj, compl.Store_obj };
+                         select new { compl.CustomerId, compl.OrderId, compl.StoreId,compl.Total };
 
 
             //Mapping the Queryable<Entity.Order> into a list<Orders>
@@ -371,27 +371,11 @@ namespace DataAccessLogic
 
             foreach (var rev in result)
             {
-                LineItems test = new LineItems();
                 Orders mine = new Orders();
-
-                test.Product_obj = new Products()
-                {
-                    //Price = rev.Product.Price,
-                    //Name = rev.Product.Name,
-                    //Id = rev.Product.ProductId,
-                    //Description = rev.Product.Description,
-                    //Category = rev.Product.Category
-
-                };
-                //mine.Id = rev.Order.OrderId;
-                //mine.TotalPrice = rev.Order.Total;
-                //mine.ItemsList.Add(test);
-                //mine.Location = new StoreFront()
-                {
-                    //Name = rev.Store.StoreName,
-                    //Address = rev.Store.Location,
-                    //Id = rev.Store.StoreId
-                };
+                mine.CustomerId=rev.CustomerId;
+                mine.OrderId=rev.OrderId;
+                mine.Total=rev.Total;
+                mine.StoreId=rev.StoreId;
 
                 listofItems.Add(mine);
             }
