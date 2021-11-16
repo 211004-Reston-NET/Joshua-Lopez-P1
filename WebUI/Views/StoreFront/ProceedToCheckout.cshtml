@@ -13,7 +13,20 @@
 <link rel="stylesheet" href="~/css/Tables.css" />    
 </head>
 
+@if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+<button class="btn btn-info">@Html.ActionLink("back to cart","Cart", new {@style="color: white;"})</button>
 
+    }
+    else
+    {
+
+   
 
 <h1>List of Products</h1>
 <form asp-action="">
@@ -45,15 +58,6 @@
 
     }
     
-        
-            <!--
-                This input element is hidden because we don't want the user to input some id instead we are just supplying the id w
-                Already have
-            -->
-        
-    
-
-    
 
 </table>
  
@@ -63,3 +67,4 @@
         {
             <p>The Total of your order is $@ViewBag.xyz</p>
         }
+         }

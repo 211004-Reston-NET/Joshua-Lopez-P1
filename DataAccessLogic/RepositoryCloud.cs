@@ -128,12 +128,12 @@ namespace DataAccessLogic
             return test;
         }
 
-        public LineItems VerifyStockDL(int productnum, StoreFront chosen)
+        public LineItems VerifyStockDL(int productnum, int storenum)
         {
            
             
             //Gets all information in the Stock table related to the received store id 
-            List<LineItems> listofline = GetInventory(chosen.Id);
+            List<LineItems> listofline = GetInventory(storenum);
             //checks the now filled list of the stores if the store contains a line item with the received product number
             bool result = listofline.Exists(x => x.Product_obj.Id == productnum);//exists returns a boolean value
             if (result == false)

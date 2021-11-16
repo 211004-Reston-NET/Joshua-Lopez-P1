@@ -56,10 +56,10 @@ namespace DataAccessLogic
         /// <summary>
         /// This method verifies if the stock is in the specified store as well
         /// </summary>
-        /// <param name="product"></param>
-        /// <param name="chosen"></param>
+        /// <param name="productnum"></param>
+        /// <param name="storenum"></param>
         /// <returns>returns the line item from the db that matches</returns>
-        LineItems VerifyStockDL(int productnum, StoreFront chosen);
+        LineItems VerifyStockDL(int productnum, int storenum);
 
         /// <summary>
         /// Verifies in the database if the entered client user name is located in the database

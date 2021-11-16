@@ -60,9 +60,9 @@ namespace BusinessLogic
         }
 
 
-        public LineItems VerifyStock(int productnum, StoreFront chosen)
+        public LineItems VerifyStock(int productnum, int storenum)
         {
-           return _repo.VerifyStockDL(productnum,chosen);
+           return _repo.VerifyStockDL(productnum,storenum);
         }
 
         public Customer ModifyCustomerRecord(Customer currentSelection)

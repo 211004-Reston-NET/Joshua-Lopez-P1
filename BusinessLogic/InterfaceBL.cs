@@ -51,12 +51,12 @@ namespace BusinessLogic
 
 
         /// <summary>
-        /// This method verifies if the stock is in the specified store as well
+        /// This method verifies if the stock item is in the store and returns that line items info
         /// </summary>
         /// <param name="product"></param>
         /// <param name="chosen"></param>
         /// <returns>returns the line item from the db that matches</returns>
-        LineItems VerifyStock(int productnum, StoreFront chosen);
+        LineItems VerifyStock(int productnum, int storenum);
 
 
         /// <summary>
