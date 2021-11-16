@@ -18,9 +18,9 @@ namespace BusinessLogic
         }
 
         
-        public Customer AddCustomersBL(Customer paramterobj)
+        public Customer AddCustomersBL(Customer parameterobj)
         {
-            return _repo.AddCustomersDL(paramterobj);
+            return _repo.AddCustomersDL(parameterobj);
         }
         
         public List<Customer> GetAllCustomersBL()
@@ -30,9 +30,9 @@ namespace BusinessLogic
 
 
     
-        public StoreFront AddStoreFrontBL(StoreFront paramterobj)
+        public StoreFront AddStoreFrontBL(StoreFront parameterobj)
         {
-            return _repo.AddStoreFrontDL(paramterobj);
+            return _repo.AddStoreFrontDL(parameterobj);
         }
 
 
@@ -43,9 +43,9 @@ namespace BusinessLogic
         }
 
      
-        public Orders AddOrdersBL(Orders paramterobj)
+        public Orders AddOrdersBL(Orders parameterobj)
         {
-            return _repo.AddOrdersDL(paramterobj);
+            return _repo.AddOrdersDL(parameterobj);
         }
 
         
@@ -81,9 +81,9 @@ namespace BusinessLogic
         }
 
          
-        public Products AddProductsBL(Products paramterobj)
+        public Products AddProductsBL(Products parameterobj)
         {
-            return _repo.AddProductsDL(paramterobj);
+            return _repo.AddProductsDL(parameterobj);
         }
 
 

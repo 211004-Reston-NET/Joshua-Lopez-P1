@@ -234,9 +234,7 @@ namespace WebUI.Controllers
 
             }
 
-
-            decimal cost = 0;
-            cost = nuevo.Total;
+            decimal cost = nuevo.Total;
             for (int x = 0; x < p_ProductId.Length; x++)
             {
                 test[x].Quantity = p_quantity[x];

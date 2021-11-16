@@ -21,27 +21,6 @@ namespace Models
 
 
 
-        // private List<LineItems> itemslist = new List<LineItems>();
-        // public List<LineItems> ItemsList
-        // {
-        //    set { itemslist = value; }
-        //    get { return itemslist; }
-        // }
-        // ////private StoreFront _location;
-        // ////public StoreFront Location
-        // ////{
-        // ////    get { return _location; }
-        // ////    set { _location = value; }
-        // ////}
-
         
-
-
-        //public override string ToString()
-        //{
-        //    string text = $"Order is from location : {_location}\tTotal Price :${decimal.Round(_totalprice, 2)}";
-        //    return text;
-        //}
-
     }
 }
