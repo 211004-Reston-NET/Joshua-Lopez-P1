@@ -421,7 +421,7 @@ namespace Tests
 
         }
 
-        
+
         [Fact]
 
         public void InsertHistoryworks()
@@ -452,7 +452,7 @@ namespace Tests
                 InterfaceRepository repo = new RespositoryCloud(contexts);
                 Orders result = new Orders();
                 result = repo.GetOrderID(result);
-                repo.InsertHistory(result.StoreId,1,result.OrderId,result.CustomerId,1);
+                repo.InsertHistory(result.StoreId, 1, result.OrderId, result.CustomerId, 1);
             }
 
         }
@@ -486,12 +486,12 @@ namespace Tests
             {
                 //Arrange
                 InterfaceRepository repo = new RespositoryCloud(context);
-                int store=2;
-                int prod=1;
-                int quantity=20;
+                int store = 2;
+                int prod = 1;
+                int quantity = 20;
 
                 //Act
-                repo.AddStockToDB(store,prod,quantity);
+                repo.AddStockToDB(store, prod, quantity);
             }
 
             //Second using block will find that Customer and see if it is similar to what we added
@@ -503,8 +503,37 @@ namespace Tests
 
 
                 Assert.NotNull(result);
-                Assert.Equal(2,result.Count);
+                Assert.Equal(2, result.Count);
+
+            }
+
+        }
+
+        [Fact]
+
+        public void VerifyItemInStock()
+        {
+            //First using block will add a Customer
+            using (var context = new P0DatabaseContext(_options))
+            {
+                //Arrange
+                InterfaceRepository repo = new RespositoryCloud(context);
+                int store = 1;
+                int prod = 2;
                 
+
+                //Act
+                LineItems result=repo.VerifyStockDL(prod,store);
+            
+
+            //Second using block will find that Customer and see if it is similar to what we added
+            //Assert
+           
+
+
+                Assert.NotNull(result);
+                Assert.Equal(33, result.Quantity);
+
             }
 
         }
@@ -621,11 +650,11 @@ namespace Tests
                         Total = 50
                     },
                    new Orders
-                    {
-                     CustomerId = 2,
-                        StoreId = 1,
+                   {
+                       CustomerId = 2,
+                       StoreId = 1,
                        Total = 45
-                    },
+                   },
                    new Orders
                    {
                        CustomerId = 1,

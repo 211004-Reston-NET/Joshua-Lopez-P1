@@ -3,12 +3,13 @@
 <h1>List of Products</h1>
 <form asp-action="">
 <table class="table table-striped table-hover">
+    <caption>Your current cart</caption>
     <tr>
-        <th>Store Id Number</th>
-        <th>Id Number</th>
-        <th>Product Name </th>
-        <th>Product Price </th>
-        <th>Amount </th>
+        <th scope="col">Store Id Number</th>
+        <th scope="col">Id Number</th>
+        <th scope="col">Product Name </th>
+        <th scope="col">Product Price </th>
+        <th scope="col">Amount </th>
 
     </tr>
     @foreach (LineItemVM line in Model)
@@ -31,22 +32,30 @@
 
     }
     
-        
-            <!--
-                This input element is hidden because we don't want the user to input some id instead we are just supplying the id w
-                Already have
-            -->
-        
-    
 
     
 
 </table>
- <input type ="submit" value="Calculate total" class="btn btn-danger" formaction="Cart" formmethod="post"/>
+ <input type ="submit" value="Calculate total / update Cart quantities" class="btn btn-danger" formaction="Cart" formmethod="post"/>
  
         </form>       
         @if(Convert.ToDecimal(ViewBag.purchase) > 0)
         {<button class="btn btn-danger">@Html.ActionLink("Confirm Purchase","ProceedToCheckout",new {p_total=@ViewBag.purchase}, new {@style="color: white;"})</button>
             <p>The Total of your order is $@ViewBag.purchase</p>
         }
-
+@if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+    @if (ViewBag.Notify != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Notify");
+            };
+        </script>
+    }

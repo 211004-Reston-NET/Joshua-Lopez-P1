@@ -157,18 +157,6 @@ namespace WebUI.Controllers
             ViewBag.Position = SingletonVM.currentuser.Position;
             ViewBag.Currency = SingletonVM.currentuser.Currency;
             List<OrderLines> myorders=iObj.GetMyOrderHistory(SingletonVM.currentuser.Id);
-            List<OrdersVM> x= new List<OrdersVM>();
-            foreach(OrderLines data in myorders)
-            {
-                OrdersVM obj=new OrdersVM();
-                obj.CustomerId=SingletonVM.currentuser.Id;
-                obj.Id=data.OrderId;
-                obj.StoreFrontId=data.StoreId;
-                obj.TotalPrice=data.Order_obj.Total;
-                obj.ItemId=data.ProductId;
-                obj.ItemName=data.Product_obj.Name;
-
-            }
 
             return View(myorders
                         .Select(rest => new OrdersVM(rest))
@@ -180,7 +168,7 @@ namespace WebUI.Controllers
 
         public void SetCurrentCustomer(CustomerVM user)
         {
-            // testing.Id = testing.Id;
+
             SingletonVM.currentuser.Name = user.Name;
             SingletonVM.currentuser.Address = user.Address;
             SingletonVM.currentuser.Contact = user.Contact;

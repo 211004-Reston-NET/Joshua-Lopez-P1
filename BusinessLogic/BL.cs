@@ -9,7 +9,7 @@ namespace BusinessLogic
     public class BL : InterfaceBL
     {
 
-        private InterfaceRepository _repo;
+        private readonly InterfaceRepository _repo;
         //dependancy
        
         public BL(InterfaceRepository p_repo)
@@ -18,9 +18,9 @@ namespace BusinessLogic
         }
 
         
-        public Customer AddCustomersBL(Customer parameterObj)
+        public Customer AddCustomersBL(Customer parameterobj)
         {
-            return _repo.AddCustomersDL(parameterObj);
+            return _repo.AddCustomersDL(parameterobj);
         }
         
         public List<Customer> GetAllCustomersBL()
@@ -30,9 +30,9 @@ namespace BusinessLogic
 
 
     
-        public StoreFront AddStoreFrontBL(StoreFront parameterObj)
+        public StoreFront AddStoreFrontBL(StoreFront parameterobj)
         {
-            return _repo.AddStoreFrontDL(parameterObj);
+            return _repo.AddStoreFrontDL(parameterobj);
         }
 
 
@@ -43,9 +43,9 @@ namespace BusinessLogic
         }
 
      
-        public Orders AddOrdersBL(Orders parameterObj)
+        public Orders AddOrdersBL(Orders parameterobj)
         {
-            return _repo.AddOrdersDL(parameterObj);
+            return _repo.AddOrdersDL(parameterobj);
         }
 
         
@@ -60,9 +60,9 @@ namespace BusinessLogic
         }
 
 
-        public LineItems VerifyStock(int productnum, StoreFront chosen)
+        public LineItems VerifyStock(int productnum, int storenum)
         {
-           return _repo.VerifyStockDL(productnum,chosen);
+           return _repo.VerifyStockDL(productnum,storenum);
         }
 
         public Customer ModifyCustomerRecord(Customer currentSelection)
@@ -81,9 +81,9 @@ namespace BusinessLogic
         }
 
          
-        public Products AddProductsBL(Products parameterObj)
+        public Products AddProductsBL(Products parameterobj)
         {
-            return _repo.AddProductsDL(parameterObj);
+            return _repo.AddProductsDL(parameterobj);
         }
 
 
@@ -145,7 +145,7 @@ namespace BusinessLogic
 
         public decimal FindProductPrice(int p_productId)
         {
-           return  _repo.FindProductPrice(p_productId);;
+           return  _repo.FindProductPrice(p_productId);
         }
 
         public List<OrderLines> GetMyOrderHistory(int objId)

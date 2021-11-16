@@ -9,7 +9,7 @@ namespace WebUI.Models
 {
     public class SingletonVM
     {
-        public SingletonVM()
+        protected SingletonVM()
         {
                 
         }

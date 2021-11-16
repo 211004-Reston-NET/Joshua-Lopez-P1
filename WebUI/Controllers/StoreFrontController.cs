@@ -28,9 +28,9 @@ namespace WebUI.Controllers
         public ActionResult LogOut()
 
         {
-            SingletonVM.currentuser=null;
+            SingletonVM.currentuser = null;
             test.Clear();
-            
+
             return RedirectToAction("Index", "Home");
 
         }
@@ -90,12 +90,12 @@ namespace WebUI.Controllers
 
         public ActionResult StoreItems(int p_id, int p_sid)
         {
-       
+
             return View(iObj.GetInventory(p_id)
                         .Select(rest => new LineItemVM(rest))
                         .ToList());
         }
-        
+
 
         [HttpGet]
         public IActionResult EditStock(int p_id, int p_quantity, int p_sid)
@@ -148,7 +148,7 @@ namespace WebUI.Controllers
         }
         public ActionResult SeeItems(int p_id, int p_sid, double p_price, string p_name)
         {
-            
+
             return View(iObj.GetInventory(p_id)
                         .Select(rest => new LineItemVM(rest))
                         .ToList());
@@ -156,7 +156,7 @@ namespace WebUI.Controllers
 
 
         [HttpGet]
-        public ActionResult Cart(int p_id, int p_sid, double p_price, string p_name)
+        public ActionResult Cart(int p_id, int p_sid, double p_price, string p_name, int p_available)
         {
             if (p_sid == 0)
             {
@@ -176,36 +176,50 @@ namespace WebUI.Controllers
             }
             else
             {
+
                 LineItems cartitem = new LineItems();
                 cartitem.ProductID = p_id;
                 cartitem.StoreID = p_sid;
-                cartitem.Quantity=1;
+                cartitem.Quantity = 1;
                 Products x = new Products();
                 x.Name = p_name;
                 x.Price = Convert.ToDecimal(p_price);
                 cartitem.Product_obj = x;
-                bool verified=false;
-                for(int i =0;i<test.Count;i++)
+                bool verified = false;
+                for (int i = 0; i < test.Count; i++)
                 {
-                    if(test[i].ProductID==p_id)
+                    LineItems stock = iObj.VerifyStock(test[i].ProductID, test[i].StoreID);
+
+                    if (test[i].ProductID == p_id)
                     {
-                        verified=true;
-                        ViewBag.Message="You already have this product in cart";
+                        verified = true;
+                        ViewBag.Message = "You already have this product in cart";
                     }
-                    if(test[i].StoreID!=p_sid)
+                    if (test[i].StoreID != p_sid)
                     {
-                        verified=true;
-                        ViewBag.Message="Do not add product from a different store";
+                        verified = true;
+                        ViewBag.Message = "Do not add product from a different store";
+                    }
+                    if (stock.Quantity - test[i].Quantity < 0)
+                    {
+                        verified = true;
+                        ViewBag.Message = "One of your items has less than what you are asking for, please modify";
+                        test[i].Quantity = 1;
                     }
 
-                    
+
                 }
-                if(verified==false)
+                if (p_available <= 0)
+                {
+                    verified = true;
+                    ViewBag.Message = "This item is currently out of stock";
+                }
+                if (verified == false)
                 {
                     test.Add(cartitem);
                 }
 
-                
+
                 decimal cost = 0;
                 for (int i = 0; i < test.Count; i++)
                 {
@@ -213,8 +227,12 @@ namespace WebUI.Controllers
 
                 }
 
-
                 ViewBag.purchase = cost;
+                if (SingletonVM.currentuser.Currency - cost < 0)
+                {
+                    ViewBag.Notify = "You do not have sufficient funds in your account select less items or add more money";
+                }
+
 
                 return View(test.Select(rest => new LineItemVM(rest))
                             .ToList());
@@ -234,14 +252,11 @@ namespace WebUI.Controllers
 
             }
 
-
-            decimal cost = 0;
-            cost = nuevo.Total;
+            decimal cost = nuevo.Total;
             for (int x = 0; x < p_ProductId.Length; x++)
             {
                 test[x].Quantity = p_quantity[x];
             }
-            p_total = cost;
 
             return RedirectToAction("Cart", "StoreFront");
 
@@ -262,10 +277,32 @@ namespace WebUI.Controllers
         public IActionResult ProceedToCheckout(decimal p_total)
         {
             ViewBag.xyz = p_total;
+            if (SingletonVM.currentuser.Currency - p_total < 0)
+            {
+                return RedirectToAction("Cart", "StoreFront");
+            }
+            else
+            {
+                for (int i = 0; i < test.Count; i++)
+                {
+                    LineItems stock = iObj.VerifyStock(test[i].ProductID, test[i].StoreID);
+
+                    if (stock.Quantity - test[i].Quantity < 0)
+                    {
+
+                        ViewBag.Message = "One of your items has less than what you are asking for, please modify";
+                        test[i].Quantity = 1;
+                    }
 
 
-            return View(test.Select(rest => new LineItemVM(rest))
-                        .ToList());
+                }
+
+                return View(test.Select(rest => new LineItemVM(rest)).ToList());
+                                                                    
+            }
+
+
+
 
         }
         [HttpPost]
@@ -275,20 +312,36 @@ namespace WebUI.Controllers
             Orders nuevo = new Orders();
             for (int i = 0; i < p_ProductId.Length; i++)
             {
+                LineItems stock = iObj.VerifyStock(test[i].ProductID, p_StoreId);
                 nuevo.Total = nuevo.Total + (p_quantity[i] * iObj.FindProductPrice(p_ProductId[i]));
+                stock.Quantity=stock.Quantity-p_quantity[i];
+                iObj.ModifyStockTable(p_StoreId,p_ProductId[i],stock.Quantity);
 
             }
             nuevo.CustomerId = SingletonVM.currentuser.Id;
             nuevo.StoreId = p_StoreId;
+            SingletonVM.currentuser.Currency=SingletonVM.currentuser.Currency-nuevo.Total;
+            iObj.ModifyCustomerRecord(new Customer()
+                {
+                    Id = SingletonVM.currentuser.Id,
+                    Name = SingletonVM.currentuser.Name,
+                    Address = SingletonVM.currentuser.Address,
+                    Email = SingletonVM.currentuser.Contact,
+                    UserName = SingletonVM.currentuser.UserName,
+                    Password = SingletonVM.currentuser.Password,
+                    Age = SingletonVM.currentuser.Age,
+                    Category = SingletonVM.currentuser.Position,
+                    CurrentCurrency = SingletonVM.currentuser.Currency
+                });
+
 
             iObj.AddOrdersBL(nuevo);
             nuevo = iObj.GetOrderID(nuevo);
+
             for (int x = 0; x < p_ProductId.Length; x++)
             {
                 iObj.InsertHistory(p_StoreId, p_ProductId[x], nuevo.OrderId, SingletonVM.currentuser.Id, p_quantity[x]);
             }
-            decimal cost = nuevo.Total;
-            ViewBag.purchase = cost;
             test.Clear();
 
             return RedirectToAction("MyProfile", "Customer");
@@ -340,7 +393,7 @@ namespace WebUI.Controllers
                     Location = p_StoreVM.Address,
                 });
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SelectStore));
             }
 
             //Will return back to the create view if the user didn't specify the right input
@@ -369,7 +422,7 @@ namespace WebUI.Controllers
                     Category = p_ViewModel.Category
                 });
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SelectStore));
             }
 
             //Will return back to the create view if the user didn't specify the right input
