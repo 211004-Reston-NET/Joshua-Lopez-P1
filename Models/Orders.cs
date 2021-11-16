@@ -15,12 +15,6 @@ namespace Models
         public virtual Customer Customer_obj { get; set; }
         public virtual StoreFront Store_obj { get; set; }
         public virtual ICollection<OrderLines> OrderHistories { get; set; }
-        // private decimal _totalprice;
-        //public decimal Total
-        //{
-        //    get { return decimal.Round(_totalprice, 2); }
-        //    set { _totalprice = decimal.Round(value, 2); }
-        //}
 
 
 

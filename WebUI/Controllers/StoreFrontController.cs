@@ -241,7 +241,6 @@ namespace WebUI.Controllers
             {
                 test[x].Quantity = p_quantity[x];
             }
-            p_total = cost;
 
             return RedirectToAction("Cart", "StoreFront");
 
@@ -340,7 +339,7 @@ namespace WebUI.Controllers
                     Location = p_StoreVM.Address,
                 });
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SelectStore));
             }
 
             //Will return back to the create view if the user didn't specify the right input
@@ -369,7 +368,7 @@ namespace WebUI.Controllers
                     Category = p_ViewModel.Category
                 });
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SelectStore));
             }
 
             //Will return back to the create view if the user didn't specify the right input

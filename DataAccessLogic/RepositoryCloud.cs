@@ -7,7 +7,7 @@ namespace DataAccessLogic
 {
     public class RespositoryCloud : InterfaceRepository
     {
-        private P0DatabaseContext _context;
+        private readonly P0DatabaseContext _context;
         public RespositoryCloud(P0DatabaseContext p_context)
         {
             _context = p_context;
@@ -41,7 +41,7 @@ namespace DataAccessLogic
         }
         public Customer GetCustomerDL(string username, string password)
         {
-            Customer obj = new Customer();
+           
             List<Customer> listOfStores = GetAllCustomersDL();
             bool result = VerifyCredentials(username, password);//method returns true or false based on entered information
             if (result == false)
@@ -49,7 +49,7 @@ namespace DataAccessLogic
                 throw new Exception("Customer Not found");
             }
 
-            obj = listOfStores.FirstOrDefault(holder => holder.UserName == username && holder.Password == password);
+            Customer obj = listOfStores.FirstOrDefault(holder => holder.UserName == username && holder.Password == password);
 
 
             return obj;
@@ -71,13 +71,13 @@ namespace DataAccessLogic
             return currentSelection;
         }
 
-        public bool VerifyCredentials(string name, string password)
+        public bool VerifyCredentials(string username, string password)
         {
             //gets all customers and makes a list that c# understands
             List<Customer> listOfCustomers = GetAllCustomersDL();
             bool result = true;
             //created customer object and looks for the first match of the username and Id
-            Customer obj = listOfCustomers.FirstOrDefault(client => client.UserName == name && client.Password == password);
+            Customer obj = listOfCustomers.FirstOrDefault(client => client.UserName == username && client.Password == password);
             if (obj == null)
             {
                 result = false;
@@ -130,10 +130,10 @@ namespace DataAccessLogic
 
         public LineItems VerifyStockDL(int productnum, StoreFront chosen)
         {
-            LineItems obj = new LineItems();
-            List<LineItems> listofline = new List<LineItems>();
+           
+            
             //Gets all information in the Stock table related to the received store id 
-            listofline = GetInventory(chosen.Id);
+            List<LineItems> listofline = GetInventory(chosen.Id);
             //checks the now filled list of the stores if the store contains a line item with the received product number
             bool result = listofline.Exists(x => x.Product_obj.Id == productnum);//exists returns a boolean value
             if (result == false)
@@ -141,7 +141,7 @@ namespace DataAccessLogic
                 throw new Exception("Product Not found in store");
             }
             //if an exception was never thrown then it will look for that received identification number and set it to the created line item
-            obj = listofline.FirstOrDefault(prodobj => prodobj.Product_obj.Id == productnum);
+            LineItems obj = listofline.FirstOrDefault(prodobj => prodobj.Product_obj.Id == productnum);
             return obj;
         }
 
@@ -203,11 +203,11 @@ namespace DataAccessLogic
             return parameterObj;
         }
 
-        public bool VerifyProduct(int identification)
+        public bool VerifyProduct(int productidentification)
         {
             //creates a Product table object of the db and intializes it
             //initialized with a db search of products table with parameter of product id
-            Products looking = _context.Products.Find(identification);
+            Products looking = _context.Products.Find(productidentification);
             bool result = true;
             if (looking == null)//if value was not found then it will return a false value for whatever method called it
             {
@@ -216,17 +216,17 @@ namespace DataAccessLogic
             return result;
 
         }
-        public Products GetProduct(int obj)
+        public Products GetProduct(int productid)
         {
             Products test = new Products();
-            bool result = VerifyProduct(obj);
+            bool result = VerifyProduct(productid);
             if (result == false)
             {
                 throw new Exception("Product Was not found with entered ID number");
             }
             else
             { //finds the product in the db and then we fill out our Product with that found information
-                Products looking = _context.Products.Find(obj);
+                Products looking = _context.Products.Find(productid);
                 test.Name = looking.Name;
                 test.Id = looking.Id;
                 test.Price = looking.Price;
@@ -239,13 +239,13 @@ namespace DataAccessLogic
 
         }
 
-        public List<LineItems> GetInventory(int obj)
+        public List<LineItems> GetInventory(int storeid)
         {
             //this query is to receive all rows in the Stocks table that match the received store id
             //returns the product information and the quantity in stock
 
             var result = from compl in _context.Stocks
-                         where compl.StoreID == obj
+                         where compl.StoreID == storeid
                          select new { compl.Product_obj, compl.Quantity };
 
 
@@ -265,7 +265,7 @@ namespace DataAccessLogic
                     Category = row.Product_obj.Category
 
                 };
-                test.StoreID = obj;
+                test.StoreID = storeid;
                 test.ProductID = row.Product_obj.Id;
                 test.Quantity = row.Quantity;
 
@@ -328,8 +328,7 @@ namespace DataAccessLogic
         {
             //method used to receive the last created id from the orders table and return that value
 
-            List<Orders> test = new List<Orders>();
-            test = GetAllOrdersDL();//sent all of the ordrs from the db into this list obj
+            List<Orders> test = GetAllOrdersDL();//sent all of the ordrs from the db into this list obj
             IEnumerable<Orders> query = test.OrderBy(x => x.OrderId);//inorder to use the last method we made an Inumerable list
             //it had to be sorted first in order for this to function
             Orders temp = query.Last();//looked for the last object in the last and gave it these values.
@@ -388,7 +387,7 @@ namespace DataAccessLogic
         { 
             decimal itemPrice=0;
 
-            Products test = new Products();
+            
             bool result = VerifyProduct(p_productId);
             if (result == false)
             {
