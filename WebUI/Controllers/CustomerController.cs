@@ -228,7 +228,7 @@ namespace WebUI.Controllers
                 });
                 SetCurrentCustomer(restVM);
 
-                return RedirectToAction(nameof(Index));
+               return RedirectToAction("Index", "Home");
             }
 
             //Will return back to the create view if the user didn't specify the right input
