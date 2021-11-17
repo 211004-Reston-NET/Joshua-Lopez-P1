@@ -12,7 +12,7 @@ namespace WebUI.Controllers
 {
     public class CustomerController : Controller
     {
-     
+
         private readonly InterfaceBL iObj;
         public CustomerController(InterfaceBL p_Inter)
         {
@@ -24,18 +24,18 @@ namespace WebUI.Controllers
 
         {
             ViewBag.testname = SingletonVM.currentuser.Name;
-            ViewBag.Classified=SingletonVM.currentuser.Position;
-           
+            ViewBag.Classified = SingletonVM.currentuser.Position;
+
 
             return View();
         }
-        
+
 
         public ActionResult LogOut()
 
         {
-            SingletonVM.currentuser=null;
-            
+            SingletonVM.currentuser = null;
+
             return RedirectToAction("Index", "Home");
 
         }
@@ -53,7 +53,7 @@ namespace WebUI.Controllers
 
         }
 
-        
+
 
         [HttpGet]
         public IActionResult CreateCustomer()
@@ -88,7 +88,7 @@ namespace WebUI.Controllers
             return View();
         }
 
-        
+
 
         [HttpGet]
         public IActionResult Login()
@@ -109,15 +109,15 @@ namespace WebUI.Controllers
                 Customer test = new Customer();
                 try
                 {
-                     test = iObj.GetCustomer(s1, s2);
+                    test = iObj.GetCustomer(s1, s2);
                 }
                 catch (System.Exception)
                 {
-                    
-                    ViewBag.Message="Username or password was not found";
+
+                    ViewBag.Message = "Username or password was not found";
                     return View();
                 }
-                
+
 
                 CustomerVM x = new CustomerVM();
                 x.Id = test.Id;
@@ -145,7 +145,7 @@ namespace WebUI.Controllers
 
 
 
-        public ActionResult MyProfile()
+        public ActionResult MyProfile(int p_sort)
         {
             ViewBag.Id = SingletonVM.currentuser.Id;
             ViewBag.Name = SingletonVM.currentuser.Name;
@@ -156,14 +156,25 @@ namespace WebUI.Controllers
             ViewBag.Age = SingletonVM.currentuser.Age;
             ViewBag.Position = SingletonVM.currentuser.Position;
             ViewBag.Currency = SingletonVM.currentuser.Currency;
-            List<OrderLines> myorders=iObj.GetMyOrderHistory(SingletonVM.currentuser.Id);
+            List<OrderLines> myorders = iObj.GetMyOrderHistory(SingletonVM.currentuser.Id);
 
-            return View(myorders
+            if (p_sort == 1)
+            {
+                IEnumerable<OrderLines> query = myorders.OrderBy(x => x.Order_obj.Total);
+                return View(query.Select(rest => new OrdersVM(rest)).ToList());
+            }
+            else
+            {
+                return View(myorders
                         .Select(rest => new OrdersVM(rest))
                         .ToList());
+            }
+
+
 
 
         }
+
 
 
         public void SetCurrentCustomer(CustomerVM user)
