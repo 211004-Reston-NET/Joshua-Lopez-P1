@@ -118,7 +118,7 @@ namespace WebUI.Controllers
             {
                 iObj.ModifyStockTable(p_sid, p_id, p_quantity);
 
-                return RedirectToAction(nameof(Index));
+                 return RedirectToAction("SelectStore", "StoreFront");
             }
             catch (System.Exception)
             {
