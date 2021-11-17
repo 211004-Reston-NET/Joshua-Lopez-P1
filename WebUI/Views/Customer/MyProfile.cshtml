@@ -1,5 +1,5 @@
 @model IEnumerable<WebUI.Models.OrdersVM>
-<link rel="stylesheet" href="~/css/Tables2.css" />
+<link rel="stylesheet" href="~/css/Table2.css" />
 
 <h2>My Information:</h2>
 <table class="table table-striped">
@@ -69,3 +69,4 @@
 
     }
 </table>
+<button class="btn btn-danger">@Html.ActionLink("Sort by Total","MyProfile",new {p_sort=1}, new {@style="color: white;"})</button>
