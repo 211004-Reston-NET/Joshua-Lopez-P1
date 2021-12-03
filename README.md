@@ -1,5 +1,3 @@
-# Michigan Modular
-
 ## Published at Microsoft Azure App Services
 - https://p1-web-app.azurewebsites.net/
 
